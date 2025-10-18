@@ -1415,5 +1415,13 @@
         console.log('💪 Treinos Marcelo - 7 Tipos Completos!');
         console.log('📊 Tipos disponíveis:', todosTipos.map(t => t.nome));
     </script>
+<script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js', { scope: './' })
+            .catch(err => console.log('SW reg failed', err));
+        });
+      }
+    </script>
 </body>
 </html>

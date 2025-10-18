@@ -1,66 +1,40 @@
-const CACHE_NAME = 'treinos-marcelo-v1.0.0';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+const CACHE_NAME = 'tm-v2';
+const OFFLINE_ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './sw.js',
 ];
 
-// Install event
-self.addEventListener('install', event => {
-  console.log('💪 Service Worker: Instalando...');
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('💪 Service Worker: Cache criado');
-        return cache.addAll(urlsToCache);
-      })
-      .catch(err => {
-        console.error('💪 Service Worker: Erro no cache:', err);
-      })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(OFFLINE_ASSETS))
   );
+  self.skipWaiting();
 });
 
-// Fetch event
-self.addEventListener('fetch', event => {
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+  // Only handle GET
+  if (req.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached version or fetch from network
-        if (response) {
-          console.log('💪 Service Worker: Servindo do cache:', event.request.url);
-          return response;
-        }
-        console.log('💪 Service Worker: Buscando da rede:', event.request.url);
-        return fetch(event.request);
-      })
-      .catch(err => {
-        console.error('💪 Service Worker: Erro no fetch:', err);
-      })
-  );
-});
-
-// Activate event
-self.addEventListener('activate', event => {
-  console.log('💪 Service Worker: Ativando...');
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('💪 Service Worker: Deletando cache antigo:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
+    caches.match(req).then((cached) => {
+      const fetchPromise = fetch(req).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+        return res;
+      }).catch(() => cached);
+      return cached || fetchPromise;
     })
   );
 });
-
-// Update found
-self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
-console.log('💪 Service Worker: Registrado com sucesso!');
