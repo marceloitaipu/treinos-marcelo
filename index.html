@@ -306,6 +306,18 @@
             margin-bottom: 0;
             font-size: 0.95em;
             line-height: 1.2;
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .exercicio-nome:hover {
+            overflow: visible;
+            white-space: normal;
+            word-wrap: break-word;
+            position: relative;
+            z-index: 10;
         }
 
         .exercicio-controls {
@@ -460,6 +472,91 @@
 
         .modal-edicao .modal-content {
             max-width: 600px;
+        }
+
+        /* Estilos específicos para o modal de cadastro de exercício */
+        .modal-exercicio {
+            max-width: 500px !important;
+        }
+
+        .form-exercicio {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-preview {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-preview h4 {
+            margin: 0 0 10px 0;
+            color: #4ecdc4;
+            font-size: 0.9em;
+        }
+
+        .preview-exercicio {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .preview-dados {
+            color: #ccc;
+            font-size: 0.8em;
+        }
+
+        .btn-edit-exercicio {
+            background: rgba(255, 193, 61, 0.2);
+            color: #ffd93d;
+            border: 1px solid rgba(255, 193, 61, 0.3);
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .btn-edit-exercicio:hover {
+            background: rgba(255, 193, 61, 0.3);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 393px) {
+            .modal-exercicio {
+                max-width: 95% !important;
+                margin: 20px auto;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .preview-exercicio {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .btn-edit-exercicio {
+                padding: 6px;
+                font-size: 0.8em;
+            }
         }
 
         .form-group {
@@ -1103,6 +1200,7 @@
                 margin-right: 8px;
                 margin-bottom: 0;
                 min-width: 120px;
+                max-width: 120px;
             }
             
             .exercicio-nome {
@@ -1110,6 +1208,10 @@
                 margin-bottom: 0;
                 text-align: left;
                 line-height: 1.2;
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             
             .exercicio-controls {
@@ -2074,49 +2176,236 @@
         }
 
         function adicionarExercicio() {
+            abrirModalCadastroExercicio();
+        }
+
+        function abrirModalCadastroExercicio(exercicioIndex = null) {
+            const isEdicao = exercicioIndex !== null;
             const exerciciosLista = document.getElementById('exercicios-lista');
             const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
-            const novoIndex = exercicios.length;
             
-            const novoExercicio = document.createElement('div');
-            novoExercicio.className = 'exercicio-edit';
-            novoExercicio.innerHTML = `
-                <button class="btn-remove" onclick="removerExercicio(${novoIndex})">×</button>
-                <input type="text" 
-                       value="Novo Exercício" 
-                       class="exercicio-input"
-                       data-index="${novoIndex}"
-                       placeholder="Nome do exercício">
-                <input type="number" 
-                       value="3" 
-                       class="series-default-input"
-                       data-index="${novoIndex}"
-                       placeholder="Séries"
-                       style="width: 60px;">
-                <input type="number" 
-                       value="12" 
-                       class="reps-default-input"
-                       data-index="${novoIndex}"
-                       placeholder="Reps"
-                       style="width: 60px;">
-                <input type="text" 
-                       value="" 
-                       class="peso-default-input"
-                       data-index="${novoIndex}"
-                       placeholder="kg/min/seg"
-                       style="width: 80px;">
+            // Se for edição, pegar dados do exercício
+            let dadosExercicio = {
+                nome: 'Novo Exercício',
+                series: '3',
+                reps: '12',
+                peso: ''
+            };
+            
+            if (isEdicao && exercicios[exercicioIndex]) {
+                const exercicioDiv = exercicios[exercicioIndex];
+                dadosExercicio = {
+                    nome: exercicioDiv.querySelector('.exercicio-input').value,
+                    series: exercicioDiv.querySelector('.series-default-input').value,
+                    reps: exercicioDiv.querySelector('.reps-default-input').value,
+                    peso: exercicioDiv.querySelector('.peso-default-input').value
+                };
+            }
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.id = 'modal-cadastro-exercicio';
+            
+            modal.innerHTML = `
+                <div class="modal-content modal-exercicio">
+                    <div class="modal-header">
+                        <h2>${isEdicao ? '✏️ Editar Exercício' : '➕ Novo Exercício'}</h2>
+                        <p>Configure os detalhes do exercício</p>
+                    </div>
+                    
+                    <div class="form-exercicio">
+                        <div class="form-group">
+                            <label for="exercicio-nome-input">🏋️ Nome do Exercício:</label>
+                            <input type="text" 
+                                   id="exercicio-nome-input" 
+                                   value="${dadosExercicio.nome}"
+                                   placeholder="Ex: Supino Reto com Barra"
+                                   maxlength="30">
+                            <small id="contador-caracteres">0/30 caracteres</small>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exercicio-series-input">📊 Séries:</label>
+                                <input type="number" 
+                                       id="exercicio-series-input" 
+                                       value="${dadosExercicio.series}"
+                                       placeholder="3"
+                                       min="1" max="10">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="exercicio-reps-input">🔢 Repetições:</label>
+                                <input type="number" 
+                                       id="exercicio-reps-input" 
+                                       value="${dadosExercicio.reps}"
+                                       placeholder="12"
+                                       min="1" max="100">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exercicio-peso-input">⚖️ Unidade de Peso/Tempo:</label>
+                            <select id="exercicio-peso-input">
+                                <option value="" ${dadosExercicio.peso === '' ? 'selected' : ''}>kg (padrão)</option>
+                                <option value="min" ${dadosExercicio.peso === 'min' ? 'selected' : ''}>minutos</option>
+                                <option value="seg" ${dadosExercicio.peso === 'seg' ? 'selected' : ''}>segundos</option>
+                                <option value="rep" ${dadosExercicio.peso === 'rep' ? 'selected' : ''}>apenas repetições</option>
+                            </select>
+                            <small>Escolha a unidade apropriada para o exercício</small>
+                        </div>
+                        
+                        <div class="form-preview">
+                            <h4>📋 Prévia:</h4>
+                            <div class="preview-exercicio">
+                                <span id="preview-nome">${dadosExercicio.nome}</span>
+                                <span class="preview-dados">
+                                    <span id="preview-series">${dadosExercicio.series}</span> × 
+                                    <span id="preview-reps">${dadosExercicio.reps}</span>
+                                    <span id="preview-unidade">${dadosExercicio.peso || 'kg'}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-cancelar" onclick="fecharModalCadastro()">❌ Cancelar</button>
+                        <button class="btn-salvar" onclick="salvarExercicio(${exercicioIndex})">💾 ${isEdicao ? 'Salvar' : 'Adicionar'}</button>
+                    </div>
+                </div>
             `;
             
-            // Inserir antes do botão "Adicionar"
-            const btnAdd = exerciciosLista.querySelector('.btn-add');
-            exerciciosLista.insertBefore(novoExercicio, btnAdd);
+            document.body.appendChild(modal);
             
-            // Focar no novo input
-            const novoInput = novoExercicio.querySelector('.exercicio-input');
-            novoInput.focus();
-            novoInput.select();
+            // Focar no campo nome
+            setTimeout(() => {
+                document.getElementById('exercicio-nome-input').focus();
+                setupPreviewUpdates();
+            }, 100);
+        }
+
+        function setupPreviewUpdates() {
+            const nomeInput = document.getElementById('exercicio-nome-input');
+            const seriesInput = document.getElementById('exercicio-series-input');
+            const repsInput = document.getElementById('exercicio-reps-input');
+            const pesoInput = document.getElementById('exercicio-peso-input');
+            const contadorCaracteres = document.getElementById('contador-caracteres');
             
-            mostrarNotificacao('➕ Novo exercício adicionado!');
+            function updatePreview() {
+                const nome = nomeInput.value || 'Nome do exercício';
+                document.getElementById('preview-nome').textContent = nome;
+                document.getElementById('preview-series').textContent = seriesInput.value || '3';
+                document.getElementById('preview-reps').textContent = repsInput.value || '12';
+                
+                const unidade = pesoInput.value || 'kg';
+                document.getElementById('preview-unidade').textContent = unidade;
+                
+                // Atualizar contador de caracteres
+                if (contadorCaracteres) {
+                    const count = nomeInput.value.length;
+                    contadorCaracteres.textContent = `${count}/30 caracteres`;
+                    contadorCaracteres.style.color = count > 25 ? '#ff6b6b' : '#ccc';
+                }
+            }
+            
+            // Atualizar inicialmente
+            updatePreview();
+            
+            nomeInput.addEventListener('input', updatePreview);
+            seriesInput.addEventListener('input', updatePreview);
+            repsInput.addEventListener('input', updatePreview);
+            pesoInput.addEventListener('change', updatePreview);
+        }
+
+        function salvarExercicio(exercicioIndex) {
+            const nome = document.getElementById('exercicio-nome-input').value.trim();
+            const series = document.getElementById('exercicio-series-input').value.trim();
+            const reps = document.getElementById('exercicio-reps-input').value.trim();
+            const peso = document.getElementById('exercicio-peso-input').value;
+            
+            if (!nome) {
+                mostrarNotificacao('⚠️ Nome do exercício é obrigatório!', 'warning');
+                return;
+            }
+            
+            if (nome.length > 30) {
+                mostrarNotificacao('⚠️ Nome muito longo! Máximo 30 caracteres.', 'warning');
+                return;
+            }
+            
+            if (!series || !reps) {
+                mostrarNotificacao('⚠️ Séries e repetições são obrigatórios!', 'warning');
+                return;
+            }
+            
+            const exerciciosLista = document.getElementById('exercicios-lista');
+            const isEdicao = exercicioIndex !== null;
+            
+            if (isEdicao) {
+                // Editar exercício existente
+                const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
+                const exercicioDiv = exercicios[exercicioIndex];
+                
+                exercicioDiv.querySelector('.exercicio-input').value = nome;
+                exercicioDiv.querySelector('.series-default-input').value = series;
+                exercicioDiv.querySelector('.reps-default-input').value = reps;
+                exercicioDiv.querySelector('.peso-default-input').value = peso;
+                
+                mostrarNotificacao('✏️ Exercício editado com sucesso!');
+            } else {
+                // Adicionar novo exercício
+                const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
+                const novoIndex = exercicios.length;
+                
+                const novoExercicio = document.createElement('div');
+                novoExercicio.className = 'exercicio-edit';
+                novoExercicio.innerHTML = `
+                    <button class="btn-remove" onclick="removerExercicio(${novoIndex})">×</button>
+                    <input type="text" 
+                           value="${nome}" 
+                           class="exercicio-input"
+                           data-index="${novoIndex}"
+                           placeholder="Nome do exercício"
+                           readonly>
+                    <input type="number" 
+                           value="${series}" 
+                           class="series-default-input"
+                           data-index="${novoIndex}"
+                           placeholder="Séries"
+                           style="width: 60px;"
+                           readonly>
+                    <input type="number" 
+                           value="${reps}" 
+                           class="reps-default-input"
+                           data-index="${novoIndex}"
+                           placeholder="Reps"
+                           style="width: 60px;"
+                           readonly>
+                    <input type="text" 
+                           value="${peso}" 
+                           class="peso-default-input"
+                           data-index="${novoIndex}"
+                           placeholder="kg/min/seg"
+                           style="width: 80px;"
+                           readonly>
+                    <button class="btn-edit-exercicio" onclick="abrirModalCadastroExercicio(${novoIndex})" title="Editar exercício">✏️</button>
+                `;
+                
+                // Inserir antes do botão "Adicionar"
+                const btnAdd = exerciciosLista.querySelector('.btn-add');
+                exerciciosLista.insertBefore(novoExercicio, btnAdd);
+                
+                mostrarNotificacao('➕ Exercício adicionado com sucesso!');
+            }
+            
+            fecharModalCadastro();
+        }
+
+        function fecharModalCadastro() {
+            const modal = document.getElementById('modal-cadastro-exercicio');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
         }
 
         function salvarEdicaoTreino(index) {
