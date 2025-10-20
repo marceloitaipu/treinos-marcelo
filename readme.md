@@ -1,60 +1,65 @@
-# 💪 Treinos Marcelo - Deploy
+# 💪 Treinos Marcelo - PWA Avançado
 
-## 🚀 Deploy Instructions
+**🌐 Acesse:** https://marceloitaipu.github.io/treinos-marcelo/
 
-### Netlify Deploy
-1. Comprima todos os arquivos desta pasta em um ZIP
-2. Acesse [Netlify](https://netlify.com)
-3. Arraste o ZIP para a área de deploy
-4. Pronto! Seu app estará online
+## 🆕 Funcionalidades Implementadas (v2.0):
 
-### Vercel Deploy
-1. Comprima todos os arquivos desta pasta em um ZIP
-2. Acesse [Vercel](https://vercel.com)
-3. Importe o projeto
-4. Deploy automático
+### ✏️ **Edição de Tipos de Treino**
+- Renomeie qualquer tipo (ABCD, ABC, etc.)
+- Interface intuitiva com botão ✏️
 
-### GitHub Pages
-1. Crie um repositório no GitHub
-2. Faça upload destes arquivos
-3. Ative GitHub Pages nas configurações
-4. Seu app estará online
+### ⏱️ **Timer de Descanso**
+- Cronômetro automático entre exercícios
+- Controles: +30s, -30s, Parar
+- Notificações sonoras e vibração
 
-## 📁 Arquivos Incluídos
+### 📊 **Sistema Completo de Controle**
+- **Séries × Repetições × Peso**
+- Campos individuais para cada exercício
+- Salvamento automático
 
-- ✅ `index.html` - App principal dos 7 tipos de treino
-- ✅ `manifest.json` - Configuração PWA
-- ✅ `sw.js` - Service Worker para funcionamento offline
-- ✅ `_redirects` - Redirecionamentos para Netlify
-- ✅ `netlify.toml` - Configurações de deploy para Netlify
+### 📝 **Sistema de Anotações**
+- Notas personalizadas por exercício
+- Exemplo: "Aumentar peso próxima vez"
+- Persistente no localStorage
 
-## 🎯 Funcionalidades
+### 📈 **Histórico Automático**
+- Salva treinos concluídos automaticamente
+- Visualização organizada por data
+- Mantém últimos 50 registros
 
-- ✅ 7 tipos de treino completos
-- ✅ Sistema de controle de peso
-- ✅ Edição de treinos
-- ✅ Interface otimizada para mobile (Poco X7 Pro)
-- ✅ PWA (instala como app no celular)
-- ✅ Funciona offline
+### 💾 **Backup e Restauração**
+- Exporta dados para arquivo JSON
+- Importa backup anterior
+- Proteção completa dos dados
 
-## 📱 Compatibilidade
+### ⚙️ **Central de Configurações**
+- Tempo de descanso configurável
+- Gestão de backup/restauração
+- Limpeza seletiva de dados
 
-- ✅ Todos os navegadores modernos
-- ✅ Mobile (iOS e Android)
-- ✅ Desktop
-- ✅ Tablet
+## 📱 **Otimização Poco X7 Pro:**
+- ✅ Design específico para 6.67" (1080x2400px)
+- ✅ Touch targets otimizados (44px+)
+- ✅ Scrolling suave e responsivo
+- ✅ Performance GPU otimizada
+- ✅ PWA completo - instala como app nativo
 
-## 🎨 Tecnologias
+## 🚀 **Deploy:**
+- ✅ Automático via GitHub Actions
+- ✅ URL: https://marceloitaipu.github.io/treinos-marcelo/
+- ✅ Funciona offline após primeira visita
+- ✅ Última atualização: 20/10/2025 - v2.0
 
-- HTML5
-- CSS3 (Glassmorphism design)
-- JavaScript Vanilla
-- PWA
-- Service Worker
-- LocalStorage
+## 🎨 **Tecnologias:**
+- HTML5 + CSS3 (Glassmorphism)
+- JavaScript Vanilla ES6+
+- PWA + Service Worker
+- GitHub Pages + Actions
+- LocalStorage + IndexedDB ready
 
 ---
 
-**Desenvolvido para Marcelo** 💪
-Versão: 1.0.0
-Data: 17/10/2025
+**💪 Desenvolvido para Marcelo**  
+**Versão:** 2.0.0 (Advanced)  
+**Data:** 20/10/2025
