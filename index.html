@@ -1441,35 +1441,66 @@
                         nome: 'Treino A - Peito e Tríceps',
                         descricao: '5 exercícios • Força e volume',
                         classe: 'treino-a',
-                        exercicios: ['Supino Reto', 'Supino Inclinado', 'Crucifixo', 'Tríceps Testa', 'Tríceps Pulley']
+                        exercicios: [
+                            { nome: 'Supino Reto', series: '3', reps: '12', peso: '' },
+                            { nome: 'Supino Inclinado', series: '3', reps: '10', peso: '' },
+                            { nome: 'Crucifixo', series: '3', reps: '15', peso: '' },
+                            { nome: 'Tríceps Testa', series: '3', reps: '12', peso: '' },
+                            { nome: 'Tríceps Pulley', series: '3', reps: '15', peso: '' }
+                        ]
                     },
                     {
                         letra: 'B',
                         nome: 'Treino B - Costas e Bíceps',
                         descricao: '5 exercícios • Puxadas e rosca',
                         classe: 'treino-b',
-                        exercicios: ['Puxada Frontal', 'Remada Curvada', 'Pullover', 'Rosca Direta', 'Rosca Martelo']
+                        exercicios: [
+                            { nome: 'Puxada Frontal', series: '3', reps: '12', peso: '' },
+                            { nome: 'Remada Curvada', series: '3', reps: '10', peso: '' },
+                            { nome: 'Pullover', series: '3', reps: '15', peso: '' },
+                            { nome: 'Rosca Direta', series: '3', reps: '12', peso: '' },
+                            { nome: 'Rosca Martelo', series: '3', reps: '15', peso: '' }
+                        ]
                     },
                     {
                         letra: 'C',
                         nome: 'Treino C - Pernas',
                         descricao: '6 exercícios • Membros inferiores',
                         classe: 'treino-c',
-                        exercicios: ['Agachamento Livre', 'Leg Press', 'Stiff', 'Extensora', 'Flexora', 'Panturrilha']
+                        exercicios: [
+                            { nome: 'Agachamento Livre', series: '4', reps: '10', peso: '' },
+                            { nome: 'Leg Press', series: '3', reps: '15', peso: '' },
+                            { nome: 'Stiff', series: '3', reps: '12', peso: '' },
+                            { nome: 'Extensora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Flexora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Panturrilha', series: '4', reps: '20', peso: '' }
+                        ]
                     },
                     {
                         letra: 'D',
                         nome: 'Treino D - Ombros e Abs',
                         descricao: '5 exercícios • Delts e core',
                         classe: 'treino-d',
-                        exercicios: ['Desenvolvimento', 'Elevação Lateral', 'Elevação Posterior', 'Encolhimento', 'Abdominal']
+                        exercicios: [
+                            { nome: 'Desenvolvimento', series: '3', reps: '12', peso: '' },
+                            { nome: 'Elevação Lateral', series: '3', reps: '15', peso: '' },
+                            { nome: 'Elevação Posterior', series: '3', reps: '15', peso: '' },
+                            { nome: 'Encolhimento', series: '3', reps: '12', peso: '' },
+                            { nome: 'Abdominal', series: '3', reps: '20', peso: '' }
+                        ]
                     },
                     {
                         letra: 'E',
                         nome: 'Treino E - Cardio e Funcional',
                         descricao: '5 exercícios • Condicionamento',
                         classe: 'treino-e',
-                        exercicios: ['Esteira', 'Bike Ergométrica', 'Elíptico', 'Corda Naval', 'Burpees']
+                        exercicios: [
+                            { nome: 'Esteira', series: '1', reps: '20', peso: 'min' },
+                            { nome: 'Bike Ergométrica', series: '1', reps: '15', peso: 'min' },
+                            { nome: 'Elíptico', series: '1', reps: '10', peso: 'min' },
+                            { nome: 'Corda Naval', series: '3', reps: '30', peso: 'seg' },
+                            { nome: 'Burpees', series: '3', reps: '15', peso: '' }
+                        ]
                     }
                 ]
             },
@@ -1482,14 +1513,24 @@
                         nome: 'Adaptação A - Full Body',
                         descricao: '4 exercícios • Corpo todo',
                         classe: 'treino-a',
-                        exercicios: ['Agachamento', 'Flexão', 'Remada', 'Prancha']
+                        exercicios: [
+                            { nome: 'Agachamento', series: '3', reps: '15', peso: '' },
+                            { nome: 'Flexão', series: '3', reps: '12', peso: '' },
+                            { nome: 'Remada', series: '3', reps: '12', peso: '' },
+                            { nome: 'Prancha', series: '3', reps: '30', peso: 'seg' }
+                        ]
                     },
                     {
                         letra: 'B',
                         nome: 'Adaptação B - Resistência',
                         descricao: '4 exercícios • Condicionamento',
                         classe: 'treino-b',
-                        exercicios: ['Leg Press', 'Puxada', 'Desenvolvimento', 'Bicicleta']
+                        exercicios: [
+                            { nome: 'Leg Press', series: '3', reps: '15', peso: '' },
+                            { nome: 'Puxada', series: '3', reps: '12', peso: '' },
+                            { nome: 'Desenvolvimento', series: '3', reps: '12', peso: '' },
+                            { nome: 'Bicicleta', series: '1', reps: '15', peso: 'min' }
+                        ]
                     }
                 ]
             },
@@ -1502,14 +1543,27 @@
                         nome: 'Treino A - Superior',
                         descricao: '6 exercícios • Membros superiores',
                         classe: 'treino-a',
-                        exercicios: ['Supino Reto', 'Puxada Frontal', 'Desenvolvimento', 'Rosca Direta', 'Tríceps Testa', 'Elevação Lateral']
+                        exercicios: [
+                            { nome: 'Supino Reto', series: '4', reps: '8', peso: '' },
+                            { nome: 'Puxada Frontal', series: '4', reps: '8', peso: '' },
+                            { nome: 'Desenvolvimento', series: '3', reps: '10', peso: '' },
+                            { nome: 'Rosca Direta', series: '3', reps: '12', peso: '' },
+                            { nome: 'Tríceps Testa', series: '3', reps: '12', peso: '' },
+                            { nome: 'Elevação Lateral', series: '3', reps: '15', peso: '' }
+                        ]
                     },
                     {
                         letra: 'B',
                         nome: 'Treino B - Inferior',
                         descricao: '5 exercícios • Membros inferiores',
                         classe: 'treino-b',
-                        exercicios: ['Agachamento', 'Stiff', 'Leg Press', 'Extensora', 'Panturrilha']
+                        exercicios: [
+                            { nome: 'Agachamento', series: '4', reps: '10', peso: '' },
+                            { nome: 'Stiff', series: '3', reps: '12', peso: '' },
+                            { nome: 'Leg Press', series: '3', reps: '15', peso: '' },
+                            { nome: 'Extensora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Panturrilha', series: '4', reps: '20', peso: '' }
+                        ]
                     }
                 ]
             },
@@ -1522,28 +1576,57 @@
                         nome: 'Treino A - Peito/Tríceps Power',
                         descricao: '6 exercícios • Alta intensidade',
                         classe: 'treino-a',
-                        exercicios: ['Supino Reto', 'Supino Inclinado', 'Crucifixo Inclinado', 'Paralelas', 'Tríceps Testa', 'Tríceps Corda']
+                        exercicios: [
+                            { nome: 'Supino Reto', series: '4', reps: '6', peso: '' },
+                            { nome: 'Supino Inclinado', series: '4', reps: '8', peso: '' },
+                            { nome: 'Crucifixo Inclinado', series: '3', reps: '12', peso: '' },
+                            { nome: 'Paralelas', series: '3', reps: '10', peso: '' },
+                            { nome: 'Tríceps Testa', series: '3', reps: '12', peso: '' },
+                            { nome: 'Tríceps Corda', series: '3', reps: '15', peso: '' }
+                        ]
                     },
                     {
                         letra: 'B',
                         nome: 'Treino B - Costas/Bíceps Power',
                         descricao: '6 exercícios • Força máxima',
                         classe: 'treino-b',
-                        exercicios: ['Barra Fixa', 'Remada Curvada', 'Puxada Frontal', 'Remada Unilateral', 'Rosca Direta', 'Rosca 21']
+                        exercicios: [
+                            { nome: 'Barra Fixa', series: '4', reps: '8', peso: '' },
+                            { nome: 'Remada Curvada', series: '4', reps: '8', peso: '' },
+                            { nome: 'Puxada Frontal', series: '3', reps: '10', peso: '' },
+                            { nome: 'Remada Unilateral', series: '3', reps: '12', peso: '' },
+                            { nome: 'Rosca Direta', series: '3', reps: '12', peso: '' },
+                            { nome: 'Rosca 21', series: '3', reps: '21', peso: '' }
+                        ]
                     },
                     {
                         letra: 'C',
                         nome: 'Treino C - Pernas Power',
                         descricao: '7 exercícios • Força e massa',
                         classe: 'treino-c',
-                        exercicios: ['Agachamento Livre', 'Leg Press', 'Stiff', 'Afundo', 'Extensora', 'Flexora', 'Panturrilha']
+                        exercicios: [
+                            { nome: 'Agachamento Livre', series: '4', reps: '8', peso: '' },
+                            { nome: 'Leg Press', series: '4', reps: '12', peso: '' },
+                            { nome: 'Stiff', series: '3', reps: '10', peso: '' },
+                            { nome: 'Afundo', series: '3', reps: '12', peso: '' },
+                            { nome: 'Extensora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Flexora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Panturrilha', series: '4', reps: '20', peso: '' }
+                        ]
                     },
                     {
                         letra: 'D',
                         nome: 'Treino D - Ombros/Core Power',
                         descricao: '6 exercícios • Delts e abdomen',
                         classe: 'treino-d',
-                        exercicios: ['Desenvolvimento', 'Elevação Lateral', 'Elevação Frontal', 'Elevação Posterior', 'Encolhimento', 'Prancha']
+                        exercicios: [
+                            { nome: 'Desenvolvimento', series: '3', reps: '10', peso: '' },
+                            { nome: 'Elevação Lateral', series: '3', reps: '15', peso: '' },
+                            { nome: 'Elevação Frontal', series: '3', reps: '15', peso: '' },
+                            { nome: 'Elevação Posterior', series: '3', reps: '15', peso: '' },
+                            { nome: 'Encolhimento', series: '3', reps: '12', peso: '' },
+                            { nome: 'Prancha', series: '3', reps: '60', peso: 'seg' }
+                        ]
                     }
                 ]
             },
@@ -1764,6 +1847,12 @@
             
             let exerciciosHtml = '';
             treino.exercicios.forEach((exercicio, i) => {
+                // Pegar nome do exercício (compatibilidade com ambos formatos)
+                const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
+                const seriesPadrao = typeof exercicio === 'object' ? exercicio.series : '';
+                const repsPadrao = typeof exercicio === 'object' ? exercicio.reps : '';
+                const pesoPadrao = typeof exercicio === 'object' ? exercicio.peso : '';
+                
                 // Carregar dados salvos
                 const pesoKey = `peso_${tipoAtualIndex}_${index}_${i}`;
                 const seriesKey = `series_${tipoAtualIndex}_${index}_${i}`;
@@ -1771,16 +1860,16 @@
                 const notasKey = `notas_${tipoAtualIndex}_${index}_${i}`;
                 const concluidoKey = `concluido_${tipoAtualIndex}_${index}_${i}`;
                 
-                const pesoSalvo = localStorage.getItem(pesoKey) || '';
-                const seriesSalvas = localStorage.getItem(seriesKey) || '';
-                const repsSalvas = localStorage.getItem(repsKey) || '';
+                const pesoSalvo = localStorage.getItem(pesoKey) || pesoPadrao;
+                const seriesSalvas = localStorage.getItem(seriesKey) || seriesPadrao;
+                const repsSalvas = localStorage.getItem(repsKey) || repsPadrao;
                 const notasSalvas = localStorage.getItem(notasKey) || '';
                 const concluido = localStorage.getItem(concluidoKey) === 'true';
                 
                 exerciciosHtml += `
                     <div class="exercicio-item ${concluido ? 'concluido' : ''}" data-exercicio="${i}">
                         <div class="exercicio-info">
-                            <div class="exercicio-nome">${exercicio}</div>
+                            <div class="exercicio-nome">${nomeExercicio}</div>
                             <textarea class="exercicio-notas" 
                                       placeholder="Anotações (ex: aumentar peso...)"
                                       onchange="salvarNotas(${tipoAtualIndex}, ${index}, ${i}, this.value)">${notasSalvas}</textarea>
@@ -1797,12 +1886,12 @@
                                    placeholder="Reps" 
                                    value="${repsSalvas}"
                                    onchange="salvarSeriesReps(${tipoAtualIndex}, ${index}, ${i}, document.querySelector('[data-exercicio=\\"${i}\\"] .series-input').value, this.value)">
-                            <input type="number" 
+                            <input type="text" 
                                    class="peso-input" 
                                    placeholder="Peso" 
                                    value="${pesoSalvo}"
                                    onchange="salvarPeso(${tipoAtualIndex}, ${index}, ${i}, this.value)">
-                            <span style="color: #ccc;">kg</span>
+                            <span style="color: #ccc;">${pesoPadrao === 'min' ? 'min' : pesoPadrao === 'seg' ? 'seg' : 'kg'}</span>
                             <button class="btn-concluir ${concluido ? 'concluido' : ''}" 
                                     onclick="toggleConcluido(${tipoAtualIndex}, ${index}, ${i}, this)">
                                 ${concluido ? '✓ Feito' : 'Concluir'}
@@ -1891,14 +1980,37 @@
             
             let exerciciosHtml = '';
             treino.exercicios.forEach((exercicio, i) => {
+                const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
+                const seriesPadrao = typeof exercicio === 'object' ? exercicio.series : '';
+                const repsPadrao = typeof exercicio === 'object' ? exercicio.reps : '';
+                const pesoPadrao = typeof exercicio === 'object' ? exercicio.peso : '';
+                
                 exerciciosHtml += `
                     <div class="exercicio-edit">
                         <button class="btn-remove" onclick="removerExercicio(${i})">×</button>
                         <input type="text" 
-                               value="${exercicio}" 
+                               value="${nomeExercicio}" 
                                class="exercicio-input"
                                data-index="${i}"
                                placeholder="Nome do exercício">
+                        <input type="number" 
+                               value="${seriesPadrao}" 
+                               class="series-default-input"
+                               data-index="${i}"
+                               placeholder="Séries"
+                               style="width: 60px;">
+                        <input type="number" 
+                               value="${repsPadrao}" 
+                               class="reps-default-input"
+                               data-index="${i}"
+                               placeholder="Reps"
+                               style="width: 60px;">
+                        <input type="text" 
+                               value="${pesoPadrao}" 
+                               class="peso-default-input"
+                               data-index="${i}"
+                               placeholder="kg/min/seg"
+                               style="width: 80px;">
                     </div>
                 `;
             });
@@ -1921,7 +2033,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Exercícios:</label>
+                        <label>Exercícios (Nome • Séries • Reps • Peso/Unidade):</label>
                         <div class="exercicios-lista" id="exercicios-lista">
                             ${exerciciosHtml}
                             <button class="btn-add" onclick="adicionarExercicio()">➕ Adicionar Exercício</button>
@@ -1974,6 +2086,24 @@
                        class="exercicio-input"
                        data-index="${novoIndex}"
                        placeholder="Nome do exercício">
+                <input type="number" 
+                       value="3" 
+                       class="series-default-input"
+                       data-index="${novoIndex}"
+                       placeholder="Séries"
+                       style="width: 60px;">
+                <input type="number" 
+                       value="12" 
+                       class="reps-default-input"
+                       data-index="${novoIndex}"
+                       placeholder="Reps"
+                       style="width: 60px;">
+                <input type="text" 
+                       value="" 
+                       class="peso-default-input"
+                       data-index="${novoIndex}"
+                       placeholder="kg/min/seg"
+                       style="width: 80px;">
             `;
             
             // Inserir antes do botão "Adicionar"
@@ -1997,14 +2127,23 @@
                 return;
             }
             
-            // Coletar exercícios
-            const inputs = document.querySelectorAll('.exercicio-input');
+            // Coletar exercícios com dados completos
+            const exerciciosEditados = document.querySelectorAll('.exercicio-edit');
             const novosExercicios = [];
             
-            inputs.forEach(input => {
-                const valor = input.value.trim();
-                if (valor) {
-                    novosExercicios.push(valor);
+            exerciciosEditados.forEach(exercicioDiv => {
+                const nome = exercicioDiv.querySelector('.exercicio-input').value.trim();
+                const series = exercicioDiv.querySelector('.series-default-input').value.trim();
+                const reps = exercicioDiv.querySelector('.reps-default-input').value.trim();
+                const peso = exercicioDiv.querySelector('.peso-default-input').value.trim();
+                
+                if (nome) {
+                    novosExercicios.push({
+                        nome: nome,
+                        series: series || '3',
+                        reps: reps || '12',
+                        peso: peso || ''
+                    });
                 }
             });
             
@@ -2282,6 +2421,7 @@
             
             // Coletar dados dos exercícios
             treino.exercicios.forEach((exercicio, i) => {
+                const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
                 const peso = localStorage.getItem(`peso_${tipoIndex}_${treinoIndex}_${i}`) || '';
                 const series = localStorage.getItem(`series_${tipoIndex}_${treinoIndex}_${i}`) || '';
                 const reps = localStorage.getItem(`reps_${tipoIndex}_${treinoIndex}_${i}`) || '';
@@ -2289,7 +2429,7 @@
                 
                 if (concluido) {
                     registroTreino.exercicios.push({
-                        nome: exercicio,
+                        nome: nomeExercicio,
                         peso: peso,
                         series: series,
                         reps: reps
