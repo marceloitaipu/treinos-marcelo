@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tm-v2';
+const CACHE_NAME = 'tm-v3-optimized';
 const OFFLINE_ASSETS = [
   './',
   './index.html',
