@@ -1249,9 +1249,54 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
-            padding: 10px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .exercicio-preview-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .exercicio-nome-preview {
+            font-size: 1em;
+            font-weight: 500;
+            color: white;
+            line-height: 1.3;
+        }
+        
+        .exercicio-dados-preview {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .exercicio-dados-preview span {
+            font-size: 0.85em;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #ccc;
+            white-space: nowrap;
+        }
+        
+        .badge-series {
+            background: rgba(76, 175, 80, 0.3) !important;
+            color: #a8e6cf !important;
+        }
+        
+        .badge-reps {
+            background: rgba(33, 150, 243, 0.3) !important;
+            color: #7fdbda !important;
+        }
+        
+        .badge-peso {
+            background: rgba(255, 193, 7, 0.3) !important;
+            color: #ffd93d !important;
         }
 
         .exercicio-input {
@@ -1743,6 +1788,24 @@
             .form-group label {
                 margin-bottom: 6px;
                 font-size: 0.9em;
+            }
+            
+            .exercicio-edit {
+                padding: 10px !important;
+                gap: 8px !important;
+            }
+            
+            .exercicio-nome-preview {
+                font-size: 0.95em !important;
+            }
+            
+            .exercicio-dados-preview {
+                gap: 6px !important;
+            }
+            
+            .exercicio-dados-preview span {
+                font-size: 0.75em !important;
+                padding: 3px 8px !important;
             }
             
             .form-group input,
@@ -3504,10 +3567,18 @@
                 const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
                 const exercicioDiv = exercicios[exercicioIndex];
                 
+                // Atualizar campos hidden
                 exercicioDiv.querySelector('.exercicio-input').value = nome;
                 exercicioDiv.querySelector('.series-default-input').value = series;
                 exercicioDiv.querySelector('.reps-default-input').value = reps;
                 exercicioDiv.querySelector('.peso-default-input').value = peso;
+                
+                // Atualizar preview visual
+                exercicioDiv.querySelector('.exercicio-nome-preview').textContent = nome;
+                const badges = exercicioDiv.querySelectorAll('.exercicio-dados-preview span');
+                badges[0].textContent = `${series} séries`;
+                badges[1].textContent = `${reps} reps`;
+                badges[2].textContent = peso || 'kg';
                 
                 mostrarNotificacao('✏️ Exercício editado com sucesso!');
             } else {
@@ -3519,33 +3590,18 @@
                 novoExercicio.className = 'exercicio-edit';
                 novoExercicio.innerHTML = `
                     <button class="btn-remove" onclick="removerExercicio(${novoIndex})">×</button>
-                    <input type="text" 
-                           value="${nome}" 
-                           class="exercicio-input"
-                           data-index="${novoIndex}"
-                           placeholder="Nome do exercício"
-                           readonly>
-                    <input type="number" 
-                           value="${series}" 
-                           class="series-default-input"
-                           data-index="${novoIndex}"
-                           placeholder="Séries"
-                           style="width: 60px;"
-                           readonly>
-                    <input type="number" 
-                           value="${reps}" 
-                           class="reps-default-input"
-                           data-index="${novoIndex}"
-                           placeholder="Reps"
-                           style="width: 60px;"
-                           readonly>
-                    <input type="text" 
-                           value="${peso}" 
-                           class="peso-default-input"
-                           data-index="${novoIndex}"
-                           placeholder="kg/min/seg"
-                           style="width: 80px;"
-                           readonly>
+                    <div class="exercicio-preview-item">
+                        <div class="exercicio-nome-preview" data-index="${novoIndex}">${nome}</div>
+                        <div class="exercicio-dados-preview">
+                            <span class="badge-series">${series} séries</span>
+                            <span class="badge-reps">${reps} reps</span>
+                            <span class="badge-peso">${peso || 'kg'}</span>
+                        </div>
+                    </div>
+                    <input type="hidden" class="exercicio-input" value="${nome}" data-index="${novoIndex}">
+                    <input type="hidden" class="series-default-input" value="${series}" data-index="${novoIndex}">
+                    <input type="hidden" class="reps-default-input" value="${reps}" data-index="${novoIndex}">
+                    <input type="hidden" class="peso-default-input" value="${peso}" data-index="${novoIndex}">
                     <button class="btn-edit-exercicio" onclick="abrirModalCadastroExercicio(${novoIndex})" title="Editar exercício">✏️</button>
                 `;
                 
