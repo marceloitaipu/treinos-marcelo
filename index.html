@@ -2672,8 +2672,9 @@
                             ${seriesInputsHtml}
                         </div>
                         <div class="exercicio-footer">
-                            <button class="btn-timer-small" onclick="iniciarTimer(90)" title="Timer 1:30min">⏱️ 1:30</button>
+                            <button class="btn-timer-small" onclick="iniciarTimer(obterTempoDescanso())" title="Timer padrão">⏱️ Padrão</button>
                             <button class="btn-timer-small" onclick="iniciarTimer(60)" title="Timer 1min">⏱️ 1:00</button>
+                            <button class="btn-timer-small" onclick="iniciarTimer(90)" title="Timer 1:30min">⏱️ 1:30</button>
                             <button class="btn-timer-small" onclick="iniciarTimer(120)" title="Timer 2min">⏱️ 2:00</button>
                         </div>
                     </div>
@@ -3659,12 +3660,15 @@
                     
                     <div class="form-group">
                         <label>🎯 Tempo padrão de descanso:</label>
-                        <select id="tempo-descanso" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: white;">
+                        <select id="tempo-descanso" onchange="salvarTempoDescanso()" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: white;">
                             <option value="60">1 minuto</option>
-                            <option value="90" selected>1:30 minutos</option>
+                            <option value="90">1:30 minutos</option>
                             <option value="120">2 minutos</option>
                             <option value="180">3 minutos</option>
                         </select>
+                        <small style="color: rgba(76, 175, 80, 0.8); font-size: 0.75em; margin-top: 5px; display: block;">
+                            ✅ Salvo automaticamente ao alterar
+                        </small>
                     </div>
                     
                     <div class="form-group">
@@ -3705,6 +3709,32 @@
             `;
             
             document.body.appendChild(modal);
+            
+            // Carregar tempo de descanso salvo
+            const tempoSalvo = localStorage.getItem('tempoDescanso') || '90';
+            const selectTempo = document.getElementById('tempo-descanso');
+            if (selectTempo) {
+                selectTempo.value = tempoSalvo;
+            }
+        }
+
+        function salvarTempoDescanso() {
+            const selectTempo = document.getElementById('tempo-descanso');
+            const tempo = selectTempo.value;
+            localStorage.setItem('tempoDescanso', tempo);
+            
+            const tempoFormatado = {
+                '60': '1:00',
+                '90': '1:30',
+                '120': '2:00',
+                '180': '3:00'
+            }[tempo] || tempo + 's';
+            
+            mostrarNotificacao(`⏱️ Tempo padrão atualizado: ${tempoFormatado}`, 'success');
+        }
+
+        function obterTempoDescanso() {
+            return parseInt(localStorage.getItem('tempoDescanso') || '90');
         }
 
         function exportarDados() {
