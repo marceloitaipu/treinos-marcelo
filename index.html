@@ -79,11 +79,34 @@
 
         .tipo-selector {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 10px;
-            justify-content: center;
+            justify-content: flex-start;
             margin-bottom: 20px;
             position: relative;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 5px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tipo-selector::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .tipo-selector::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .tipo-selector::-webkit-scrollbar-thumb {
+            background: rgba(255, 193, 7, 0.5);
+            border-radius: 10px;
+        }
+
+        .tipo-selector::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 193, 7, 0.7);
         }
 
         .tipo-btn {
@@ -99,6 +122,8 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tipo-btn:hover {
@@ -931,26 +956,166 @@
             background: rgba(76, 175, 80, 1);
         }
 
+        /* ========================================
+           OTIMIZAÇÕES POCO X7 PRO (393px width)
+           ======================================== */
+        
         @media (max-width: 393px) {
+            /* Modal otimizado */
+            .modal-content {
+                max-width: 95vw !important;
+                margin: 10px auto !important;
+                padding: 15px !important;
+                max-height: 90vh !important;
+                overflow-y: auto !important;
+            }
+            
             .modal-exercicio {
                 max-width: 95% !important;
                 margin: 20px auto;
             }
             
-            .form-row {
-                grid-template-columns: 1fr;
+            /* Header ajustado */
+            .header h1 {
+                font-size: 1.8em !important;
+            }
+            
+            .header p {
+                font-size: 0.85em !important;
+            }
+            
+            /* Seletor de tipos responsivo */
+            .tipo-selector {
+                gap: 8px !important;
+                padding: 0 5px !important;
+            }
+            
+            .tipo-btn-container {
+                flex: 0 0 auto;
+            }
+            
+            .tipo-btn {
+                padding: 10px 16px !important;
+                font-size: 0.85em !important;
+                white-space: nowrap;
+            }
+            
+            .btn-add-tipo {
+                padding: 10px 16px !important;
+                font-size: 0.85em !important;
+            }
+            
+            /* Grid de treinos */
+            .treinos-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+                padding: 0 5px !important;
+            }
+            
+            /* Cards de treino */
+            .treino-card {
+                padding: 15px !important;
+            }
+            
+            .treino-header {
+                flex-direction: row;
                 gap: 10px;
             }
             
+            .treino-letra {
+                width: 50px !important;
+                height: 50px !important;
+                font-size: 1.5em !important;
+            }
+            
+            /* Formulários */
+            .form-row {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                font-size: 16px !important; /* Evita zoom no iOS */
+            }
+            
+            /* Preview de exercício */
             .preview-exercicio {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 5px;
             }
             
+            /* Botões de edição */
             .btn-edit-exercicio {
                 padding: 6px;
                 font-size: 0.8em;
+            }
+            
+            /* Séries individuais */
+            .serie-row {
+                flex-wrap: wrap;
+                gap: 6px !important;
+                padding: 10px 8px !important;
+            }
+            
+            .serie-label {
+                min-width: 30px !important;
+            }
+            
+            .reps-serie-input,
+            .peso-serie-input {
+                flex: 1;
+                min-width: 60px;
+            }
+            
+            /* Footer de exercícios com timers */
+            .exercicio-footer {
+                flex-wrap: wrap;
+                gap: 5px !important;
+            }
+            
+            .btn-timer-small {
+                flex: 1;
+                min-width: 70px;
+                padding: 8px 10px !important;
+                font-size: 0.7em !important;
+            }
+            
+            /* Dropdown menus */
+            .dropdown-menu-tipo,
+            .dropdown-menu-treino {
+                min-width: 140px !important;
+                right: 0 !important;
+            }
+            
+            /* Histórico de séries */
+            .series-historico-container {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Botões de ação */
+            .form-actions {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            
+            .btn-salvar,
+            .btn-cancelar,
+            .btn-fechar {
+                width: 100% !important;
+            }
+            
+            /* Exercícios list */
+            .exercicios-lista {
+                max-height: 250px !important;
+            }
+            
+            /* Input de nome de treino ao criar novo tipo */
+            #novoTipoNome {
+                font-size: 16px !important;
+                width: 100% !important;
             }
         }
 
@@ -3420,21 +3585,70 @@
 
         // NOVA: Criar novo tipo de treino
         function criarNovoTipoTreino() {
-            const novoNome = prompt('📝 Digite o nome do novo tipo de treino:', 'Meu Treino Personalizado');
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
             
-            if (!novoNome || novoNome.trim() === '') {
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 90vw; width: 400px;">
+                    <div class="modal-header">
+                        <h2>➕ Novo Tipo de Treino</h2>
+                        <p>Crie um novo tipo personalizado</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="novoTipoNome">📝 Nome do Tipo:</label>
+                        <input type="text" 
+                               id="novoTipoNome" 
+                               placeholder="Ex: ABCD Avançado, Push Pull Legs..."
+                               maxlength="50"
+                               onkeypress="if(event.key==='Enter') confirmarCriarTipo()"
+                               style="width: 100%; padding: 12px; font-size: 16px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 193, 7, 0.5);">
+                        <small style="color: rgba(255,255,255,0.6); font-size: 0.8em; margin-top: 5px; display: block;">
+                            💡 Escolha um nome descritivo (máximo 50 caracteres)
+                        </small>
+                    </div>
+                    
+                    <div class="form-actions" style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn-salvar" onclick="confirmarCriarTipo()" style="flex: 1;">
+                            ✅ Criar Tipo
+                        </button>
+                        <button class="btn-cancelar" onclick="fecharModal()" style="flex: 1;">
+                            ❌ Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Focar no input
+            setTimeout(() => {
+                const input = document.getElementById('novoTipoNome');
+                if (input) {
+                    input.focus();
+                    input.select();
+                }
+            }, 100);
+        }
+
+        function confirmarCriarTipo() {
+            const input = document.getElementById('novoTipoNome');
+            const novoNome = input ? input.value.trim() : '';
+            
+            if (!novoNome || novoNome === '') {
                 mostrarNotificacao('⚠️ Nome é obrigatório!', 'warning');
+                input.focus();
                 return;
             }
             
-            if (novoNome.trim().length > 50) {
+            if (novoNome.length > 50) {
                 mostrarNotificacao('⚠️ Nome muito longo! Máximo 50 caracteres.', 'warning');
                 return;
             }
             
             // Criar estrutura básica do novo tipo
             const novoTipo = {
-                nome: novoNome.trim(),
+                nome: novoNome,
                 treinos: [
                     {
                         letra: 'A',
@@ -3452,8 +3666,9 @@
             // Salvar e recarregar
             if (salvarTreinosComValidacao()) {
                 tipoAtualIndex = todosTipos.length - 1; // Selecionar o novo tipo
+                fecharModal();
                 carregarTreinos();
-                mostrarNotificacao(`✅ Tipo "${novoNome}" criado com sucesso!`);
+                mostrarNotificacao(`✅ Tipo "${novoNome}" criado com sucesso!`, 'success');
                 console.log('➕ Novo tipo criado:', novoTipo);
                 
                 // Abrir modal de edição automaticamente
