@@ -85,11 +85,12 @@
             margin-bottom: 20px;
             position: relative;
             overflow-x: auto;
-            overflow-y: hidden;
+            overflow-y: visible;
             padding: 10px 10px 14px 10px;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             scroll-snap-type: x proximity;
+            z-index: 50;
         }
 
         .tipo-selector::-webkit-scrollbar {
@@ -144,6 +145,7 @@
         .tipo-btn-container {
             position: relative;
             display: inline-block;
+            z-index: 100;
         }
 
         .btn-menu-tipo {
@@ -164,7 +166,7 @@
             justify-content: center;
             transition: all 0.3s ease;
             box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            z-index: 2000;
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.2);
             line-height: 1;
@@ -186,7 +188,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
             min-width: 160px;
-            z-index: 2000;
+            z-index: 3000;
             display: none;
             overflow: hidden;
             animation: fadeInDown 0.2s ease;
@@ -1016,6 +1018,7 @@
             
             .tipo-btn-container {
                 flex: 0 0 auto;
+                z-index: 100 !important;
             }
             
             .tipo-btn {
@@ -1034,6 +1037,7 @@
                 background: rgba(255, 255, 255, 0.4) !important;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
                 border: 2px solid rgba(255, 255, 255, 0.3) !important;
+                z-index: 2000 !important;
             }
             
             .btn-menu-tipo:active {
@@ -1042,7 +1046,7 @@
             }
             
             .dropdown-menu-tipo {
-                z-index: 2000 !important;
+                z-index: 3000 !important;
                 min-width: 150px !important;
                 top: 28px !important;
             }
