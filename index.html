@@ -325,16 +325,14 @@
 
         .treino-actions {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             margin-top: auto;
             position: relative;
-            align-items: center;
-            justify-content: space-between;
+            align-items: stretch;
         }
 
         .btn-iniciar {
-            flex: 1;
-            max-width: calc(100% - 52px);
+            flex: 1 1 auto;
             padding: 14px 12px;
             border: none;
             border-radius: 10px;
@@ -346,6 +344,7 @@
             transition: all 0.3s ease;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            min-width: 0;
         }
 
         .btn-iniciar:hover {
@@ -354,7 +353,7 @@
         }
 
         .btn-menu-treino {
-            padding: 10px 14px;
+            padding: 0;
             border: none;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.2);
@@ -366,10 +365,10 @@
             -webkit-tap-highlight-color: transparent;
             position: relative;
             z-index: 10;
-            flex-shrink: 0;
-            min-width: 44px;
+            flex: 0 0 44px;
             width: 44px;
-            height: 44px;
+            height: auto;
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1133,24 +1132,26 @@
             
             /* Botão de menu sempre visível */
             .btn-menu-treino {
+                flex: 0 0 44px !important;
                 width: 44px !important;
-                height: 44px !important;
-                min-width: 44px !important;
+                height: auto !important;
+                min-height: 44px !important;
                 flex-shrink: 0 !important;
                 font-size: 1.6em !important;
                 padding: 0 !important;
-                background: rgba(255, 255, 255, 0.25) !important;
+                background: rgba(255, 255, 255, 0.3) !important;
             }
             
             .btn-iniciar {
-                max-width: calc(100% - 52px) !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
                 font-size: 0.9em !important;
                 padding: 12px 10px !important;
             }
             
             .treino-actions {
-                gap: 8px !important;
-                justify-content: space-between !important;
+                gap: 10px !important;
+                align-items: stretch !important;
             }
             
             /* Histórico de séries */
