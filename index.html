@@ -1953,7 +1953,7 @@
             if (typeof exercicio === 'object') {
                 return exercicio.nome && 
                        exercicio.nome.trim() !== '' && 
-                       exercicio.nome.length <= 30;
+                       exercicio.nome.length <= 100;
             }
             return false;
         }
@@ -3129,8 +3129,8 @@
                                    id="exercicio-nome-input" 
                                    value="${dadosExercicio.nome}"
                                    placeholder="Ex: Supino Reto com Barra"
-                                   maxlength="30">
-                            <small id="contador-caracteres">0/30 caracteres</small>
+                                   maxlength="100">
+                            <small id="contador-caracteres">0/100 caracteres</small>
                         </div>
                         
                         <div class="form-row">
@@ -3212,8 +3212,8 @@
                 // Atualizar contador de caracteres
                 if (contadorCaracteres) {
                     const count = nomeInput.value.length;
-                    contadorCaracteres.textContent = `${count}/30 caracteres`;
-                    contadorCaracteres.style.color = count > 25 ? '#ff6b6b' : '#ccc';
+                    contadorCaracteres.textContent = `${count}/100 caracteres`;
+                    contadorCaracteres.style.color = count > 90 ? '#ff6b6b' : '#ccc';
                 }
             }
             
@@ -3237,8 +3237,8 @@
                 return;
             }
             
-            if (nome.length > 30) {
-                mostrarNotificacao('⚠️ Nome muito longo! Máximo 30 caracteres.', 'warning');
+            if (nome.length > 100) {
+                mostrarNotificacao('⚠️ Nome muito longo! Máximo 100 caracteres.', 'warning');
                 return;
             }
             
