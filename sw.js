@@ -1,5 +1,5 @@
 // Versão com timestamp para forçar atualização
-const CACHE_VERSION = 'v3.4-force';
+const CACHE_VERSION = 'v3.4.1';
 const CACHE_NAME = `tm-${CACHE_VERSION}-${Date.now()}`;
 const urlsToCache = [
     '/',
@@ -12,7 +12,9 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('📦 Cacheando assets:', urlsToCache);
-      return cache.addAll(urlsToCache);
+      // Adicionar query string para forçar atualização
+      const urlsComTimestamp = urlsToCache.map(url => `${url}?v=${Date.now()}`);
+      return cache.addAll(urlsComTimestamp);
     })
   );
   // Forçar ativação imediata
@@ -38,13 +40,13 @@ self.addEventListener('fetch', (event) => {
   // Only handle GET
   if (req.method !== 'GET') return;
 
-  // Estratégia: Network First para HTML, Cache First para assets
+  // Estratégia: Network First para HTML (sempre busca do servidor)
   const isHTMLRequest = req.url.includes('.html') || req.url.endsWith('/');
   
   if (isHTMLRequest) {
-    // Network First - sempre busca a versão mais recente
+    // Network First com cache-bypass - sempre busca a versão mais recente
     event.respondWith(
-      fetch(req)
+      fetch(req, { cache: 'no-cache' })
         .then((res) => {
           const copy = res.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
