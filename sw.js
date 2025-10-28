@@ -1,5 +1,5 @@
 // Versão com timestamp para forçar atualização
-const CACHE_VERSION = 'v3.1';
+const CACHE_VERSION = 'v3.2';
 const CACHE_NAME = `tm-${CACHE_VERSION}-${Date.now()}`;
 const OFFLINE_ASSETS = [
   './',
