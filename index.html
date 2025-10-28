@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
-    <title>💪 Treinos Marcelo - v3.3 UI Clean</title>
-    <meta name="description" content="App de treinos com interface limpa e menus dropdown - v3.3 UI Clean">
+    <title>💪 Treinos Marcelo - v3.4 Carga por Série</title>
+    <meta name="description" content="App de treinos com carga progressiva individual por série - v3.4">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -444,9 +444,6 @@
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             transition: all 0.3s ease;
         }
 
@@ -455,28 +452,150 @@
             border: 1px solid rgba(76, 175, 80, 0.5);
         }
 
-        .exercicio-info {
-            flex: 0 0 auto;
-            margin-right: 12px;
+        .exercicio-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .exercicio-nome {
             font-weight: bold;
-            margin-bottom: 0;
-            font-size: 0.95em;
-            line-height: 1.2;
-            max-width: 140px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            font-size: 1em;
+            color: #fff;
+            flex: 1;
         }
 
-        .exercicio-nome:hover {
-            overflow: visible;
-            white-space: normal;
-            word-wrap: break-word;
-            position: relative;
-            z-index: 10;
+        .exercicio-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .series-config-input {
+            width: 45px;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .series-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .serie-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .serie-row:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .serie-label {
+            font-weight: bold;
+            color: #ffd93d;
+            font-size: 0.85em;
+            min-width: 25px;
+        }
+
+        .reps-serie-input {
+            width: 50px;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        .peso-serie-input {
+            width: 60px;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 107, 107, 0.2);
+            color: white;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .peso-serie-input:focus {
+            background: rgba(255, 107, 107, 0.3);
+            outline: none;
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-check-serie {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(76, 175, 80, 0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .btn-check-serie.concluida {
+            background: rgba(76, 175, 80, 0.8);
+            color: #fff;
+        }
+
+        .btn-check-serie:hover {
+            transform: scale(1.1);
+            background: rgba(76, 175, 80, 0.4);
+        }
+
+        .exercicio-footer {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .btn-timer-small {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            cursor: pointer;
+            font-size: 0.75em;
+            transition: all 0.2s ease;
+            font-weight: bold;
+        }
+
+        .btn-timer-small:hover {
+            background: rgba(255, 193, 7, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .exercicio-info {
+            flex: 0 0 auto;
+            margin-right: 12px;
         }
 
         .exercicio-controls {
@@ -510,7 +629,10 @@
 
         .peso-input::placeholder,
         .series-input::placeholder,
-        .reps-input::placeholder {
+        .reps-input::placeholder,
+        .series-config-input::placeholder,
+        .reps-serie-input::placeholder,
+        .peso-serie-input::placeholder {
             color: rgba(255, 255, 255, 0.7);
         }
 
@@ -711,6 +833,60 @@
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+
+        .series-historico-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .serie-historico-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .sugestao-mini {
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            padding: 6px 8px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            font-size: 0.8em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-aplicar-mini {
+            background: rgba(76, 175, 80, 0.7);
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .btn-aplicar-mini:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+
+        .historico-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .historico-mini-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .historico-item {
@@ -2138,7 +2314,7 @@
             }
             
             carregarTreinos();
-            console.log('✅ App v3.3 UI Clean carregado com sucesso!');
+            console.log('✅ App v3.4 Carga por Série carregado com sucesso!');
             
             // Verificar atualizações do Service Worker
             verificarAtualizacoes();
@@ -2407,50 +2583,74 @@
             treino.exercicios.forEach((exercicio, i) => {
                 // Pegar nome do exercício (compatibilidade com ambos formatos)
                 const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
-                const seriesPadrao = typeof exercicio === 'object' ? exercicio.series : '';
-                const repsPadrao = typeof exercicio === 'object' ? exercicio.reps : '';
+                const seriesPadrao = typeof exercicio === 'object' ? exercicio.series : '3';
+                const repsPadrao = typeof exercicio === 'object' ? exercicio.reps : '12';
                 const pesoPadrao = typeof exercicio === 'object' ? exercicio.peso : '';
                 
                 // Carregar dados salvos
-                const pesoKey = `peso_${tipoAtualIndex}_${index}_${i}`;
                 const seriesKey = `series_${tipoAtualIndex}_${index}_${i}`;
                 const repsKey = `reps_${tipoAtualIndex}_${index}_${i}`;
                 const concluidoKey = `concluido_${tipoAtualIndex}_${index}_${i}`;
                 
-                const pesoSalvo = localStorage.getItem(pesoKey) || pesoPadrao;
-                const seriesSalvas = localStorage.getItem(seriesKey) || seriesPadrao;
+                const seriesSalvas = parseInt(localStorage.getItem(seriesKey) || seriesPadrao) || 3;
                 const repsSalvas = localStorage.getItem(repsKey) || repsPadrao;
                 const concluido = localStorage.getItem(concluidoKey) === 'true';
                 
+                // Gerar inputs de peso para cada série
+                let seriesInputsHtml = '';
+                for (let s = 1; s <= seriesSalvas; s++) {
+                    const pesoSerieKey = `peso_${tipoAtualIndex}_${index}_${i}_serie${s}`;
+                    const pesoSerieSalvo = localStorage.getItem(pesoSerieKey) || pesoPadrao;
+                    
+                    seriesInputsHtml += `
+                        <div class="serie-row">
+                            <span class="serie-label">${s}ª</span>
+                            <input type="number" 
+                                   class="reps-serie-input" 
+                                   placeholder="Reps"
+                                   value="${repsSalvas}"
+                                   onchange="salvarRepsSerie(${tipoAtualIndex}, ${index}, ${i}, ${s}, this.value)">
+                            <span style="color: #ccc; font-size: 0.8em;">×</span>
+                            <input type="text" 
+                                   class="peso-serie-input" 
+                                   placeholder="kg"
+                                   value="${pesoSerieSalvo}"
+                                   onchange="salvarPesoSerie(${tipoAtualIndex}, ${index}, ${i}, ${s}, this.value)">
+                            <span style="color: #ccc;">kg</span>
+                            <button class="btn-check-serie" onclick="toggleSerieConcluida(${tipoAtualIndex}, ${index}, ${i}, ${s}, this)" title="Marcar série como concluída">
+                                ${localStorage.getItem(`serie_concluida_${tipoAtualIndex}_${index}_${i}_${s}`) === 'true' ? '✓' : '○'}
+                            </button>
+                        </div>
+                    `;
+                }
+                
                 exerciciosHtml += `
                     <div class="exercicio-item ${concluido ? 'concluido' : ''}" data-exercicio="${i}">
-                        <div class="exercicio-info">
+                        <div class="exercicio-header-row">
                             <div class="exercicio-nome">${nomeExercicio}</div>
+                            <div class="exercicio-header-actions">
+                                <input type="number" 
+                                       class="series-config-input" 
+                                       placeholder="Séries" 
+                                       value="${seriesSalvas}"
+                                       min="1"
+                                       max="10"
+                                       onchange="atualizarNumeroSeries(${tipoAtualIndex}, ${index}, ${i}, this.value)"
+                                       title="Número de séries">
+                                <button class="btn-timer" onclick="mostrarHistoricoCarga(${tipoAtualIndex}, ${index}, ${i})" title="Histórico de carga">📊</button>
+                                <button class="btn-concluir ${concluido ? 'concluido' : ''}" 
+                                        onclick="toggleConcluido(${tipoAtualIndex}, ${index}, ${i}, this)">
+                                    ${concluido ? '✓' : '○'}
+                                </button>
+                            </div>
                         </div>
-                        <div class="exercicio-controls">
-                            <input type="number" 
-                                   class="series-input" 
-                                   placeholder="Séries" 
-                                   value="${seriesSalvas}"
-                                   onchange="salvarSeriesReps(${tipoAtualIndex}, ${index}, ${i}, this.value, document.querySelector('[data-exercicio=\\"${i}\\"] .reps-input').value)">
-                            <span style="color: #ccc; font-size: 0.8em;">x</span>
-                            <input type="number" 
-                                   class="reps-input" 
-                                   placeholder="Reps" 
-                                   value="${repsSalvas}"
-                                   onchange="salvarSeriesReps(${tipoAtualIndex}, ${index}, ${i}, document.querySelector('[data-exercicio=\\"${i}\\"] .series-input').value, this.value)">
-                            <input type="text" 
-                                   class="peso-input" 
-                                   placeholder="Peso" 
-                                   value="${pesoSalvo}"
-                                   onchange="salvarPeso(${tipoAtualIndex}, ${index}, ${i}, this.value)">
-                            <span style="color: #ccc;">${pesoPadrao === 'min' ? 'min' : pesoPadrao === 'seg' ? 'seg' : 'kg'}</span>
-                            <button class="btn-timer" onclick="mostrarHistoricoCarga(${tipoAtualIndex}, ${index}, ${i})" title="Histórico de carga">📊</button>
-                            <button class="btn-concluir ${concluido ? 'concluido' : ''}" 
-                                    onclick="toggleConcluido(${tipoAtualIndex}, ${index}, ${i}, this)">
-                                ${concluido ? '✓ Feito' : 'Concluir'}
-                            </button>
-                            <button class="btn-timer" onclick="iniciarTimer(90)" title="Timer 1:30min">⏱️</button>
+                        <div class="series-container">
+                            ${seriesInputsHtml}
+                        </div>
+                        <div class="exercicio-footer">
+                            <button class="btn-timer-small" onclick="iniciarTimer(90)" title="Timer 1:30min">⏱️ 1:30</button>
+                            <button class="btn-timer-small" onclick="iniciarTimer(60)" title="Timer 1min">⏱️ 1:00</button>
+                            <button class="btn-timer-small" onclick="iniciarTimer(120)" title="Timer 2min">⏱️ 2:00</button>
                         </div>
                     </div>
                 `;
@@ -2482,6 +2682,96 @@
             salvarHistoricoCarga(tipoIndex, treinoIndex, exercicioIndex, peso);
             
             console.log(`💾 Peso salvo: ${peso}kg para exercício ${exercicioIndex}`);
+        }
+
+        // NOVAS FUNÇÕES: Carga Progressiva por Série
+        function salvarPesoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, peso) {
+            const key = `peso_${tipoIndex}_${treinoIndex}_${exercicioIndex}_serie${serieNum}`;
+            localStorage.setItem(key, peso);
+            
+            // Salvar no histórico
+            salvarHistoricoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, peso);
+            
+            console.log(`💾 Peso série ${serieNum} salvo: ${peso}kg`);
+            mostrarNotificacao(`💪 ${peso}kg salvo na ${serieNum}ª série`, 'success');
+        }
+
+        function salvarRepsSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, reps) {
+            const key = `reps_${tipoIndex}_${treinoIndex}_${exercicioIndex}_serie${serieNum}`;
+            localStorage.setItem(key, reps);
+            console.log(`💾 Reps série ${serieNum} salvo: ${reps}`);
+        }
+
+        function toggleSerieConcluida(tipoIndex, treinoIndex, exercicioIndex, serieNum, button) {
+            const key = `serie_concluida_${tipoIndex}_${treinoIndex}_${exercicioIndex}_${serieNum}`;
+            const isConcluida = localStorage.getItem(key) === 'true';
+            
+            localStorage.setItem(key, !isConcluida);
+            button.textContent = !isConcluida ? '✓' : '○';
+            button.classList.toggle('concluida');
+            
+            // Verificar se todas as séries foram concluídas
+            verificarExercicioConcluido(tipoIndex, treinoIndex, exercicioIndex);
+            
+            if (!isConcluida) {
+                mostrarNotificacao(`✅ ${serieNum}ª série concluída!`, 'success');
+            }
+        }
+
+        function verificarExercicioConcluido(tipoIndex, treinoIndex, exercicioIndex) {
+            const seriesKey = `series_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const numSeries = parseInt(localStorage.getItem(seriesKey) || 3);
+            
+            let todasConcluidas = true;
+            for (let s = 1; s <= numSeries; s++) {
+                const key = `serie_concluida_${tipoIndex}_${treinoIndex}_${exercicioIndex}_${s}`;
+                if (localStorage.getItem(key) !== 'true') {
+                    todasConcluidas = false;
+                    break;
+                }
+            }
+            
+            // Atualizar status do exercício completo
+            const concluidoKey = `concluido_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            localStorage.setItem(concluidoKey, todasConcluidas);
+            
+            if (todasConcluidas) {
+                mostrarNotificacao('🎉 Exercício completo!', 'success');
+            }
+        }
+
+        function atualizarNumeroSeries(tipoIndex, treinoIndex, exercicioIndex, numSeries) {
+            numSeries = parseInt(numSeries) || 3;
+            if (numSeries < 1) numSeries = 1;
+            if (numSeries > 10) numSeries = 10;
+            
+            const key = `series_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            localStorage.setItem(key, numSeries);
+            
+            // Recarregar o modal
+            fecharModal();
+            setTimeout(() => iniciarTreino(treinoIndex), 100);
+            
+            mostrarNotificacao(`📝 Número de séries atualizado: ${numSeries}`, 'info');
+        }
+
+        function salvarHistoricoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, peso) {
+            if (!peso || peso.trim() === '') return;
+            
+            const key = `historico_serie_${tipoIndex}_${treinoIndex}_${exercicioIndex}_${serieNum}`;
+            let historico = JSON.parse(localStorage.getItem(key) || '[]');
+            
+            historico.push({
+                data: new Date().toISOString(),
+                peso: parseFloat(peso) || 0
+            });
+            
+            // Manter últimos 10 registros
+            if (historico.length > 10) {
+                historico = historico.slice(-10);
+            }
+            
+            localStorage.setItem(key, JSON.stringify(historico));
         }
 
         // NOVA: Sistema de Carga Progressiva
@@ -2537,60 +2827,66 @@
         }
 
         function mostrarHistoricoCarga(tipoIndex, treinoIndex, exercicioIndex) {
-            const historico = obterHistoricoCarga(tipoIndex, treinoIndex, exercicioIndex);
             const treino = todosTipos[tipoIndex].treinos[treinoIndex];
             const exercicio = treino.exercicios[exercicioIndex];
             const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
             
-            let historicoHtml = '';
+            const seriesKey = `series_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const numSeries = parseInt(localStorage.getItem(seriesKey) || 3);
             
-            if (historico.length === 0) {
-                historicoHtml = '<p style="text-align: center; color: #ccc; padding: 10px; font-size: 0.85em;">📊 Nenhum histórico ainda. Comece a registrar suas cargas!</p>';
-            } else {
-                const analise = calcularSugestaoCarga(historico);
+            let seriesHistoricoHtml = '';
+            
+            // Mostrar histórico de cada série
+            for (let s = 1; s <= numSeries; s++) {
+                const key = `historico_serie_${tipoIndex}_${treinoIndex}_${exercicioIndex}_${s}`;
+                const historico = JSON.parse(localStorage.getItem(key) || '[]');
                 
-                // Mostrar sugestão
-                if (analise) {
-                    historicoHtml += `
-                        <div class="sugestao-carga">
-                            <div style="flex: 1;">
-                                <strong>💡 Sugestão:</strong> ${analise.sugestao}kg
-                                <br><small>${analise.tendencia} | Média: ${analise.media}kg</small>
+                let serieHtml = `<div class="serie-historico-card">
+                    <h4 style="color: #ffd93d; margin-bottom: 8px;">${s}ª Série</h4>`;
+                
+                if (historico.length === 0) {
+                    serieHtml += '<p style="color: #999; font-size: 0.8em;">Sem histórico</p>';
+                } else {
+                    const ultimos = historico.slice(-3).reverse();
+                    const ultimo = historico[historico.length - 1];
+                    const sugestao = Math.ceil((ultimo.peso * 1.025) / 2.5) * 2.5;
+                    
+                    serieHtml += `<div class="sugestao-mini">
+                        <span>💡 Sugestão: <strong>${sugestao.toFixed(1)}kg</strong></span>
+                        <button class="btn-aplicar-mini" onclick="aplicarSugestaoSerie(${tipoIndex}, ${treinoIndex}, ${exercicioIndex}, ${s}, ${sugestao})">
+                            ↑
+                        </button>
+                    </div>`;
+                    
+                    serieHtml += '<div class="historico-mini">';
+                    ultimos.forEach(registro => {
+                        const data = new Date(registro.data);
+                        const dataFormatada = data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+                        serieHtml += `
+                            <div class="historico-mini-item">
+                                <span style="font-size: 0.75em; color: #999;">${dataFormatada}</span>
+                                <strong style="color: #4caf50;">${registro.peso}kg</strong>
                             </div>
-                            <button class="btn-usar-sugestao" onclick="aplicarSugestaoCarga(${tipoIndex}, ${treinoIndex}, ${exercicioIndex}, ${analise.sugestao})">
-                                Usar
-                            </button>
-                        </div>
-                    `;
+                        `;
+                    });
+                    serieHtml += '</div>';
                 }
                 
-                // Mostrar histórico (últimos 5)
-                historicoHtml += '<div style="margin-top: 10px;">';
-                historico.slice(-5).reverse().forEach(registro => {
-                    const data = new Date(registro.data);
-                    const dataFormatada = data.toLocaleDateString('pt-BR');
-                    historicoHtml += `
-                        <div class="historico-item">
-                            <span>${dataFormatada}</span>
-                            <strong style="color: #4caf50;">${registro.peso}kg</strong>
-                        </div>
-                    `;
-                });
-                historicoHtml += '</div>';
+                serieHtml += '</div>';
+                seriesHistoricoHtml += serieHtml;
             }
             
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.innerHTML = `
-                <div class="modal-content" style="max-width: 400px;">
+                <div class="modal-content" style="max-width: 500px; max-height: 85vh; overflow-y: auto;">
                     <div class="modal-header">
-                        <h2>📊 Carga Progressiva</h2>
+                        <h2>📊 Histórico de Cargas</h2>
                         <p>${nomeExercicio}</p>
                     </div>
                     
-                    <div class="carga-progressiva">
-                        <h5>📈 Histórico de Cargas</h5>
-                        ${historicoHtml}
+                    <div class="series-historico-container">
+                        ${seriesHistoricoHtml}
                     </div>
                     
                     <div class="form-actions" style="margin-top: 20px;">
@@ -2602,21 +2898,14 @@
             document.body.appendChild(modal);
         }
 
-        function aplicarSugestaoCarga(tipoIndex, treinoIndex, exercicioIndex, sugestao) {
-            const modal = document.querySelector('.modal-overlay');
-            const exercicioItem = document.querySelector(`[data-exercicio="${exercicioIndex}"]`);
-            
-            if (exercicioItem) {
-                const pesoInput = exercicioItem.querySelector('.peso-input');
-                if (pesoInput) {
-                    pesoInput.value = sugestao;
-                    salvarPeso(tipoIndex, treinoIndex, exercicioIndex, sugestao);
-                    mostrarNotificacao(`✅ Carga de ${sugestao}kg aplicada!`);
-                }
-            }
-            
-            if (modal && document.body.contains(modal)) {
-                document.body.removeChild(modal);
+        function aplicarSugestaoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, sugestao) {
+            // Encontrar o input da série e aplicar o valor
+            const inputs = document.querySelectorAll(`[data-exercicio="${exercicioIndex}"] .peso-serie-input`);
+            if (inputs[serieNum - 1]) {
+                inputs[serieNum - 1].value = sugestao.toFixed(1);
+                salvarPesoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, sugestao.toFixed(1));
+                fecharModal();
+                mostrarNotificacao(`✅ ${sugestao.toFixed(1)}kg aplicado na ${serieNum}ª série!`, 'success');
             }
         }
 
