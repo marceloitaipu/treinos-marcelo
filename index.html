@@ -6,8 +6,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>💪 Treinos Marcelo - v3.5.0 Menu Fix</title>
-    <meta name="description" content="App de treinos com carga progressiva individual por série - v3.5.0 - Build: 20251028">
+    <title>💪 Treinos Marcelo - v3.5.1 Preview</title>
+    <meta name="description" content="App de treinos com carga progressiva individual por série - v3.5.1 - Build: 20251028">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2234,7 +2234,7 @@
     <div class="header">
         <h1>💪 Treinos Marcelo</h1>
         <p>Controle completo de treinos com peso e edição personalizada</p>
-        <span style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7em; color: rgba(255,255,255,0.5); font-weight: bold; background: rgba(76,175,80,0.3); padding: 2px 8px; border-radius: 10px;">v3.5.0</span>
+        <span style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7em; color: rgba(255,255,255,0.5); font-weight: bold; background: rgba(76,175,80,0.3); padding: 2px 8px; border-radius: 10px;">v3.5.1</span>
         <button class="btn-config" onclick="abrirConfiguracoes()" title="Configurações">⚙️</button>
     </div>
 
@@ -2634,7 +2634,7 @@
             }
             
             carregarTreinos();
-            console.log('✅ App v3.5.0 Menu Fix carregado com sucesso!');
+            console.log('✅ App v3.5.1 Preview Visual carregado com sucesso!');
             
             // Verificar atualizações do Service Worker
             verificarAtualizacoes();
@@ -4112,7 +4112,7 @@
             
             const a = document.createElement('a');
             a.href = url;
-            a.download = `treinos-marcelo-v3.5.0-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `treinos-marcelo-v3.5.1-backup-${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -4335,6 +4335,6 @@
         });
       }
     </script>
-    <!-- Build: v3.5.0 - 2025-10-28 21:00 UTC - Menu Fix Update -->
+    <!-- Build: v3.5.1 - 2025-10-28 22:00 UTC - Preview Visual Update -->
 </body>
 </html>
