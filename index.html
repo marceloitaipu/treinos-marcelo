@@ -3598,7 +3598,7 @@
                 novoExercicio.className = 'exercicio-edit';
                 novoExercicio.innerHTML = `
                     <button class="btn-remove" onclick="removerExercicio(${novoIndex})">×</button>
-                    <div class="exercicio-preview-item" onclick="abrirModalCadastroExercicio(${novoIndex})" style="cursor: pointer;">
+                    <div class="exercicio-preview-item" style="cursor: pointer;">
                         <div class="exercicio-nome-preview" data-index="${novoIndex}">${nome}</div>
                         <div class="exercicio-dados-preview">
                             <span class="badge-series">${series} séries</span>
@@ -3610,8 +3610,25 @@
                     <input type="hidden" class="series-default-input" value="${series}" data-index="${novoIndex}">
                     <input type="hidden" class="reps-default-input" value="${reps}" data-index="${novoIndex}">
                     <input type="hidden" class="peso-default-input" value="${peso}" data-index="${novoIndex}">
-                    <button class="btn-edit-exercicio" onclick="event.stopPropagation(); abrirModalCadastroExercicio(${novoIndex})" title="Editar exercício">✏️</button>
+                    <button class="btn-edit-exercicio" title="Editar exercício">✏️</button>
                 `;
+                
+                // Adicionar event listeners após criar o elemento
+                const previewItem = novoExercicio.querySelector('.exercicio-preview-item');
+                const btnEdit = novoExercicio.querySelector('.btn-edit-exercicio');
+                
+                previewItem.addEventListener('click', function() {
+                    const exerciciosAtuais = document.querySelectorAll('.exercicio-edit');
+                    const index = Array.from(exerciciosAtuais).indexOf(novoExercicio);
+                    abrirModalCadastroExercicio(index);
+                });
+                
+                btnEdit.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const exerciciosAtuais = document.querySelectorAll('.exercicio-edit');
+                    const index = Array.from(exerciciosAtuais).indexOf(novoExercicio);
+                    abrirModalCadastroExercicio(index);
+                });
                 
                 // Inserir antes do botão "Adicionar"
                 const btnAdd = exerciciosLista.querySelector('.btn-add');
