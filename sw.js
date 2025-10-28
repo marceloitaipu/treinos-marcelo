@@ -1,5 +1,5 @@
 // Versão com timestamp para forçar atualização
-const CACHE_VERSION = 'v3.4';
+const CACHE_VERSION = 'v3.4-force';
 const CACHE_NAME = `tm-${CACHE_VERSION}-${Date.now()}`;
 const urlsToCache = [
     '/',
@@ -11,8 +11,8 @@ self.addEventListener('install', (event) => {
   console.log('🔄 Service Worker instalando versão:', CACHE_VERSION);
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('📦 Cacheando assets:', OFFLINE_ASSETS);
-      return cache.addAll(OFFLINE_ASSETS);
+      console.log('📦 Cacheando assets:', urlsToCache);
+      return cache.addAll(urlsToCache);
     })
   );
   // Forçar ativação imediata

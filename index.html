@@ -1915,6 +1915,7 @@
     <div class="header">
         <h1>💪 Treinos Marcelo</h1>
         <p>Controle completo de treinos com peso e edição personalizada</p>
+        <span style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7em; color: rgba(255,255,255,0.5);">v3.4</span>
         <button class="btn-config" onclick="abrirConfiguracoes()" title="Configurações">⚙️</button>
     </div>
 
@@ -2323,21 +2324,41 @@
         // Verificar atualizações do Service Worker
         function verificarAtualizacoes() {
             if ('serviceWorker' in navigator) {
+                // Forçar atualização a cada 5 segundos
+                setInterval(() => {
+                    navigator.serviceWorker.getRegistration().then(reg => {
+                        if (reg) {
+                            reg.update();
+                        }
+                    });
+                }, 5000);
+
                 navigator.serviceWorker.getRegistration().then(reg => {
                     if (reg) {
                         reg.update();
+                        
+                        // Detectar nova versão e recarregar automaticamente
                         reg.addEventListener('updatefound', () => {
                             const newWorker = reg.installing;
+                            console.log('🔄 Nova versão detectada, instalando...');
+                            
                             newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'activated') {
-                                    console.log('🔄 Nova versão disponível!');
-                                    if (confirm('🆕 Nova versão disponível! Recarregar agora?')) {
-                                        window.location.reload();
-                                    }
+                                if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+                                    console.log('✅ Nova versão ativada! Recarregando...');
+                                    // Recarregar automaticamente após 1 segundo
+                                    setTimeout(() => {
+                                        window.location.reload(true);
+                                    }, 1000);
                                 }
                             });
                         });
                     }
+                });
+
+                // Listener para quando o SW assumir controle
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    console.log('🔄 Service Worker atualizado! Recarregando página...');
+                    window.location.reload(true);
                 });
             }
         }
