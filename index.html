@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
-    <title>💪 Treinos Marcelo - v3.0 Otimizado</title>
-    <meta name="description" content="App completo de treinos otimizado para Poco X7 Pro - v3.0 Advanced">
+    <title>💪 Treinos Marcelo - v3.1 Enhanced</title>
+    <meta name="description" content="App completo de treinos otimizado para Poco X7 Pro - v3.1 com validação e cache busting">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1538,6 +1538,56 @@
         // Estado da aplicação
         let tipoAtualIndex = 0;
 
+        // Validação de Schema de Dados
+        function validarTreino(treino) {
+            if (!treino || typeof treino !== 'object') return false;
+            if (!treino.letra || !treino.nome || !treino.descricao || !treino.classe) return false;
+            if (!Array.isArray(treino.exercicios) || treino.exercicios.length === 0) return false;
+            return true;
+        }
+
+        function validarTipoTreino(tipo) {
+            if (!tipo || typeof tipo !== 'object') return false;
+            if (!tipo.nome || !Array.isArray(tipo.treinos)) return false;
+            return tipo.treinos.every(validarTreino);
+        }
+
+        function validarExercicio(exercicio) {
+            if (typeof exercicio === 'string') return exercicio.trim() !== '';
+            if (typeof exercicio === 'object') {
+                return exercicio.nome && 
+                       exercicio.nome.trim() !== '' && 
+                       exercicio.nome.length <= 30;
+            }
+            return false;
+        }
+
+        // Salvar com validação
+        function salvarTreinosComValidacao() {
+            try {
+                // Validar antes de salvar
+                if (!Array.isArray(todosTipos)) {
+                    console.error('❌ Erro: todosTipos não é um array');
+                    return false;
+                }
+                
+                const dadosValidos = todosTipos.every(validarTipoTreino);
+                if (!dadosValidos) {
+                    console.error('❌ Erro: Dados de treino inválidos');
+                    mostrarNotificacao('⚠️ Erro ao salvar: dados inválidos', 'warning');
+                    return false;
+                }
+
+                localStorage.setItem('marceloTreinos', JSON.stringify(todosTipos));
+                console.log('✅ Treinos salvos com sucesso');
+                return true;
+            } catch (error) {
+                console.error('❌ Erro ao salvar treinos:', error);
+                mostrarNotificacao('❌ Erro ao salvar dados!', 'warning');
+                return false;
+            }
+        }
+
         // Dados dos treinos - Array com 7 tipos
         const todosTipos = [
             // 0 - ABCD Clássico (5 treinos)
@@ -1837,30 +1887,68 @@
 
         // Inicializar app
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('💪 Inicializando Treinos Marcelo com 7 tipos...');
+            console.log('💪 Inicializando Treinos Marcelo v3.1 com validação...');
             
-            // Carregar treinos salvos do localStorage
+            // Carregar treinos salvos do localStorage com validação
             const treinosSalvos = localStorage.getItem('marceloTreinos');
             if (treinosSalvos) {
                 try {
                     const treinosCarregados = JSON.parse(treinosSalvos);
                     if (Array.isArray(treinosCarregados) && treinosCarregados.length >= 6) {
-                        // Substituir apenas se tiver 6 ou mais tipos válidos
+                        // Validar cada tipo antes de carregar
+                        let dadosValidos = true;
                         treinosCarregados.forEach((tipo, index) => {
                             if (tipo && tipo.treinos && Array.isArray(tipo.treinos) && index < todosTipos.length) {
-                                todosTipos[index] = tipo;
+                                if (validarTipoTreino(tipo)) {
+                                    todosTipos[index] = tipo;
+                                } else {
+                                    console.warn(`⚠️ Tipo ${index} inválido, usando padrão`);
+                                    dadosValidos = false;
+                                }
                             }
                         });
-                        console.log('✅ Treinos personalizados carregados do localStorage');
+                        
+                        if (dadosValidos) {
+                            console.log('✅ Treinos personalizados carregados e validados');
+                        } else {
+                            console.log('⚠️ Alguns dados inválidos foram ignorados');
+                            mostrarNotificacao('⚠️ Alguns dados foram restaurados aos padrões', 'warning');
+                        }
                     }
                 } catch (error) {
-                    console.log('⚠️ Erro ao carregar treinos salvos, usando padrões');
+                    console.error('⚠️ Erro ao carregar treinos salvos:', error);
+                    mostrarNotificacao('⚠️ Erro ao carregar dados salvos, usando padrões', 'warning');
                 }
             }
             
             carregarTreinos();
-            console.log('✅ App carregado!');
+            console.log('✅ App v3.1 carregado com sucesso!');
+            
+            // Verificar atualizações do Service Worker
+            verificarAtualizacoes();
         });
+
+        // Verificar atualizações do Service Worker
+        function verificarAtualizacoes() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(reg => {
+                    if (reg) {
+                        reg.update();
+                        reg.addEventListener('updatefound', () => {
+                            const newWorker = reg.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'activated') {
+                                    console.log('🔄 Nova versão disponível!');
+                                    if (confirm('🆕 Nova versão disponível! Recarregar agora?')) {
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+        }
 
         function carregarTreinos() {
             console.log('🔄 Carregando treinos...');
@@ -2158,18 +2246,23 @@
             const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
             
             if (exercicios.length > 1) {
-                exercicios[exercicioIndex].remove();
+                const nomeExercicio = exercicios[exercicioIndex].querySelector('.exercicio-input').value;
                 
-                // Reindexar os exercícios restantes
-                const exerciciosRestantes = exerciciosLista.querySelectorAll('.exercicio-edit');
-                exerciciosRestantes.forEach((ex, i) => {
-                    const input = ex.querySelector('.exercicio-input');
-                    input.setAttribute('data-index', i);
-                    const btnRemove = ex.querySelector('.btn-remove');
-                    btnRemove.setAttribute('onclick', `removerExercicio(${i})`);
-                });
-                
-                mostrarNotificacao('🗑️ Exercício removido!', 'warning');
+                // Confirmação antes de remover
+                if (confirm(`🗑️ Remover exercício "${nomeExercicio}"?\n\nEsta ação não pode ser desfeita.`)) {
+                    exercicios[exercicioIndex].remove();
+                    
+                    // Reindexar os exercícios restantes
+                    const exerciciosRestantes = exerciciosLista.querySelectorAll('.exercicio-edit');
+                    exerciciosRestantes.forEach((ex, i) => {
+                        const input = ex.querySelector('.exercicio-input');
+                        input.setAttribute('data-index', i);
+                        const btnRemove = ex.querySelector('.btn-remove');
+                        btnRemove.setAttribute('onclick', `removerExercicio(${i})`);
+                    });
+                    
+                    mostrarNotificacao('🗑️ Exercício removido!', 'warning');
+                }
             } else {
                 mostrarNotificacao('⚠️ Não é possível remover o último exercício!', 'warning');
             }
@@ -2447,18 +2540,20 @@
             todosTipos[tipoAtualIndex].treinos[index].descricao = novaDescricao;
             todosTipos[tipoAtualIndex].treinos[index].exercicios = novosExercicios;
             
-            // Salvar no localStorage
-            localStorage.setItem('marceloTreinos', JSON.stringify(todosTipos));
-            
-            fecharModal();
-            carregarTreinos();
-            mostrarNotificacao('💾 Treino salvo com sucesso!');
-            
-            console.log('💾 Treino editado e salvo:', {
-                nome: novoNome,
-                descricao: novaDescricao,
-                exercicios: novosExercicios
-            });
+            // Salvar no localStorage com validação
+            if (salvarTreinosComValidacao()) {
+                fecharModal();
+                carregarTreinos();
+                mostrarNotificacao('💾 Treino salvo com sucesso!');
+                
+                console.log('💾 Treino editado e salvo:', {
+                    nome: novoNome,
+                    descricao: novaDescricao,
+                    exercicios: novosExercicios
+                });
+            } else {
+                mostrarNotificacao('❌ Erro ao salvar treino!', 'warning');
+            }
         }
 
         function fecharModal() {
@@ -2490,11 +2585,19 @@
             const novoNome = prompt('📝 Digite o novo nome para este tipo de treino:', tipo.nome);
             
             if (novoNome && novoNome.trim() !== '' && novoNome.trim() !== tipo.nome) {
+                // Validar comprimento
+                if (novoNome.trim().length > 50) {
+                    mostrarNotificacao('⚠️ Nome muito longo! Máximo 50 caracteres.', 'warning');
+                    return;
+                }
+                
                 todosTipos[index].nome = novoNome.trim();
-                localStorage.setItem('marceloTreinos', JSON.stringify(todosTipos));
-                carregarTreinos();
-                mostrarNotificacao(`✅ Nome alterado para: ${novoNome}`);
-                console.log(`✏️ Tipo ${index} renomeado para: ${novoNome}`);
+                
+                if (salvarTreinosComValidacao()) {
+                    carregarTreinos();
+                    mostrarNotificacao(`✅ Nome alterado para: ${novoNome}`);
+                    console.log(`✏️ Tipo ${index} renomeado para: ${novoNome}`);
+                }
             }
         }
 
@@ -2689,9 +2792,29 @@
         }
 
         function limparTodosDados() {
-            if (confirm('⚠️ Tem certeza que deseja limpar TODOS os dados? Esta ação não pode ser desfeita!')) {
-                localStorage.clear();
-                location.reload();
+            const confirmacao1 = confirm('⚠️ ATENÇÃO: Deseja limpar TODOS os dados do app?\n\nIsso inclui:\n• Todos os treinos personalizados\n• Histórico de treinos\n• Pesos e repetições salvos\n• Configurações\n\nEsta ação é IRREVERSÍVEL!\n\nTem certeza?');
+            
+            if (confirmacao1) {
+                const confirmacao2 = prompt('⚠️ CONFIRMAÇÃO FINAL\n\nDigite "APAGAR TUDO" (sem aspas) para confirmar a exclusão permanente de todos os dados:');
+                
+                if (confirmacao2 === 'APAGAR TUDO') {
+                    console.log('🗑️ Limpando todos os dados...');
+                    localStorage.clear();
+                    
+                    // Limpar cache do service worker também
+                    if ('serviceWorker' in navigator) {
+                        caches.keys().then(names => {
+                            names.forEach(name => caches.delete(name));
+                        });
+                    }
+                    
+                    mostrarNotificacao('🗑️ Todos os dados foram apagados!', 'warning');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    mostrarNotificacao('❌ Exclusão cancelada', 'warning');
+                }
             }
         }
 
@@ -2808,10 +2931,11 @@
         }
 
         function limparHistorico() {
-            if (confirm('⚠️ Deseja limpar todo o histórico de treinos?')) {
+            if (confirm('⚠️ ATENÇÃO: Deseja limpar TODO o histórico de treinos?\n\nEsta ação é IRREVERSÍVEL e apagará todos os registros de treinos concluídos.\n\nTem certeza?')) {
                 localStorage.removeItem('historicoTreinos');
                 fecharModal();
-                mostrarNotificacao('🗑️ Histórico limpo!');
+                mostrarNotificacao('🗑️ Histórico limpo com sucesso!');
+                console.log('🗑️ Histórico de treinos apagado');
             }
         }
 
@@ -2823,8 +2947,9 @@
             localStorage.setItem(keyR, reps);
         }
 
-        // Debug - Versão v3.0 Otimizada para Poco X7 Pro
-        console.log('💪 Treinos Marcelo v3.0 - Otimizado para Poco X7 Pro!');
+        // Debug - Versão v3.1 Enhanced
+        console.log('💪 Treinos Marcelo v3.1 Enhanced - Otimizado para Poco X7 Pro!');
+        console.log('✨ Novidades v3.1: Validação de dados, cache busting, confirmações de segurança');
         console.log('📊 Tipos disponíveis:', todosTipos.map(t => t.nome));
     </script>
 <script>
