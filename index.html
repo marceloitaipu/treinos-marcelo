@@ -148,42 +148,43 @@
 
         .btn-menu-tipo {
             position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 24px;
-            height: 24px;
+            top: -10px;
+            right: -10px;
+            width: 28px;
+            height: 28px;
             border: none;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.25);
             color: white;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.2em;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            z-index: 10;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn-menu-tipo:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.35);
             transform: scale(1.1);
         }
 
         .dropdown-menu-tipo {
             position: absolute;
-            top: 20px;
+            top: 25px;
             right: -8px;
             background: rgba(30, 30, 30, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 150px;
-            z-index: 100;
+            min-width: 160px;
+            z-index: 2000;
             display: none;
             overflow: hidden;
             animation: fadeInDown 0.2s ease;
@@ -1022,6 +1023,22 @@
                 padding: 10px 16px !important;
                 font-size: 0.85em !important;
                 white-space: nowrap;
+            }
+            
+            /* Botão de menu do tipo maior no mobile */
+            .btn-menu-tipo {
+                width: 32px !important;
+                height: 32px !important;
+                top: -12px !important;
+                right: -12px !important;
+                font-size: 1.4em !important;
+                background: rgba(255, 255, 255, 0.3) !important;
+                box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5) !important;
+            }
+            
+            .dropdown-menu-tipo {
+                z-index: 2000 !important;
+                min-width: 150px !important;
             }
             
             .btn-add-tipo {
@@ -2617,21 +2634,18 @@
                     dropdown.classList.remove('show');
                 };
                 
-                // Opção Deletar (só aparece se tiver mais de 1 tipo)
-                if (todosTipos.length > 1) {
-                    const deleteItem = document.createElement('button');
-                    deleteItem.className = 'dropdown-item-tipo delete';
-                    deleteItem.innerHTML = '🗑️ Deletar Tipo';
-                    deleteItem.onclick = (e) => {
-                        e.stopPropagation();
-                        deletarTipoTreino(index);
-                        dropdown.classList.remove('show');
-                    };
-                    dropdown.appendChild(editItem);
-                    dropdown.appendChild(deleteItem);
-                } else {
-                    dropdown.appendChild(editItem);
-                }
+                // Opção Deletar
+                const deleteItem = document.createElement('button');
+                deleteItem.className = 'dropdown-item-tipo delete';
+                deleteItem.innerHTML = '🗑️ Deletar Tipo';
+                deleteItem.onclick = (e) => {
+                    e.stopPropagation();
+                    deletarTipoTreino(index);
+                    dropdown.classList.remove('show');
+                };
+                
+                dropdown.appendChild(editItem);
+                dropdown.appendChild(deleteItem);
                 
                 container.appendChild(btn);
                 container.appendChild(menuBtn);
