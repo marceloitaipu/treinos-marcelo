@@ -328,10 +328,12 @@
             margin-top: auto;
             position: relative;
             align-items: center;
+            justify-content: space-between;
         }
 
         .btn-iniciar {
             flex: 1;
+            max-width: calc(100% - 52px);
             padding: 14px 12px;
             border: none;
             border-radius: 10px;
@@ -351,12 +353,12 @@
         }
 
         .btn-menu-treino {
-            padding: 8px 12px;
+            padding: 10px 14px;
             border: none;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
-            font-size: 1.4em;
+            font-size: 1.6em;
             cursor: pointer;
             transition: all 0.3s ease;
             user-select: none;
@@ -365,13 +367,16 @@
             z-index: 10;
             flex-shrink: 0;
             min-width: 44px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
+            line-height: 1;
         }
 
         .btn-menu-treino:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
         }
 
@@ -1107,6 +1112,28 @@
             .dropdown-menu-treino {
                 min-width: 140px !important;
                 right: 0 !important;
+            }
+            
+            /* Botão de menu sempre visível */
+            .btn-menu-treino {
+                width: 44px !important;
+                height: 44px !important;
+                min-width: 44px !important;
+                flex-shrink: 0 !important;
+                font-size: 1.6em !important;
+                padding: 0 !important;
+                background: rgba(255, 255, 255, 0.25) !important;
+            }
+            
+            .btn-iniciar {
+                max-width: calc(100% - 52px) !important;
+                font-size: 0.9em !important;
+                padding: 12px 10px !important;
+            }
+            
+            .treino-actions {
+                gap: 8px !important;
+                justify-content: space-between !important;
             }
             
             /* Histórico de séries */
