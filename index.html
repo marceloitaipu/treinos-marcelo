@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
-    <title>💪 Treinos Marcelo - v3.2 Pro</title>
-    <meta name="description" content="App completo de treinos com CRUD completo e carga progressiva - v3.2 Pro">
+    <title>💪 Treinos Marcelo - v3.3 UI Clean</title>
+    <meta name="description" content="App de treinos com interface limpa e menus dropdown - v3.3 UI Clean">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -114,7 +114,7 @@
             display: inline-block;
         }
 
-        .btn-edit-tipo {
+        .btn-menu-tipo {
             position: absolute;
             top: -8px;
             right: -8px;
@@ -122,48 +122,87 @@
             height: 24px;
             border: none;
             border-radius: 50%;
-            background: rgba(255, 193, 7, 0.9);
-            color: #000;
-            cursor: pointer;
-            font-size: 0.7em;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
-            z-index: 10;
-        }
-
-        .btn-edit-tipo:hover {
-            background: rgba(255, 193, 7, 1);
-            transform: scale(1.1);
-        }
-
-        .btn-delete-tipo {
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            width: 24px;
-            height: 24px;
-            border: none;
-            border-radius: 50%;
-            background: rgba(244, 67, 54, 0.9);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
             cursor: pointer;
-            font-size: 0.7em;
+            font-size: 1em;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(244, 67, 54, 0.4);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
 
-        .btn-delete-tipo:hover {
-            background: rgba(244, 67, 54, 1);
+        .btn-menu-tipo:hover {
+            background: rgba(255, 255, 255, 0.25);
             transform: scale(1.1);
+        }
+
+        .dropdown-menu-tipo {
+            position: absolute;
+            top: 20px;
+            right: -8px;
+            background: rgba(30, 30, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 150px;
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+            animation: fadeInDown 0.2s ease;
+        }
+
+        .dropdown-menu-tipo.show {
+            display: block;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item-tipo {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 0.9em;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item-tipo:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item-tipo.edit {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item-tipo.edit:hover {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .dropdown-item-tipo.delete:hover {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
         }
 
         .btn-add-tipo {
@@ -248,6 +287,7 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            position: relative;
         }
 
         .btn-iniciar {
@@ -267,6 +307,78 @@
         .btn-iniciar:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-menu-treino {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+
+        .btn-menu-treino:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        .dropdown-menu-treino {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: rgba(30, 30, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 150px;
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+            animation: fadeInDown 0.2s ease;
+        }
+
+        .dropdown-menu-treino.show {
+            display: block;
+        }
+
+        .dropdown-item-treino {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 0.9em;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item-treino:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item-treino.edit {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item-treino.edit:hover {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .dropdown-item-treino.delete:hover {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
         }
 
         .btn-edit {
@@ -2026,7 +2138,7 @@
             }
             
             carregarTreinos();
-            console.log('✅ App v3.1 carregado com sucesso!');
+            console.log('✅ App v3.3 UI Clean carregado com sucesso!');
             
             // Verificar atualizações do Service Worker
             verificarAtualizacoes();
@@ -2070,30 +2182,49 @@
                 btn.textContent = tipo.nome;
                 btn.onclick = () => selecionarTipo(index);
                 
-                // Botão de deletar (só aparece se tiver mais de 1 tipo)
-                if (todosTipos.length > 1) {
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'btn-delete-tipo';
-                    deleteBtn.innerHTML = '×';
-                    deleteBtn.onclick = (e) => {
-                        e.stopPropagation();
-                        deletarTipoTreino(index);
-                    };
-                    deleteBtn.title = 'Deletar tipo de treino';
-                    container.appendChild(deleteBtn);
-                }
+                // Botão de menu (três pontos)
+                const menuBtn = document.createElement('button');
+                menuBtn.className = 'btn-menu-tipo';
+                menuBtn.innerHTML = '⋮';
+                menuBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleDropdownMenu(container, index);
+                };
+                menuBtn.title = 'Opções';
                 
-                const editBtn = document.createElement('button');
-                editBtn.className = 'btn-edit-tipo';
-                editBtn.innerHTML = '✏️';
-                editBtn.onclick = (e) => {
+                // Menu dropdown
+                const dropdown = document.createElement('div');
+                dropdown.className = 'dropdown-menu-tipo';
+                
+                // Opção Editar
+                const editItem = document.createElement('button');
+                editItem.className = 'dropdown-item-tipo edit';
+                editItem.innerHTML = '✏️ Editar Nome';
+                editItem.onclick = (e) => {
                     e.stopPropagation();
                     editarNomeTipo(index);
+                    dropdown.classList.remove('show');
                 };
-                editBtn.title = 'Editar nome do tipo';
+                
+                // Opção Deletar (só aparece se tiver mais de 1 tipo)
+                if (todosTipos.length > 1) {
+                    const deleteItem = document.createElement('button');
+                    deleteItem.className = 'dropdown-item-tipo delete';
+                    deleteItem.innerHTML = '🗑️ Deletar Tipo';
+                    deleteItem.onclick = (e) => {
+                        e.stopPropagation();
+                        deletarTipoTreino(index);
+                        dropdown.classList.remove('show');
+                    };
+                    dropdown.appendChild(editItem);
+                    dropdown.appendChild(deleteItem);
+                } else {
+                    dropdown.appendChild(editItem);
+                }
                 
                 container.appendChild(btn);
-                container.appendChild(editBtn);
+                container.appendChild(menuBtn);
+                container.appendChild(dropdown);
                 tipoSelector.appendChild(container);
             });
             
@@ -2119,6 +2250,61 @@
             
             // Carregar treinos
             carregarTreinosTipo(index);
+        }
+
+        function toggleDropdownMenu(container, index) {
+            const dropdown = container.querySelector('.dropdown-menu-tipo');
+            const isShowing = dropdown.classList.contains('show');
+            
+            // Fechar todos os menus abertos
+            document.querySelectorAll('.dropdown-menu-tipo').forEach(menu => {
+                menu.classList.remove('show');
+            });
+            
+            // Toggle do menu atual
+            if (!isShowing) {
+                dropdown.classList.add('show');
+                
+                // Fechar ao clicar fora
+                setTimeout(() => {
+                    const closeOnClickOutside = (e) => {
+                        if (!container.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                            document.removeEventListener('click', closeOnClickOutside);
+                        }
+                    };
+                    document.addEventListener('click', closeOnClickOutside);
+                }, 0);
+            }
+        }
+
+        function toggleDropdownMenuTreino(event, treinoIndex) {
+            event.stopPropagation();
+            const button = event.target;
+            const actionsDiv = button.parentElement;
+            const dropdown = actionsDiv.querySelector('.dropdown-menu-treino');
+            const isShowing = dropdown.classList.contains('show');
+            
+            // Fechar todos os menus abertos
+            document.querySelectorAll('.dropdown-menu-treino').forEach(menu => {
+                menu.classList.remove('show');
+            });
+            
+            // Toggle do menu atual
+            if (!isShowing) {
+                dropdown.classList.add('show');
+                
+                // Fechar ao clicar fora
+                setTimeout(() => {
+                    const closeOnClickOutside = (e) => {
+                        if (!actionsDiv.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                            document.removeEventListener('click', closeOnClickOutside);
+                        }
+                    };
+                    document.addEventListener('click', closeOnClickOutside);
+                }, 0);
+            }
         }
 
         function carregarTreinosTipo(tipoIndex) {
@@ -2147,16 +2333,43 @@
                         <button class="btn-iniciar" onclick="iniciarTreino(${index})">
                             🚀 Iniciar Treino
                         </button>
-                        <button class="btn-edit" onclick="editarTreino(${index})" title="Editar treino">
-                            ✏️
+                        <button class="btn-menu-treino" onclick="toggleDropdownMenuTreino(event, ${index})" title="Opções">
+                            ⋮
                         </button>
-                        ${tipo.treinos.length > 1 ? `
-                            <button class="btn-edit" onclick="deletarTreino(${index})" title="Deletar treino" style="background: rgba(244, 67, 54, 0.7);">
-                                🗑️
-                            </button>
-                        ` : ''}
                     </div>
                 `;
+                
+                // Criar menu dropdown
+                const menuDropdown = document.createElement('div');
+                menuDropdown.className = 'dropdown-menu-treino';
+                menuDropdown.dataset.treinoIndex = index;
+                
+                // Opção Editar
+                const editItem = document.createElement('button');
+                editItem.className = 'dropdown-item-treino edit';
+                editItem.innerHTML = '✏️ Editar';
+                editItem.onclick = (e) => {
+                    e.stopPropagation();
+                    editarTreino(index);
+                    menuDropdown.classList.remove('show');
+                };
+                
+                menuDropdown.appendChild(editItem);
+                
+                // Opção Deletar (só aparece se tiver mais de 1 treino)
+                if (tipo.treinos.length > 1) {
+                    const deleteItem = document.createElement('button');
+                    deleteItem.className = 'dropdown-item-treino delete';
+                    deleteItem.innerHTML = '🗑️ Deletar';
+                    deleteItem.onclick = (e) => {
+                        e.stopPropagation();
+                        deletarTreino(index);
+                        menuDropdown.classList.remove('show');
+                    };
+                    menuDropdown.appendChild(deleteItem);
+                }
+                
+                card.querySelector('.treino-actions').appendChild(menuDropdown);
                 
                 container.appendChild(card);
             });

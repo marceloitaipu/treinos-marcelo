@@ -1,10 +1,10 @@
 // Versão com timestamp para forçar atualização
-const CACHE_VERSION = 'v3.2';
+const CACHE_VERSION = 'v3.3';
 const CACHE_NAME = `tm-${CACHE_VERSION}-${Date.now()}`;
-const OFFLINE_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
+const urlsToCache = [
+    '/',
+    '/index.html',
+    '/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
