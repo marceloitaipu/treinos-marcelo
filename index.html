@@ -3654,6 +3654,7 @@
                     <div class="modal-header">
                         <h2>⚙️ Configurações</h2>
                         <p>Personalização e backup dos dados</p>
+                        <small style="color: rgba(255,255,255,0.5); font-size: 0.75em;">Versão 3.4.1 - Carga Progressiva por Série</small>
                     </div>
                     
                     <div class="form-group">
@@ -3672,20 +3673,29 @@
                             <button class="btn-salvar" onclick="exportarDados()" style="flex: 1;">📤 Exportar</button>
                             <button class="btn-cancelar" onclick="importarDados()" style="flex: 1;">📥 Importar</button>
                         </div>
+                        <small style="color: rgba(255,255,255,0.5); font-size: 0.75em; margin-top: 5px; display: block;">
+                            💡 Exporta todos os treinos, pesos e históricos
+                        </small>
                     </div>
                     
                     <div class="form-group">
-                        <label>� Histórico e progresso:</label>
+                        <label>💪 Histórico e progresso:</label>
                         <button class="btn-salvar" onclick="abrirHistorico()" style="width: 100%;">
                             📈 Ver Histórico de Treinos
                         </button>
+                        <small style="color: rgba(255,255,255,0.5); font-size: 0.75em; margin-top: 5px; display: block;">
+                            📊 Inclui histórico de carga por série individual
+                        </small>
                     </div>
                     
                     <div class="form-group">
-                        <label>�🗑️ Limpar dados:</label>
+                        <label>⚠️🗑️ Limpar dados:</label>
                         <button class="btn-cancelar" onclick="limparTodosDados()" style="width: 100%; background: rgba(244, 67, 54, 0.7);">
                             🗑️ Limpar Todos os Dados
                         </button>
+                        <small style="color: rgba(244, 67, 54, 0.8); font-size: 0.75em; margin-top: 5px; display: block;">
+                            ⚠️ Remove TUDO: treinos, pesos, histórico e séries salvas
+                        </small>
                     </div>
                     
                     <div class="form-actions">
@@ -3698,10 +3708,19 @@
         }
 
         function exportarDados() {
+            // Coletar todos os dados do localStorage
+            const localStorageData = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                localStorageData[key] = localStorage.getItem(key);
+            }
+            
             const dados = {
                 treinos: todosTipos,
-                versao: '2.0',
-                data: new Date().toISOString()
+                localStorage: localStorageData,
+                versao: '3.4.1',
+                data: new Date().toISOString(),
+                info: 'Backup completo incluindo histórico de séries individuais'
             };
             
             const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
@@ -3709,13 +3728,13 @@
             
             const a = document.createElement('a');
             a.href = url;
-            a.download = `treinos-marcelo-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `treinos-marcelo-v3.4.1-backup-${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            mostrarNotificacao('📤 Backup exportado com sucesso!');
+            mostrarNotificacao('📤 Backup completo exportado! (Inclui séries individuais)', 'success');
         }
 
         function importarDados() {
@@ -3730,16 +3749,29 @@
                     reader.onload = (e) => {
                         try {
                             const dados = JSON.parse(e.target.result);
+                            
                             if (dados.treinos && Array.isArray(dados.treinos)) {
+                                // Restaurar treinos
                                 todosTipos.splice(0, todosTipos.length, ...dados.treinos);
                                 localStorage.setItem('marceloTreinos', JSON.stringify(todosTipos));
+                                
+                                // Restaurar localStorage completo (se disponível)
+                                if (dados.localStorage && typeof dados.localStorage === 'object') {
+                                    Object.keys(dados.localStorage).forEach(key => {
+                                        localStorage.setItem(key, dados.localStorage[key]);
+                                    });
+                                    mostrarNotificacao('📥 Backup completo restaurado! (Com histórico de séries)', 'success');
+                                } else {
+                                    mostrarNotificacao('📥 Dados importados (versão antiga)', 'success');
+                                }
+                                
                                 carregarTreinos();
                                 fecharModal();
-                                mostrarNotificacao('📥 Dados importados com sucesso!');
                             } else {
                                 mostrarNotificacao('❌ Arquivo inválido!', 'warning');
                             }
                         } catch (error) {
+                            console.error('Erro ao importar:', error);
                             mostrarNotificacao('❌ Erro ao ler arquivo!', 'warning');
                         }
                     };
