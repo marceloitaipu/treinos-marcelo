@@ -3308,36 +3308,26 @@
             let exerciciosHtml = '';
             treino.exercicios.forEach((exercicio, i) => {
                 const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
-                const seriesPadrao = typeof exercicio === 'object' ? exercicio.series : '';
-                const repsPadrao = typeof exercicio === 'object' ? exercicio.reps : '';
+                const seriesPadrao = typeof exercicio === 'object' ? exercicio.series : '3';
+                const repsPadrao = typeof exercicio === 'object' ? exercicio.reps : '12';
                 const pesoPadrao = typeof exercicio === 'object' ? exercicio.peso : '';
                 
                 exerciciosHtml += `
-                    <div class="exercicio-edit">
+                    <div class="exercicio-edit" data-exercicio-index="${i}">
                         <button class="btn-remove" onclick="removerExercicio(${i})">×</button>
-                        <input type="text" 
-                               value="${nomeExercicio}" 
-                               class="exercicio-input"
-                               data-index="${i}"
-                               placeholder="Nome do exercício">
-                        <input type="number" 
-                               value="${seriesPadrao}" 
-                               class="series-default-input"
-                               data-index="${i}"
-                               placeholder="Séries"
-                               style="width: 60px;">
-                        <input type="number" 
-                               value="${repsPadrao}" 
-                               class="reps-default-input"
-                               data-index="${i}"
-                               placeholder="Reps"
-                               style="width: 60px;">
-                        <input type="text" 
-                               value="${pesoPadrao}" 
-                               class="peso-default-input"
-                               data-index="${i}"
-                               placeholder="kg/min/seg"
-                               style="width: 80px;">
+                        <div class="exercicio-preview-item" style="cursor: pointer;">
+                            <div class="exercicio-nome-preview">${nomeExercicio}</div>
+                            <div class="exercicio-dados-preview">
+                                <span class="badge-series">${seriesPadrao} séries</span>
+                                <span class="badge-reps">${repsPadrao} reps</span>
+                                <span class="badge-peso">${pesoPadrao || 'kg'}</span>
+                            </div>
+                        </div>
+                        <input type="hidden" class="exercicio-input" value="${nomeExercicio}" data-index="${i}">
+                        <input type="hidden" class="series-default-input" value="${seriesPadrao}" data-index="${i}">
+                        <input type="hidden" class="reps-default-input" value="${repsPadrao}" data-index="${i}">
+                        <input type="hidden" class="peso-default-input" value="${pesoPadrao}" data-index="${i}">
+                        <button class="btn-edit-exercicio" title="Editar exercício">✏️</button>
                     </div>
                 `;
             });
@@ -3375,6 +3365,32 @@
             `;
             
             document.body.appendChild(modal);
+            
+            // Adicionar event listeners para os exercícios existentes
+            setTimeout(() => {
+                const exerciciosEdit = document.querySelectorAll('#exercicios-lista .exercicio-edit');
+                exerciciosEdit.forEach((exercicioDiv) => {
+                    const previewItem = exercicioDiv.querySelector('.exercicio-preview-item');
+                    const btnEdit = exercicioDiv.querySelector('.btn-edit-exercicio');
+                    
+                    if (previewItem) {
+                        previewItem.addEventListener('click', function() {
+                            const exerciciosAtuais = document.querySelectorAll('#exercicios-lista .exercicio-edit');
+                            const idx = Array.from(exerciciosAtuais).indexOf(exercicioDiv);
+                            abrirModalCadastroExercicio(idx);
+                        });
+                    }
+                    
+                    if (btnEdit) {
+                        btnEdit.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const exerciciosAtuais = document.querySelectorAll('#exercicios-lista .exercicio-edit');
+                            const idx = Array.from(exerciciosAtuais).indexOf(exercicioDiv);
+                            abrirModalCadastroExercicio(idx);
+                        });
+                    }
+                });
+            }, 100);
         }
 
         function removerExercicio(exercicioIndex) {
