@@ -1,5 +1,5 @@
 // Versão com timestamp para forçar atualização
-const CACHE_VERSION = 'v3.4.1';
+const CACHE_VERSION = 'v3.5.0';
 const CACHE_NAME = `tm-${CACHE_VERSION}-${Date.now()}`;
 const urlsToCache = [
     '/',
