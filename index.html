@@ -2262,7 +2262,8 @@
         function validarTreino(treino) {
             if (!treino || typeof treino !== 'object') return false;
             if (!treino.letra || !treino.nome || !treino.descricao || !treino.classe) return false;
-            if (!Array.isArray(treino.exercicios) || treino.exercicios.length === 0) return false;
+            if (!Array.isArray(treino.exercicios)) return false;
+            // Permitir treinos sem exercícios (será editado depois)
             return true;
         }
 
@@ -3427,6 +3428,13 @@
         function abrirModalCadastroExercicio(exercicioIndex = null) {
             const isEdicao = exercicioIndex !== null;
             const exerciciosLista = document.getElementById('exercicios-lista');
+            
+            if (!exerciciosLista) {
+                mostrarNotificacao('⚠️ Erro: Abra o modal de edição do treino primeiro!', 'warning');
+                console.error('exercicios-lista não encontrado. Modal de treino precisa estar aberto.');
+                return;
+            }
+            
             const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
             
             // Se for edição, pegar dados do exercício
@@ -3584,6 +3592,12 @@
             }
             
             const exerciciosLista = document.getElementById('exercicios-lista');
+            if (!exerciciosLista) {
+                mostrarNotificacao('⚠️ Erro: Lista de exercícios não encontrada!', 'error');
+                console.error('exercicios-lista não encontrado');
+                return;
+            }
+            
             const isEdicao = exercicioIndex !== null;
             
             if (isEdicao) {
