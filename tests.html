@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧪 Testes — Treinos Marcelo</title>
+<style>
+  :root {
+    --pass: #06d6a0; --fail: #ff4757; --skip: #ffd60a;
+    --bg: #08080f; --surface: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08); --muted: #8b95a6;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(67,97,238,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 110%, rgba(6,214,160,0.1) 0%, transparent 55%);
+    color: #e8eaf0;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 1.8em; font-weight: 900; margin-bottom: 4px;
+    background: linear-gradient(90deg, #fff, #4cc9f0, #06d6a0);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle { color: var(--muted); font-size: 0.88em; margin-bottom: 20px; }
+  #summary {
+    display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .stat {
+    flex: 1; min-width: 100px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px 18px; text-align: center;
+  }
+  .stat .n { font-size: 2em; font-weight: 900; display: block; }
+  .stat .l { font-size: 0.78em; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing:.06em; }
+  .stat.pass { border-color: rgba(6,214,160,.3); }
+  .stat.pass .n { color: var(--pass); }
+  .stat.fail { border-color: rgba(255,71,87,.3); }
+  .stat.fail .n { color: var(--fail); }
+  .stat.skip { border-color: rgba(255,214,10,.3); }
+  .stat.skip .n { color: var(--skip); }
+  .stat.total .n { color: #4cc9f0; }
+
+  #progress-bar-wrap {
+    height: 6px; background: rgba(255,255,255,.06);
+    border-radius: 3px; margin-bottom: 24px; overflow: hidden;
+  }
+  #progress-bar { height:100%; width:0%; border-radius:3px;
+    background: linear-gradient(90deg, #06d6a0, #4361ee); transition: width .3s; }
+
+  .group { margin-bottom: 18px; }
+  .group-title {
+    font-size: 0.75em; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: #4cc9f0; margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  .test-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 16px; margin-bottom: 6px;
+    transition: border-color .2s;
+  }
+  .test-row.pass { border-color: rgba(6,214,160,.25); }
+  .test-row.fail { border-color: rgba(255,71,87,.35); background: rgba(255,71,87,.04); }
+  .test-row.running { border-color: rgba(76,201,240,.3); }
+  .badge {
+    min-width: 26px; height: 26px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8em; font-weight: 900; flex-shrink: 0; margin-top: 1px;
+  }
+  .badge.pass { background: rgba(6,214,160,.2); color: var(--pass); }
+  .badge.fail { background: rgba(255,71,87,.2); color: var(--fail); }
+  .badge.running { background: rgba(76,201,240,.2); color: #4cc9f0; animation: spin .8s linear infinite; }
+  .badge.pending { background: rgba(255,255,255,.08); color: var(--muted); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .test-info { flex: 1; }
+  .test-name { font-weight: 700; font-size: .9em; margin-bottom: 2px; }
+  .test-desc { font-size: .8em; color: var(--muted); }
+  .test-error { font-size: .8em; color: var(--fail); margin-top: 4px;
+    background: rgba(255,71,87,.08); border-radius: 6px; padding: 6px 10px;
+    font-family: monospace; white-space: pre-wrap; word-break: break-word; }
+
+  #run-btn {
+    padding: 13px 32px; border: none; border-radius: 12px; cursor: pointer;
+    background: linear-gradient(135deg, #4361ee, #06d6a0); color: #fff;
+    font-weight: 800; font-size: 1em; letter-spacing:.03em; margin-bottom: 24px;
+    box-shadow: 0 4px 18px rgba(67,97,238,.35); transition: all .2s;
+  }
+  #run-btn:hover { transform: scale(1.04); box-shadow: 0 6px 24px rgba(67,97,238,.5); }
+  #run-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+  #iframe-host { display: none; }
+</style>
+</head>
+<body>
+
+<h1>🧪 Testes Automatizados</h1>
+<p class="subtitle">Treinos Marcelo v2.0 — <span id="ts"></span></p>
+
+<button id="run-btn" onclick="runAll()">▶ Rodar todos os testes</button>
+
+<div id="summary">
+  <div class="stat total"><span class="n" id="s-total">—</span><span class="l">Total</span></div>
+  <div class="stat pass"><span class="n" id="s-pass">—</span><span class="l">Passou</span></div>
+  <div class="stat fail"><span class="n" id="s-fail">—</span><span class="l">Falhou</span></div>
+  <div class="stat skip"><span class="n" id="s-skip">—</span><span class="l">Pulados</span></div>
+</div>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+<div id="results"></div>
+
+<!-- App carregado aqui (invisível) -->
+<div id="iframe-host">
+  <iframe id="app-frame" src="marcelo-7-tipos-final.html" sandbox="allow-scripts allow-same-origin"></iframe>
+</div>
+
+<script>
+// =============================================
+//  FRAMEWORK DE TESTES MINIMALISTA
+// =============================================
+let W = null; // contentWindow do iframe
+let passCount = 0, failCount = 0, skipCount = 0;
+let allTests = [];
+
+// Helpers para acessar variáveis let/const do iframe via eval
+// (let/const não são propriedades de window, então W.varName retorna undefined)
+function G(expr)       { return W.eval(expr); }           // get
+function S(expr, val)  { W.eval(`${expr} = ${JSON.stringify(val)}`); } // set
+
+function assert(cond, msg) {
+  if (!cond) throw new Error(msg || 'Asserção falhou');
+}
+function assertEqual(a, b, msg) {
+  if (a !== b) throw new Error((msg || '') + ` — esperado: ${JSON.stringify(b)}, obtido: ${JSON.stringify(a)}`);
+}
+function assertContains(str, sub, msg) {
+  if (!String(str).includes(sub)) throw new Error((msg || '') + ` — "${sub}" não encontrado em "${str}"`);
+}
+function assertThrows(fn, msg) {
+  try { fn(); throw new Error('Nenhuma exceção lançada'); }
+  catch(e) { if (e.message === 'Nenhuma exceção lançada') throw new Error(msg || e.message); }
+}
+
+// =============================================
+//  DEFINIÇÃO DOS TESTES
+// =============================================
+const suites = [
+
+  // ── 1. XSS / Sanitização ───────────────────
+  { group: '🔒 XSS — esc()',
+    tests: [
+      { name: 'esc() — texto simples',
+        desc: 'Texto sem caracteres especiais passa sem alteração',
+        run: () => assertEqual(W.esc('Supino Reto'), 'Supino Reto') },
+
+      { name: 'esc() — < e > escapados',
+        desc: 'Tags HTML são neutralizadas',
+        run: () => {
+          assertContains(W.esc('<script>'), '&lt;script&gt;');
+        }
+      },
+      { name: 'esc() — aspas escapadas',
+        desc: 'Aspas duplas e simples são escapadas',
+        run: () => {
+          assertContains(W.esc('"oi"'), '&quot;');
+          assertContains(W.esc("'oi'"), '&#39;');
+        }
+      },
+      { name: 'esc() — & escapado',
+        run: () => assertContains(W.esc('A & B'), '&amp;') },
+      { name: 'esc() — payload XSS completo',
+        run: () => {
+          const r = W.esc('<img src=x onerror="alert(1)">');
+          assert(!r.includes('<img'), 'Tag img não foi sanitizada');
+          assertContains(r, '&lt;img', 'Abertura de tag não escapada');
+          assertContains(r, '&gt;', 'Fechamento de tag não escapado');
+          // onerror como texto é inofensivo desde que < e " sejam escapados
+          assert(!r.includes('<img'), 'Tag executável ainda presente (bug!)');
+        }
+      },
+      { name: 'esc() — número convertido para string',
+        run: () => assertEqual(W.esc(42), '42') },
+      { name: 'esc() — undefined/null retorna string',
+        run: () => { const r = W.esc(null); assert(typeof r === 'string'); } },
+    ]
+  },
+
+  // ── 2. Timer ───────────────────────────────
+  { group: '⏱️ Timer de Descanso',
+    tests: [
+      { name: 'criarTimerHTML() — retorna HTML com elementos corretos',
+        run: () => {
+          const h = W.criarTimerHTML(90);
+          assertContains(h, 'id="timerBox"');
+          assertContains(h, 'id="timerDisplay"');
+          assertContains(h, 'id="timerBar"');
+          assertContains(h, 'value="90"');
+        }
+      },
+      { name: 'criarTimerHTML() — valor padrão 60s quando undefined',
+        run: () => assertContains(W.criarTimerHTML(undefined), 'value="60"') },
+
+      { name: 'resetarTimer() — restaura timerAtual ao total',
+        run: () => {
+          S('timerTotal', 120);
+          S('timerAtual', 5);
+          W.resetarTimer();
+          assertEqual(G('timerAtual'), 120, 'timerAtual após reset');
+        }
+      },
+      { name: 'pararTimer() — coloca timerRodando=false e limpa intervalo',
+        run: () => {
+          S('timerRodando', true);
+          W.pararTimer();
+          assertEqual(G('timerRodando'), false);
+          assertEqual(G('timerInterval'), null);
+        }
+      },
+      { name: 'atualizarDisplayTimer() — formata 0s como 00:00',
+        run: () => {
+          let el = W.document.getElementById('timerDisplay');
+          if (!el) {
+            el = W.document.createElement('div');
+            el.id = 'timerDisplay';
+            W.document.body.appendChild(el);
+          }
+          S('timerAtual', 0);
+          S('timerTotal', 60);
+          W.atualizarDisplayTimer();
+          assertEqual(el.textContent, '00:00');
+        }
+      },
+      { name: 'atualizarDisplayTimer() — formata 90s como 01:30',
+        run: () => {
+          let el = W.document.getElementById('timerDisplay');
+          if (!el) { el = W.document.createElement('div'); el.id='timerDisplay'; W.document.body.appendChild(el); }
+          S('timerAtual', 90); S('timerTotal', 120);
+          W.atualizarDisplayTimer();
+          assertEqual(el.textContent, '01:30');
+        }
+      },
+      { name: 'atualizarDisplayTimer() — aplica classe "urgente" quando ≤10s',
+        run: () => {
+          let el = W.document.getElementById('timerDisplay');
+          if (!el) { el = W.document.createElement('div'); el.id='timerDisplay'; W.document.body.appendChild(el); }
+          S('timerAtual', 9); S('timerTotal', 60);
+          W.atualizarDisplayTimer();
+          assert(el.className.includes('urgente'), 'classe urgente esperada');
+        }
+      },
+      { name: 'toggleTimer() — inicia quando parado',
+        run: () => {
+          S('timerRodando', false);
+          S('timerAtual', 30);
+          S('timerTotal', 30);
+          W.toggleTimer();
+          assert(G('timerRodando') === true, 'timer deve estar rodando');
+          W.pararTimer(); // limpa
+        }
+      },
+      { name: 'toggleTimer() — para quando rodando',
+        run: () => {
+          S('timerRodando', false);
+          S('timerAtual', 30);
+          S('timerTotal', 30);
+          W.toggleTimer();           // inicia
+          W.toggleTimer();           // para
+          assertEqual(G('timerRodando'), false);
+        }
+      },
+    ]
+  },
+
+  // ── 3. localStorage — Dados ────────────────
+  { group: '💾 Persistência — localStorage',
+    tests: [
+      { name: 'salvarTodosOsTreinos() — salva e recupera todosTipos',
+        run: () => {
+          W.salvarTodosOsTreinos();
+          const raw = W.eval('localStorage.getItem("marceloTreinos")');
+          assert(raw !== null, 'Dado não salvo');
+          const parsed = JSON.parse(raw);
+          assert(Array.isArray(parsed), 'Deve ser array JSON');
+        }
+      },
+      { name: 'carregarTreinosSalvos() — restaura estado após salvar',
+        run: () => {
+          W.salvarTodosOsTreinos();
+          W.carregarTreinosSalvos();
+          const tipos = G('todosTipos');
+          assert(Array.isArray(tipos) && tipos.length > 0, 'todosTipos deve ser populado');
+        }
+      },
+      { name: 'carregarTreinosSalvos() — ignora dados corrompidos',
+        run: () => {
+          W.eval('localStorage.setItem("marceloTreinosV2", "NOT_JSON")');
+          // Não deve lançar exceção
+          try { W.carregarTreinosSalvos(); }
+          catch(e) { throw new Error('Exceção com dado corrompido: ' + e.message); }
+          W.eval('localStorage.removeItem("marceloTreinosV2")');
+        }
+      },
+    ]
+  },
+
+  // ── 4. Seleção de Tipo / Cards ──────────────
+  { group: '🏋️ Navegação e Cards',
+    tests: [
+      { name: 'selecionarTipo() — altera tipoAtualIndex',
+        run: () => {
+          W.selecionarTipo(2);
+          assertEqual(G('tipoAtualIndex'), 2);
+          W.selecionarTipo(0); // restaura
+        }
+      },
+      { name: 'carregarTreinosTipo() — renderiza cards no container',
+        run: () => {
+          const container = W.document.getElementById('treinosContainer');
+          W.carregarTreinosTipo(0);
+          assert(container.children.length > 0, 'Container vazio');
+          assert(container.querySelector('.treino-card') !== null, 'Nenhum .treino-card');
+        }
+      },
+      { name: 'carregarTreinosTipo() — cards contêm btn-iniciar e btn-edit',
+        run: () => {
+          W.carregarTreinosTipo(0);
+          const container = W.document.getElementById('treinosContainer');
+          assert(container.querySelector('.btn-iniciar') !== null, 'btn-iniciar ausente');
+          assert(container.querySelector('.btn-edit')    !== null, 'btn-edit ausente');
+        }
+      },
+      { name: 'carregarTreinos() — renderiza botões de tipo',
+        run: () => {
+          W.carregarTreinos();
+          const selector = W.document.getElementById('tipoSelector');
+          assert(selector !== null, '#tipoSelector não encontrado');
+          assert(selector.querySelectorAll('.tipo-btn').length >= 7, 'Menos de 7 tipo-btns');
+        }
+      },
+    ]
+  },
+
+  // ── 5. Modal de Treino ─────────────────────
+  { group: '🚪 Modal de Treino',
+    tests: [
+      { name: 'iniciarTreino() — cria modal-overlay no DOM',
+        run: () => {
+          W.fecharModal();
+          W.tipoAtualIndex = 0;
+          W.iniciarTreino(0);
+          assert(W.document.querySelector('.modal-overlay') !== null, 'Modal não criado');
+          W.fecharModal();
+        }
+      },
+      { name: 'iniciarTreino() — modal contém timer',
+        run: () => {
+          W.tipoAtualIndex = 0;
+          W.iniciarTreino(0);
+          assert(W.document.getElementById('timerBox') !== null, 'timerBox ausente no modal');
+          W.fecharModal();
+        }
+      },
+      { name: 'iniciarTreino() — modal lista exercícios do treino',
+        run: () => {
+          W.tipoAtualIndex = 0;
+          W.iniciarTreino(0);
+          const items = W.document.querySelectorAll('.exercicio-item');
+          assert(items.length > 0, 'Nenhum .exercicio-item no modal');
+          W.fecharModal();
+        }
+      },
+      { name: 'fecharModal() — remove todos os modal-overlay',
+        run: () => {
+          W.tipoAtualIndex = 0;
+          W.iniciarTreino(0);
+          W.fecharModal();
+          assertEqual(W.document.querySelectorAll('.modal-overlay').length, 0, 'Modais não removidos');
+        }
+      },
+      { name: 'fecharModal() — para o timer ao fechar',
+        run: () => {
+          S('tipoAtualIndex', 0);
+          W.iniciarTreino(0);
+          S('timerRodando', true);
+          W.fecharModal();
+          assertEqual(G('timerRodando'), false, 'Timer ainda rodando após fechar modal');
+        }
+      },
+    ]
+  },
+
+  // ── 6. Peso / Séries / Conclusão ───────────
+  { group: '⚖️ Peso, Séries e Conclusão',
+    tests: [
+      { name: 'salvarPeso() — peso positivo é salvo',
+        run: () => {
+          // Cria input fake
+          let inp = W.document.getElementById('pesoInput_0');
+          if (!inp) { inp = W.document.createElement('input'); inp.id='pesoInput_0'; W.document.body.appendChild(inp); }
+          W.salvarPeso(0, 0, 0, '80');
+          assertEqual(W.localStorage.getItem('peso_0_0_0'), '80');
+        }
+      },
+      { name: 'salvarPeso() — peso negativo é rejeitado',
+        run: () => {
+          W.localStorage.removeItem('peso_0_0_1');
+          let inp = W.document.getElementById('pesoInput_1');
+          if (!inp) { inp = W.document.createElement('input'); inp.id='pesoInput_1'; W.document.body.appendChild(inp); }
+          W.salvarPeso(0, 0, 1, '-5');
+          assert(W.localStorage.getItem('peso_0_0_1') === null, 'Peso negativo foi salvo (bug!)');
+        }
+      },
+      { name: 'salvarPeso() — texto inválido é rejeitado',
+        run: () => {
+          W.localStorage.removeItem('peso_0_0_2');
+          let inp = W.document.getElementById('pesoInput_2');
+          if (!inp) { inp = W.document.createElement('input'); inp.id='pesoInput_2'; W.document.body.appendChild(inp); }
+          W.salvarPeso(0, 0, 2, 'abc');
+          assert(W.localStorage.getItem('peso_0_0_2') === null, 'Texto salvo como peso (bug!)');
+        }
+      },
+      { name: 'salvarPeso() — zero é aceito (peso corporal)',
+        run: () => {
+          let inp = W.document.getElementById('pesoInput_3');
+          if (!inp) { inp = W.document.createElement('input'); inp.id='pesoInput_3'; W.document.body.appendChild(inp); }
+          W.salvarPeso(0, 0, 3, '0');
+          assertEqual(W.localStorage.getItem('peso_0_0_3'), '0');
+        }
+      },
+      { name: 'ajustarSeries() — incrementa série e salva no localStorage',
+        run: () => {
+          W.localStorage.removeItem('series_0_0_0');
+          // Cria elementos DOM necessários
+          let cnt = W.document.getElementById('serieCount_0');
+          if (!cnt) { cnt = W.document.createElement('span'); cnt.id='serieCount_0'; W.document.body.appendChild(cnt); }
+          let info = W.document.getElementById('seriesInfo_0');
+          if (!info) { info = W.document.createElement('span'); info.id='seriesInfo_0'; W.document.body.appendChild(info); }
+          W.pararTimer(); // garante timer limpo
+          W.ajustarSeries(0, 0, 0, 1);
+          assertEqual(W.localStorage.getItem('series_0_0_0'), '1');
+          W.pararTimer();
+        }
+      },
+      { name: 'ajustarSeries() — não vai abaixo de 0',
+        run: () => {
+          W.localStorage.removeItem('series_0_0_0');
+          let cnt = W.document.getElementById('serieCount_0');
+          if (!cnt) { cnt = W.document.createElement('span'); cnt.id='serieCount_0'; W.document.body.appendChild(cnt); }
+          let info = W.document.getElementById('seriesInfo_0');
+          if (!info) { info = W.document.createElement('span'); info.id='seriesInfo_0'; W.document.body.appendChild(info); }
+          W.ajustarSeries(0, 0, 0, -5);
+          assertEqual(W.localStorage.getItem('series_0_0_0'), '0', 'Série negativa!');
+          W.pararTimer();
+        }
+      },
+      { name: 'toggleConcluido() — marca como concluído',
+        run: () => {
+          W.localStorage.removeItem('concluido_0_0_0');
+          const item = W.document.createElement('div');
+          item.className = 'exercicio-item';
+          const btn = W.document.createElement('button');
+          item.appendChild(btn);
+          W.document.body.appendChild(item);
+          W.toggleConcluido(0, 0, 0, btn);
+          assert(item.classList.contains('concluido'), 'Item não marcado como concluído');
+          assertEqual(W.localStorage.getItem('concluido_0_0_0'), 'true');
+          item.remove();
+        }
+      },
+      { name: 'toggleConcluido() — desmarca quando já concluído',
+        run: () => {
+          const item = W.document.createElement('div');
+          item.className = 'exercicio-item concluido';
+          const btn = W.document.createElement('button');
+          btn.className = 'concluido';
+          item.appendChild(btn);
+          W.document.body.appendChild(item);
+          W.localStorage.setItem('concluido_0_0_5', 'true');
+          W.toggleConcluido(0, 0, 5, btn);
+          assert(!item.classList.contains('concluido'), 'Item não desmarcado');
+          assert(W.localStorage.getItem('concluido_0_0_5') === null, 'Chave não removida');
+          item.remove();
+        }
+      },
+    ]
+  },
+
+  // ── 7. Edição de Treino ────────────────────
+  { group: '✏️ Edição de Treino',
+    tests: [
+      { name: 'editarTreino() — abre modal de edição',
+        run: () => {
+          W.fecharModal();
+          W.tipoAtualIndex = 0;
+          W.editarTreino(0);
+          assert(W.document.querySelector('.modal-overlay') !== null, 'Modal não abriu');
+          assert(W.document.getElementById('edit-nome') !== null, '#edit-nome ausente');
+          W.fecharModal();
+        }
+      },
+      { name: 'criarItemExercicioEdicao() — retorna div com input e btn-remove',
+        run: () => {
+          const div = W.criarItemExercicioEdicao('Supino', 0);
+          assertEqual(div.className, 'exercicio-edit');
+          assert(div.querySelector('.exercicio-input') !== null, 'input ausente');
+          assert(div.querySelector('.btn-remove') !== null, 'btn-remove ausente');
+          assertEqual(div.querySelector('.exercicio-input').value, 'Supino');
+        }
+      },
+      { name: 'adicionarExercicio() — adiciona novo item na lista',
+        run: () => {
+          W.tipoAtualIndex = 0;
+          W.editarTreino(0);
+          const lista = W.document.getElementById('exercicios-lista');
+          const antesCount = lista.querySelectorAll('.exercicio-edit').length;
+          W.adicionarExercicio();
+          const depoisCount = lista.querySelectorAll('.exercicio-edit').length;
+          assertEqual(depoisCount, antesCount + 1, 'Nenhum exercício adicionado');
+          W.fecharModal();
+        }
+      },
+      { name: 'removerExercicio() — remove item (quando há mais de 1)',
+        run: () => {
+          W.tipoAtualIndex = 0;
+          W.editarTreino(0);
+          const lista = W.document.getElementById('exercicios-lista');
+          const antes = lista.querySelectorAll('.exercicio-edit').length;
+          assert(antes > 1, 'Treino tem menos de 2 exercícios, impossível testar remoção');
+          const primeiro = lista.querySelector('.exercicio-edit');
+          W.removerExercicio(primeiro);
+          assertEqual(lista.querySelectorAll('.exercicio-edit').length, antes - 1);
+          W.fecharModal();
+        }
+      },
+      { name: 'removerExercicio() — bloqueia quando só há 1 exercício',
+        run: () => {
+          W.fecharModal();
+          // Salva original e reduz para 1 exercício via eval (const array, mas pode modificar)
+          const exOrig = G('todosTipos[0].treinos[0].exercicios');
+          W.eval('todosTipos[0].treinos[0].exercicios = ["Unico Exercicio"]');
+          S('tipoAtualIndex', 0);
+          W.editarTreino(0);
+          const lista   = W.document.getElementById('exercicios-lista');
+          const unico   = lista.querySelector('.exercicio-edit');
+          W.removerExercicio(unico);
+          assertEqual(lista.querySelectorAll('.exercicio-edit').length, 1, 'Exercício único foi removido (bug!)');
+          W.fecharModal();
+          W.eval(`todosTipos[0].treinos[0].exercicios = ${JSON.stringify(exOrig)}`);
+        }
+      },
+      { name: 'salvarEdicaoTreino() — salva nome, descrição e exercícios',
+        run: () => {
+          W.fecharModal();
+          S('tipoAtualIndex', 0);
+          const nomeOriginal = G('todosTipos[0].treinos[0].nome');
+          W.editarTreino(0);
+          W.document.getElementById('edit-nome').value = 'Treino TEST';
+          W.salvarEdicaoTreino(0);
+          assertEqual(G('todosTipos[0].treinos[0].nome'), 'Treino TEST');
+          // restaura
+          W.eval(`todosTipos[0].treinos[0].nome = ${JSON.stringify(nomeOriginal)}`);
+          W.salvarTodosOsTreinos();
+        }
+      },
+      { name: 'salvarEdicaoTreino() — rejeita nome vazio',
+        run: () => {
+          W.fecharModal();
+          S('tipoAtualIndex', 0);
+          const nomeOriginal = G('todosTipos[0].treinos[0].nome');
+          W.editarTreino(0);
+          W.document.getElementById('edit-nome').value = '   ';
+          W.salvarEdicaoTreino(0);
+          // Modal deve continuar aberto (nome não salvo)
+          assert(W.document.querySelector('.modal-overlay') !== null, 'Modal fechou com nome vazio (bug!)');
+          W.fecharModal();
+          assertEqual(G('todosTipos[0].treinos[0].nome'), nomeOriginal, 'Nome foi alterado (bug!)');
+        }
+      },
+    ]
+  },
+
+  // ── 8. Histórico ───────────────────────────
+  { group: '📊 Histórico',
+    tests: [
+      { name: 'registrarHistorico() — adiciona entrada ao histórico',
+        run: () => {
+          W.localStorage.removeItem('marceloHistorico');
+          W.registrarHistorico('Treino A Teste', ['Ex1', 'Ex2']);
+          const hist = JSON.parse(W.localStorage.getItem('marceloHistorico'));
+          assertEqual(hist.length, 1);
+          assertEqual(hist[0].nome, 'Treino A Teste');
+        }
+      },
+      { name: 'registrarHistorico() — não ultrapassa 50 entradas',
+        run: () => {
+          W.localStorage.removeItem('marceloHistorico');
+          for (let i = 0; i < 55; i++) W.registrarHistorico(`Treino ${i}`, ['Ex']);
+          const hist = JSON.parse(W.localStorage.getItem('marceloHistorico'));
+          assert(hist.length <= 50, `Histórico tem ${hist.length} entradas (limite 50)`);
+        }
+      },
+      { name: 'verHistorico() — abre modal com título correto',
+        run: () => {
+          W.fecharModal();
+          W.verHistorico();
+          const modal = W.document.querySelector('.modal-overlay');
+          assert(modal !== null, 'Modal não abriu');
+          assertContains(modal.innerHTML, 'Histórico');
+          W.fecharModal();
+        }
+      },
+      { name: 'limparHistorico() — remove histórico do localStorage',
+        run: () => {
+          W.localStorage.setItem('marceloHistorico', JSON.stringify([{data:'x',nome:'y',exercicios:[]}]));
+          // Simulate confirm = true
+          const origConfirm = W.confirm;
+          W.confirm = () => true;
+          W.limparHistorico();
+          W.confirm = origConfirm;
+          assertEqual(W.localStorage.getItem('marceloHistorico'), null);
+        }
+      },
+      { name: 'limparHistorico() — cancela quando confirm=false',
+        run: () => {
+          const dados = JSON.stringify([{data:'x',nome:'y',exercicios:[]}]);
+          W.localStorage.setItem('marceloHistorico', dados);
+          const origConfirm = W.confirm;
+          W.confirm = () => false;
+          W.limparHistorico();
+          W.confirm = origConfirm;
+          assert(W.localStorage.getItem('marceloHistorico') !== null, 'Histórico apagado mesmo cancelando');
+        }
+      },
+    ]
+  },
+
+  // ── 9. Backup ──────────────────────────────
+  { group: '💾 Backup / Exportação',
+    tests: [
+      { name: 'exportarBackup() — não lança exceção',
+        run: () => {
+          // Mock para evitar download real
+          const origCreate = W.document.createElement.bind(W.document);
+          let anchors = [];
+          W.document.createElement = (tag) => {
+            const el = origCreate(tag);
+            if (tag === 'a') anchors.push(el);
+            return el;
+          };
+          W.exportarBackup();
+          W.document.createElement = origCreate;
+          assert(anchors.length > 0, 'Elemento <a> não criado para download');
+        }
+      },
+      { name: 'processarImportacao() — rejeita JSON inválido',
+        run: () => {
+          const fakeEvent = {
+            target: {
+              files: [new File(['NOT JSON'], 'test.json', { type:'application/json' })],
+              value: ''
+            }
+          };
+          // Deve chamar mostrarNotificacao com 'error' — não lançar exceção
+          // Como FileReader é assíncrono, verificamos que não lança imediatamente
+          try { W.processarImportacao(fakeEvent); }
+          catch(e) { throw new Error('Exceção ao processar importação: ' + e.message); }
+        }
+      },
+      { name: 'importarBackup() — clica no inputImportacao',
+        run: () => {
+          const inp = W.document.getElementById('inputImportacao');
+          assert(inp !== null, '#inputImportacao não encontrado no DOM');
+          let clicked = false;
+          const origClick = inp.click.bind(inp);
+          inp.click = () => { clicked = true; };
+          W.importarBackup();
+          inp.click = origClick;
+          assert(clicked, 'Input de importação não foi clicado');
+        }
+      },
+    ]
+  },
+
+  // ── 10. Novo Tipo de Treino ─────────────────
+  { group: '➕ Novo Tipo de Treino',
+    tests: [
+      { name: 'novoTipoTreino() — abre modal',
+        run: () => {
+          W.fecharModal();
+          W.novoTipoTreino();
+          assert(W.document.querySelector('.modal-overlay') !== null, 'Modal não abriu');
+          assert(W.document.getElementById('novoTipoNome') !== null, '#novoTipoNome ausente');
+          W.fecharModal();
+        }
+      },
+      { name: 'criarNovoTipo() — adiciona tipo à lista',
+        run: () => {
+          W.fecharModal();
+          W.novoTipoTreino();
+          const antes = G('todosTipos').length;
+          W.document.getElementById('novoTipoNome').value = 'Meu Tipo Teste';
+          W.criarNovoTipo();
+          const depoisLen = G('todosTipos').length;
+          assertEqual(depoisLen, antes + 1);
+          assertEqual(G(`todosTipos[${depoisLen - 1}].nome`), 'Meu Tipo Teste');
+          // Remove o tipo criado
+          W.eval('todosTipos.pop()');
+          W.salvarTodosOsTreinos();
+        }
+      },
+      { name: 'criarNovoTipo() — rejeita nome vazio',
+        run: () => {
+          W.fecharModal();
+          W.novoTipoTreino();
+          const antes = G('todosTipos').length;
+          W.document.getElementById('novoTipoNome').value = '   ';
+          W.criarNovoTipo();
+          assertEqual(G('todosTipos').length, antes, 'Tipo criado com nome vazio (bug!)');
+          W.fecharModal();
+        }
+      },
+    ]
+  },
+
+  // ── 11. Notificações ───────────────────────
+  { group: '🔔 Notificações',
+    tests: [
+      { name: 'mostrarNotificacao() — cria elemento .notification no body',
+        run: () => {
+          W.document.querySelectorAll('.notification').forEach(n=>n.remove());
+          W.mostrarNotificacao('Teste de notificação', 'success');
+          const notif = W.document.querySelector('.notification');
+          assert(notif !== null, 'Notificação não encontrada');
+          assert(notif.classList.contains('success'), 'Classe success ausente');
+          assertEqual(notif.textContent, 'Teste de notificação');
+          notif.remove();
+        }
+      },
+      { name: 'mostrarNotificacao() — substitui notificação existente',
+        run: () => {
+          W.mostrarNotificacao('Primeira');
+          W.mostrarNotificacao('Segunda');
+          const notifs = W.document.querySelectorAll('.notification');
+          assertEqual(notifs.length, 1, `${notifs.length} notificações simultâneas (esperado 1)`);
+          notifs.forEach(n=>n.remove());
+        }
+      },
+      { name: 'mostrarNotificacao() — tipo warning aplica classe correta',
+        run: () => {
+          W.document.querySelectorAll('.notification').forEach(n=>n.remove());
+          W.mostrarNotificacao('Aviso!', 'warning');
+          const notif = W.document.querySelector('.notification');
+          assert(notif !== null && notif.classList.contains('warning'));
+          notif.remove();
+        }
+      },
+    ]
+  },
+
+  // ── 12. Teclado / Acessibilidade ───────────
+  { group: '⌨️ Teclado — Escape',
+    tests: [
+      { name: 'Tecla Escape fecha modal aberto',
+        run: () => {
+          W.fecharModal();
+          S('tipoAtualIndex', 0);
+          W.iniciarTreino(0);
+          assert(W.document.querySelector('.modal-overlay') !== null, 'Modal não abriu');
+          const evt = new W.KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+          W.document.dispatchEvent(evt);
+          assertEqual(W.document.querySelectorAll('.modal-overlay').length, 0, 'Modal não fechou com Escape');
+        }
+      },
+    ]
+  },
+];
+
+// =============================================
+//  RUNNER
+// =============================================
+function buildUI() {
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+  allTests = [];
+  suites.forEach(suite => {
+    const group = document.createElement('div');
+    group.className = 'group';
+    group.innerHTML = `<div class="group-title">${suite.group}</div>`;
+    suite.tests.forEach(t => {
+      const row = document.createElement('div');
+      row.className = 'test-row';
+      row.id = 'test-' + allTests.length;
+      row.innerHTML = `
+        <div class="badge pending" id="badge-${allTests.length}">○</div>
+        <div class="test-info">
+          <div class="test-name">${t.name}</div>
+          ${t.desc ? `<div class="test-desc">${t.desc}</div>` : ''}
+          <div class="test-error" id="err-${allTests.length}" style="display:none"></div>
+        </div>`;
+      group.appendChild(row);
+      allTests.push({ row, test: t, idx: allTests.length });
+    });
+    container.appendChild(group);
+  });
+}
+
+async function runAll() {
+  const btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Rodando…';
+  passCount = 0; failCount = 0; skipCount = 0;
+  updateSummary();
+
+  for (const { row, test, idx } of allTests) {
+    const badge = document.getElementById('badge-' + idx);
+    const errDiv = document.getElementById('err-' + idx);
+    row.className = 'test-row running';
+    badge.className = 'badge running';
+    badge.textContent = '↻';
+    errDiv.style.display = 'none';
+    await sleep(12); // yield para atualizar UI
+
+    try {
+      await test.run();
+      row.className = 'test-row pass';
+      badge.className = 'badge pass';
+      badge.textContent = '✓';
+      passCount++;
+    } catch(e) {
+      row.className = 'test-row fail';
+      badge.className = 'badge fail';
+      badge.textContent = '✗';
+      errDiv.textContent = e.message;
+      errDiv.style.display = 'block';
+      failCount++;
+    }
+    updateSummary();
+    updateProgress();
+  }
+
+  btn.disabled = false;
+  btn.textContent = failCount === 0
+    ? '✅ Todos os testes passaram — Rodar novamente'
+    : `❌ ${failCount} falha(s) — Rodar novamente`;
+}
+
+function updateSummary() {
+  const total = passCount + failCount + skipCount;
+  document.getElementById('s-total').textContent = allTests.length;
+  document.getElementById('s-pass').textContent  = passCount;
+  document.getElementById('s-fail').textContent  = failCount;
+  document.getElementById('s-skip').textContent  = skipCount;
+}
+
+function updateProgress() {
+  const done = passCount + failCount + skipCount;
+  document.getElementById('progress-bar').style.width =
+    ((done / allTests.length) * 100) + '%';
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// =============================================
+//  INICIALIZAÇÃO — espera o iframe carregar
+// =============================================
+document.getElementById('ts').textContent = new Date().toLocaleString('pt-BR');
+
+const frame = document.getElementById('app-frame');
+frame.addEventListener('load', () => {
+  W = frame.contentWindow;
+  buildUI();
+  updateSummary();
+  document.getElementById('run-btn').disabled = false;
+  document.getElementById('run-btn').textContent = '▶ Rodar todos os testes (' + allTests.length + ')';
+});
+
+document.getElementById('run-btn').disabled = true;
+document.getElementById('run-btn').textContent = '⏳ Carregando app…';
+</script>
+</body>
+</html>

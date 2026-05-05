@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>?? Treinos Marcelo - 7 Tipos</title>
+    <meta name="description" content="App completo de treinos com controle de peso e edição">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a1a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-orange: #ff6b35;
+            --neon-pink:   #f72585;
+            --neon-purple: #7209b7;
+            --neon-blue:   #4361ee;
+            --neon-cyan:   #4cc9f0;
+            --neon-green:  #06d6a0;
+            --neon-yellow: #ffd60a;
+            --card-bg:     rgba(255,255,255,0.04);
+            --card-border: rgba(255,255,255,0.08);
+            --modal-bg:    rgba(8,8,20,0.97);
+            --text-muted:  #8b95a6;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #08080f;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(67,97,238,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(247,37,133,0.14) 0%, transparent 55%);
+            color: #e8eaf0;
+            min-height: 100vh;
+            padding: 10px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            touch-action: manipulation;
+        }
+
+        .header {
+            text-align: center;
+            padding: 24px 20px 16px;
+            background: linear-gradient(135deg, rgba(67,97,238,0.12) 0%, rgba(247,37,133,0.08) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 40px rgba(67,97,238,0.15), 0 8px 32px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-orange), var(--neon-cyan));
+        }
+
+        .header h1 {
+            font-size: 2.4em;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            background: linear-gradient(90deg, #fff 0%, #c9d4ff 40%, var(--neon-pink) 80%, var(--neon-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header > p {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .tipo-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .tipo-btn {
+            padding: 10px 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.05);
+            color: #a0aec0;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-weight: 700;
+            font-size: 0.85em;
+            letter-spacing: 0.02em;
+            backdrop-filter: blur(10px);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tipo-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border-color: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .tipo-btn.active {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 20px rgba(67,97,238,0.5), 0 0 0 1px rgba(247,37,133,0.3);
+            transform: translateY(-1px);
+        }
+
+        .treinos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .treino-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid var(--card-border);
+            transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+
+        /* Barra colorida no topo de cada card por tipo */
+        .treino-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+        .treino-a::before { background: linear-gradient(90deg, #ff6b35, #f72585); }
+        .treino-b::before { background: linear-gradient(90deg, #4cc9f0, #4361ee); }
+        .treino-c::before { background: linear-gradient(90deg, #7209b7, #4361ee); }
+        .treino-d::before { background: linear-gradient(90deg, #ffd60a, #ff6b35); }
+        .treino-e::before { background: linear-gradient(90deg, #06d6a0, #4cc9f0); }
+
+        .treino-card:hover {
+            transform: translateY(-6px) translateZ(0);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.14);
+        }
+
+        .treino-card:active {
+            transform: translateY(-2px) scale(0.99) translateZ(0);
+        }
+
+        .treino-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .treino-letra {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.35em;
+            margin-right: 14px;
+            flex-shrink: 0;
+            color: #fff;
+        }
+
+        .treino-a .treino-letra {
+            background: linear-gradient(135deg, #ff6b35, #f72585);
+            box-shadow: 0 4px 20px rgba(247,37,133,0.45);
+        }
+        .treino-b .treino-letra {
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+            box-shadow: 0 4px 20px rgba(67,97,238,0.45);
+        }
+        .treino-c .treino-letra {
+            background: linear-gradient(135deg, #7209b7, #4361ee);
+            box-shadow: 0 4px 20px rgba(114,9,183,0.45);
+        }
+        .treino-d .treino-letra {
+            background: linear-gradient(135deg, #ffd60a, #ff6b35);
+            box-shadow: 0 4px 20px rgba(255,214,10,0.4);
+            color: #1a0a00;
+        }
+        .treino-e .treino-letra {
+            background: linear-gradient(135deg, #06d6a0, #4cc9f0);
+            box-shadow: 0 4px 20px rgba(6,214,160,0.4);
+            color: #001a14;
+        }
+
+        .treino-info h3 {
+            font-size: 1.05em;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #f0f2ff;
+            line-height: 1.3;
+        }
+
+        .treino-info p {
+            color: var(--text-muted);
+            font-size: 0.82em;
+            font-weight: 500;
+        }
+
+        .treino-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .btn-iniciar {
+            flex: 1;
+            padding: 13px 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4361ee, #f72585);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.9em;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 4px 18px rgba(67,97,238,0.35);
+        }
+
+        .btn-iniciar:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 28px rgba(67,97,238,0.55);
+        }
+
+        .btn-iniciar:active { transform: scale(0.97); }
+
+        .btn-edit {
+            padding: 13px 16px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.06);
+            color: #c0c8e0;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            font-size: 1.05em;
+        }
+
+        .btn-edit:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.25);
+            transform: scale(1.06);
+        }
+
+        .btn-edit:active { transform: scale(0.95); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.82);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            backdrop-filter: blur(30px);
+            border-radius: 22px;
+            padding: 28px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(67,97,238,0.15);
+            position: relative;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            border-radius: 22px 22px 0 0;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .modal-header h2 {
+            margin-bottom: 6px;
+            font-size: 1.4em;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-header p {
+            color: var(--text-muted);
+            font-size: 0.88em;
+        }
+
+        .exercicio-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            transition: all 0.25s ease;
+            gap: 10px;
+        }
+
+        .exercicio-item:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        .exercicio-item.concluido {
+            background: rgba(6,214,160,0.08);
+            border-color: rgba(6,214,160,0.3);
+        }
+
+        .exercicio-info { flex: 1; }
+
+        .exercicio-nome {
+            font-weight: 700;
+            font-size: 0.95em;
+            margin-bottom: 4px;
+            color: #e8eaf0;
+        }
+
+        .exercicio-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .peso-input {
+            width: 68px;
+            padding: 8px 6px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+            text-align: center;
+            font-size: 0.95em;
+            font-weight: 700;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .peso-input:focus {
+            border-color: var(--neon-blue);
+            background: rgba(67,97,238,0.1);
+        }
+
+        .peso-input::placeholder { color: rgba(255,255,255,0.35); }
+
+        .btn-concluir {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(6,214,160,0.2);
+            border: 1px solid rgba(6,214,160,0.4);
+            color: #06d6a0;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 700;
+            font-size: 0.82em;
+            white-space: nowrap;
+        }
+
+        .btn-concluir:hover {
+            background: rgba(6,214,160,0.35);
+            box-shadow: 0 0 12px rgba(6,214,160,0.3);
+        }
+
+        .btn-concluir.concluido {
+            background: rgba(6,214,160,0.25);
+            border-color: #06d6a0;
+            color: #06d6a0;
+        }
+
+        .btn-concluir:active { transform: scale(0.95); }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 22px;
+        }
+
+        .btn-fechar {
+            padding: 13px 36px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(67,97,238,0.25), rgba(247,37,133,0.2));
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-weight: 700;
+            font-size: 0.95em;
+            letter-spacing: 0.03em;
+        }
+
+        .btn-fechar:hover {
+            background: linear-gradient(135deg, rgba(67,97,238,0.45), rgba(247,37,133,0.35));
+            box-shadow: 0 4px 20px rgba(67,97,238,0.35);
+            transform: translateY(-1px);
+        }
+
+        /* Modal de edição */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 700;
+            font-size: 0.82em;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            color: #f0f2ff;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--neon-blue);
+            background: rgba(67,97,238,0.08);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .exercicios-lista {
+            max-height: 280px;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px;
+            background: rgba(0,0,0,0.2);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.15) transparent;
+        }
+
+        .exercicio-edit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+
+        .exercicio-edit:hover { background: rgba(255,255,255,0.07); }
+
+        .exercicio-input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 7px;
+            background: rgba(255,255,255,0.06);
+            color: #f0f2ff;
+            font-size: 0.95em;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .exercicio-input:focus {
+            border-color: var(--neon-blue);
+            background: rgba(67,97,238,0.08);
+        }
+
+        .btn-remove {
+            background: rgba(239,68,68,0.2);
+            border: 1px solid rgba(239,68,68,0.4);
+            color: #f87171;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.2s;
+        }
+
+        .btn-remove:hover {
+            background: rgba(239,68,68,0.5);
+            color: #fff;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            border: 1px dashed rgba(6,214,160,0.4);
+            border-radius: 10px;
+            background: rgba(6,214,160,0.06);
+            color: var(--neon-green);
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .btn-add:hover {
+            background: rgba(6,214,160,0.15);
+            border-color: var(--neon-green);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .btn-salvar {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #06d6a0, #4361ee);
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 0.95em;
+            box-shadow: 0 4px 18px rgba(6,214,160,0.3);
+        }
+
+        .btn-salvar:hover {
+            transform: scale(1.04);
+            box-shadow: 0 6px 24px rgba(6,214,160,0.45);
+        }
+
+        .btn-cancelar {
+            flex: 1;
+            padding: 13px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            color: #a0aec0;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 0.95em;
+        }
+
+        .btn-cancelar:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Notificações */
+        .notification {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            left: 16px;
+            padding: 14px 20px;
+            border-radius: 14px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.92em;
+            z-index: 9999;
+            animation: notifSlide 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, rgba(6,214,160,0.85), rgba(67,97,238,0.75));
+            box-shadow: 0 8px 32px rgba(6,214,160,0.3);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, rgba(255,193,7,0.85), rgba(255,107,53,0.75));
+            box-shadow: 0 8px 32px rgba(255,193,7,0.3);
+        }
+
+        @keyframes notifSlide {
+            from { transform: translateY(-120%) scale(0.9); opacity: 0; }
+            to   { transform: translateY(0) scale(1);       opacity: 1; }
+        }
+
+        /* Feedback touch */
+        .tipo-btn:active    { transform: scale(0.95); }
+        .btn-iniciar:active { transform: scale(0.96); }
+        .btn-edit:active    { transform: scale(0.95); }
+        .btn-concluir:active{ transform: scale(0.95); }
+
+        /* Responsivo otimizado para Poco X7 Pro e outros celulares */
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            
+            .header {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+            
+            .header h1 { 
+                font-size: 2em; 
+                margin-bottom: 8px;
+            }
+            
+            .header p {
+                font-size: 0.95em;
+                opacity: 0.9;
+            }
+            
+            .tipo-selector {
+                gap: 8px;
+                margin-bottom: 16px;
+                padding: 0 4px;
+            }
+            
+            .tipo-btn { 
+                padding: 12px 16px; 
+                font-size: 0.9em;
+                min-width: auto;
+                flex: 1;
+                max-width: 140px;
+            }
+            
+            .treinos-grid { 
+                grid-template-columns: 1fr;
+                gap: 16px;
+                max-width: 100%;
+            }
+            
+            .treino-card {
+                padding: 18px;
+                margin: 0;
+            }
+            
+            .treino-header {
+                margin-bottom: 12px;
+            }
+            
+            .treino-letra {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1em;
+                margin-right: 12px;
+            }
+            
+            .treino-info h3 {
+                font-size: 1.1em;
+                line-height: 1.3;
+                margin-bottom: 4px;
+            }
+            
+            .treino-info p {
+                font-size: 0.85em;
+                line-height: 1.2;
+            }
+            
+            .treino-actions {
+                gap: 8px;
+                margin-top: 12px;
+            }
+            
+            .btn-iniciar {
+                padding: 14px;
+                font-size: 0.95em;
+            }
+            
+            .btn-edit {
+                padding: 14px 18px;
+                font-size: 1.1em;
+            }
+        }
+
+        /* Otimização específica para telas grandes de celular (Poco X7 Pro) */
+        @media (min-width: 390px) and (max-width: 768px) {
+            .tipo-selector {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding: 0 8px 8px 8px;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            
+            .tipo-selector::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .tipo-btn {
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
+            
+            .treinos-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 14px;
+            }
+        }
+
+        /* Modal responsivo */
+        @media (max-width: 768px) {
+            .modal-overlay {
+                padding: 12px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+            
+            .modal-content { 
+                padding: 20px;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                max-height: calc(100vh - 40px);
+                border-radius: 16px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.4em;
+                margin-bottom: 8px;
+            }
+            
+            .modal-header p {
+                font-size: 0.9em;
+            }
+            
+            .exercicio-item {
+                padding: 14px;
+                margin-bottom: 12px;
+                border-radius: 8px;
+            }
+            
+            .exercicio-nome {
+                font-size: 0.95em;
+                line-height: 1.3;
+            }
+            
+            .exercicio-controls {
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            
+            .peso-input {
+                width: 65px;
+                padding: 10px 8px;
+                font-size: 16px; /* Evita zoom no iOS */
+            }
+            
+            .btn-concluir {
+                padding: 10px 12px;
+                font-size: 0.9em;
+                white-space: nowrap;
+            }
+            
+            .form-group {
+                margin-bottom: 16px;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 14px;
+                font-size: 16px; /* Evita zoom no iOS */
+                border-radius: 10px;
+            }
+            
+            .exercicios-lista {
+                max-height: 250px;
+                padding: 12px;
+            }
+            
+            .exercicio-edit {
+                padding: 8px;
+                margin-bottom: 8px;
+                gap: 8px;
+            }
+            
+            .exercicio-input {
+                padding: 10px;
+                font-size: 16px; /* Evita zoom no iOS */
+            }
+            
+            .btn-remove {
+                width: 32px;
+                height: 32px;
+                font-size: 1.1em;
+            }
+            
+            .btn-add {
+                padding: 14px;
+                font-size: 0.95em;
+                margin-top: 8px;
+            }
+            
+            .form-actions {
+                gap: 12px;
+                margin-top: 20px;
+            }
+            
+            .btn-salvar,
+            .btn-cancelar {
+                padding: 14px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+            
+            .btn-fechar {
+                padding: 14px 24px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+            
+            .notification {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                padding: 14px 16px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Otimização para telas muito pequenas */
+        @media (max-width: 360px) {
+            .header h1 { 
+                font-size: 1.7em; 
+            }
+            
+            .tipo-btn { 
+                padding: 10px 12px; 
+                font-size: 0.85em;
+                max-width: 120px;
+            }
+            
+            .treino-card {
+                padding: 16px;
+            }
+            
+            .treino-letra {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+                margin-right: 10px;
+            }
+            
+            .btn-iniciar {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+            
+            .btn-edit {
+                padding: 12px 16px;
+            }
+        }
+
+        /* Melhorias para interação touch */
+        @media (hover: none) and (pointer: coarse) {
+            .tipo-btn,
+            .btn-iniciar,
+            .btn-edit,
+            .btn-concluir,
+            .btn-salvar,
+            .btn-cancelar,
+            .btn-fechar {
+                min-height: 44px;
+            }
+            
+            .btn-remove {
+                min-width: 44px;
+                min-height: 44px;
+            }
+            
+            .peso-input {
+                min-height: 44px;
+            }
+        }
+
+        /* ===== TIMER DE DESCANSO ===== */
+        .timer-container {
+            background: linear-gradient(135deg, rgba(67,97,238,0.12), rgba(76,201,240,0.08));
+            border: 1px solid rgba(67,97,238,0.25);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 18px;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(67,97,238,0.15);
+        }
+
+        .timer-titulo {
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            margin-bottom: 10px;
+        }
+
+        .timer-display {
+            font-size: 3.5em;
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.04em;
+            margin-bottom: 8px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .timer-display.urgente {
+            color: #ff4757;
+            text-shadow: 0 0 20px rgba(255,71,87,0.6);
+        }
+        .timer-display.normal {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px rgba(76,201,240,0.5);
+        }
+
+        .timer-config {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .timer-config label {
+            font-size: 0.82em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .timer-input {
+            width: 68px;
+            padding: 7px 8px;
+            border: 1px solid rgba(76,201,240,0.3);
+            border-radius: 8px;
+            background: rgba(76,201,240,0.07);
+            color: #fff;
+            text-align: center;
+            font-size: 1em;
+            font-weight: 700;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .timer-input:focus { border-color: var(--neon-cyan); }
+
+        .timer-btn-set {
+            padding: 7px 14px;
+            border: none;
+            border-radius: 8px;
+            background: var(--neon-blue);
+            color: white;
+            cursor: pointer;
+            font-size: 0.82em;
+            font-weight: 700;
+            transition: all 0.2s;
+            box-shadow: 0 2px 10px rgba(67,97,238,0.4);
+        }
+
+        .timer-btn-set:hover { filter: brightness(1.2); transform: scale(1.05); }
+
+        .timer-controles {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .timer-btn {
+            padding: 11px 22px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.88em;
+            letter-spacing: 0.02em;
+        }
+
+        .timer-btn.play  {
+            background: linear-gradient(135deg, #06d6a0, #4361ee);
+            color: white;
+            box-shadow: 0 4px 16px rgba(6,214,160,0.4);
+        }
+        .timer-btn.pause {
+            background: linear-gradient(135deg, #ff4757, #f72585);
+            color: white;
+            box-shadow: 0 4px 16px rgba(255,71,87,0.4);
+        }
+        .timer-btn.reset {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #a0aec0;
+        }
+        .timer-btn:hover { filter: brightness(1.15); transform: scale(1.05); }
+        .timer-btn:active { transform: scale(0.95); }
+
+        .timer-progress {
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 3px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .timer-progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue), var(--neon-pink));
+            transition: width 0.9s linear;
+            box-shadow: 0 0 8px rgba(76,201,240,0.6);
+        }
+
+        /* ===== SÉRIES ===== */
+        .series-info {
+            font-size: 0.78em;
+            color: var(--text-muted);
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        .serie-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(67,97,238,0.2);
+            border: 1px solid rgba(67,97,238,0.4);
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 0.78em;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin-top: 5px;
+        }
+
+        .serie-badge.completo {
+            background: rgba(6,214,160,0.2);
+            border-color: rgba(6,214,160,0.5);
+            color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(6,214,160,0.2);
+        }
+
+        /* ===== CONTROLES DE SÉRIES NO MODAL ===== */
+        .series-controles {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .serie-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .serie-btn.menos {
+            background: rgba(239,68,68,0.2);
+            border: 1px solid rgba(239,68,68,0.4);
+            color: #f87171;
+        }
+        .serie-btn.mais {
+            background: rgba(6,214,160,0.2);
+            border: 1px solid rgba(6,214,160,0.4);
+            color: var(--neon-green);
+        }
+        .serie-btn:hover { filter: brightness(1.3); transform: scale(1.12); }
+        .serie-btn:active { transform: scale(0.9); }
+
+        .serie-contador {
+            font-weight: 900;
+            font-size: 1.05em;
+            min-width: 44px;
+            text-align: center;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(76,201,240,0.4);
+        }
+
+        /* ===== CABEÇALHO - AÇÕES ===== */
+        .header-acoes {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-acao-header {
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-backup    { background: rgba(67,97,238,0.2);  color: var(--neon-cyan);   border: 1px solid rgba(67,97,238,0.4); }
+        .btn-restaurar { background: rgba(255,193,7,0.15); color: #fcd34d;            border: 1px solid rgba(255,193,7,0.35); }
+        .btn-historico { background: rgba(114,9,183,0.2);  color: #c084fc;            border: 1px solid rgba(114,9,183,0.4); }
+        .btn-novo-tipo { background: rgba(6,214,160,0.15); color: var(--neon-green);  border: 1px solid rgba(6,214,160,0.35); }
+
+        .btn-acao-header:hover {
+            filter: brightness(1.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+        }
+
+        /* ===== HISTÓRICO DE TREINOS ===== */
+        .historico-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--neon-blue);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-right: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            transition: background 0.2s;
+        }
+
+        .historico-item:hover { background: rgba(255,255,255,0.07); }
+
+        .historico-data {
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--neon-cyan);
+            margin-bottom: 4px;
+        }
+
+        .historico-nome {
+            font-weight: 800;
+            font-size: 0.95em;
+            margin-bottom: 6px;
+            color: #e8eaf0;
+        }
+
+        .historico-exercicios {
+            font-size: 0.82em;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .btn-limpar-hist {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 10px;
+            background: rgba(239,68,68,0.1);
+            color: #f87171;
+            cursor: pointer;
+            margin-top: 12px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .btn-limpar-hist:hover {
+            background: rgba(239,68,68,0.25);
+            box-shadow: 0 0 12px rgba(239,68,68,0.2);
+        }
+
+        /* ===== NOVO TIPO DE TREINO ===== */
+        .tipo-novo-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tipo-novo-form input {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.05);
+            color: #f0f2ff;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .tipo-novo-form input:focus {
+            border-color: var(--neon-green);
+            background: rgba(6,214,160,0.06);
+        }
+
+        .btn-criar-tipo {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #06d6a0, #4361ee);
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(6,214,160,0.35);
+            transition: all 0.2s;
+        }
+
+        .btn-criar-tipo:hover { filter: brightness(1.15); transform: scale(1.04); }
+
+        /* Notificação de erro */
+        .notification.error {
+            background: linear-gradient(135deg, rgba(239,68,68,0.85), rgba(247,37,133,0.75));
+            box-shadow: 0 8px 32px rgba(239,68,68,0.3);
+        }
+
+        /* Timer piscando quando termina */
+        @keyframes piscar {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.25; }
+        }
+        .timer-display.fim {
+            animation: piscar 0.5s infinite;
+            color: #ff4757;
+            text-shadow: 0 0 30px rgba(255,71,87,0.8);
+        }
+
+        /* Scrollbar customizada */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>?? Treinos Marcelo</h1>
+        <p>Controle completo de treinos com peso e edição personalizada</p>
+        <div class="header-acoes">
+            <button class="btn-acao-header btn-backup"    onclick="exportarBackup()">?? Exportar Backup</button>
+            <button class="btn-acao-header btn-restaurar" onclick="importarBackup()">?? Restaurar Backup</button>
+            <button class="btn-acao-header btn-historico" onclick="verHistorico()">?? Histórico</button>
+            <button class="btn-acao-header btn-novo-tipo" onclick="novoTipoTreino()">? Novo Tipo</button>
+        </div>
+    </div>
+
+    <!-- Input oculto para importar arquivo JSON -->
+    <input type="file" id="inputImportacao" accept=".json" style="display:none" onchange="processarImportacao(event)">
+
+    <div class="tipo-selector" id="tipoSelector">
+        <!-- Botões dos tipos serão inseridos aqui -->
+    </div>
+
+    <div class="treinos-grid" id="treinosContainer">
+        <!-- Cards dos treinos serão inseridos aqui -->
+    </div>
+
+    <script>
+        // =============================================
+        //  UTILITÁRIOS DE SEGURANÇA
+        // =============================================
+        function esc(str) {
+            // Escapa texto para inserção segura em HTML (previne XSS)
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+    </script>
+    <script>
+        // =============================================
+        //  ESTADO DA APLICAÇÃO
+        // =============================================
+        let tipoAtualIndex = 0;
+
+        // =============================================
+        //  TIMER DE DESCANSO
+        // =============================================
+        let timerInterval = null;
+        let timerTotal    = 60;
+        let timerAtual    = 60;
+        let timerRodando  = false;
+        let _timerModalId = null; // ID do modal que criou o timer
+
+        function criarTimerHTML(descansoSugerido) {
+            const seg = descansoSugerido || 60;
+            return `
+            <div class="timer-container" id="timerBox">
+                <div class="timer-titulo">?? TIMER DE DESCANSO</div>
+                <div class="timer-progress"><div class="timer-progress-bar" id="timerBar" style="width:0%"></div></div>
+                <div class="timer-display normal" id="timerDisplay">01:00</div>
+                <div class="timer-config">
+                    <label>Tempo (s):</label>
+                    <input type="number" class="timer-input" id="timerInputSeg" min="5" max="600" value="${seg}">
+                    <button class="timer-btn-set" onclick="definirTimer()">OK</button>
+                </div>
+                <div class="timer-controles">
+                    <button class="timer-btn play" id="timerBtnPlay" onclick="toggleTimer()">?? Iniciar</button>
+                    <button class="timer-btn reset" onclick="resetarTimer()">?? Reset</button>
+                </div>
+            </div>`;
+        }
+
+        function definirTimer() {
+            const input = document.getElementById('timerInputSeg');
+            const val   = parseInt(input.value);
+            if (!val || val < 5 || val > 600) {
+                mostrarNotificacao('?? Digite um tempo entre 5 e 600 segundos', 'warning');
+                return;
+            }
+            pararTimer();
+            timerTotal  = val;
+            timerAtual  = val;
+            atualizarDisplayTimer();
+        }
+
+        function toggleTimer() {
+            if (timerRodando) {
+                pararTimer();
+            } else {
+                iniciarTimer();
+            }
+        }
+
+        function iniciarTimer() {
+            if (timerAtual <= 0) resetarTimer();
+            timerRodando = true;
+            const btn = document.getElementById('timerBtnPlay');
+            if (btn) { btn.textContent = '?? Pausar'; btn.className = 'timer-btn pause'; }
+
+            timerInterval = setInterval(() => {
+                timerAtual--;
+                atualizarDisplayTimer();
+                if (timerAtual <= 0) {
+                    pararTimer();
+                    timerConcluido();
+                }
+            }, 1000);
+        }
+
+        function pararTimer() {
+            timerRodando = false;
+            clearInterval(timerInterval);
+            timerInterval = null;
+            const btn = document.getElementById('timerBtnPlay');
+            if (btn) { btn.textContent = '?? Iniciar'; btn.className = 'timer-btn play'; }
+        }
+
+        function resetarTimer() {
+            pararTimer();
+            timerAtual = timerTotal;
+            atualizarDisplayTimer();
+            const display = document.getElementById('timerDisplay');
+            if (display) display.classList.remove('fim');
+        }
+
+        function atualizarDisplayTimer() {
+            const display = document.getElementById('timerDisplay');
+            const bar     = document.getElementById('timerBar');
+            if (!display) return;
+
+            const mins = Math.floor(timerAtual / 60);
+            const secs = timerAtual % 60;
+            display.textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+
+            const pct = timerTotal > 0 ? ((timerTotal - timerAtual) / timerTotal) * 100 : 0;
+            if (bar) bar.style.width = pct + '%';
+
+            // Cor: vermelho quando < 10s
+            display.className = 'timer-display ' + (timerAtual <= 10 ? 'urgente' : 'normal');
+        }
+
+        function timerConcluido() {
+            const display = document.getElementById('timerDisplay');
+            if (display) { display.textContent = '00:00'; display.className = 'timer-display fim'; }
+            mostrarNotificacao('? Descanso concluído! Próxima série! ??', 'success');
+            // Vibrar no mobile, se disponível
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        }
+
+        // =============================================
+        //  DADOS DOS TREINOS — 7 TIPOS
+        // =============================================
+        const todosTipos = [
+            // 0 - ABCD Marcelo (4 treinos)
+            {
+                nome: 'ABCD Marcelo',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito, Ombros e Tríceps',
+                        descricao: '8 exercícios',
+                        classe: 'treino-a',
+                        exercicios: ['Supino reto barra ou maq', 'Supino inclinado halteres', 'Voador', 'Desenvolvimento Máquina', 'Elevação lateral halter', 'Tríceps testa corda', 'Tríceps Corda', 'Supino declinado com alteres']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Pernas',
+                        descricao: '7 exercícios',
+                        classe: 'treino-b',
+                        exercicios: ['Agachamento máquina', 'Leg Press', 'Cadeira Extensora', 'Mesa Flexora', 'Panturrilha em pé', 'Abdominal com cabo', 'Glúteo cabo ou máquina']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Costas e Bíceps',
+                        descricao: '6 exercícios',
+                        classe: 'treino-c',
+                        exercicios: ['Puxada Alta pega Pronada', 'Remada Curvada Máquina', 'Serrote unilateral Halteres', 'Remada baixa cabo ou máquina', 'Rosca direta barra', 'Rosca Alternada, inclinada, alteres']
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Ombro, Posterior e Panturrilha',
+                        descricao: '7 exercícios',
+                        classe: 'treino-d',
+                        exercicios: ['Levantamento Terra Romeno', 'Cadeira Flexora', 'Elevação Lateral', 'Elevação posterior crucifixo invertido ou máquina', 'Encolhimento Halter ou Barra', 'Panturrilha sentado', 'Abdominal com cabo']
+                    }
+                ]
+            },
+            // 1 - Treino Jacke (5 treinos)
+            {
+                nome: 'Treino Jacke',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Segunda Peito - Tríceps',
+                        descricao: '8 exercícios',
+                        classe: 'treino-a',
+                        exercicios: ['Tríceps Supinada com Anilha', 'Tríceps TopHead Deitado no Banco com Anilha', 'Tríceps Francês Sentado com Anilha', 'Supino Vertical', 'Supino Inclinado Máquina pronada', 'Tríceps Paralela Sentado Máquina', 'Crossover no Cabo Polia Alta', 'Tríceps no Cabo Polia Alta']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Quadriceps - Panturrilha + Cárdio',
+                        descricao: '6 exercícios',
+                        classe: 'treino-b',
+                        exercicios: ['Avanço com Afundo Unilateral (combinado)', 'Agachamento com Halter', 'Cadeira Extensora (banco afastado)', 'Cadeira Adutora (empurra com joelho)', 'Panturrilha na Parede', 'Corrida na Esteira com Trote']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Quarta Costas - Biceps',
+                        descricao: '8 exercícios',
+                        classe: 'treino-c',
+                        exercicios: ['Puxada Aberta Barra Reta (sentado)', 'Puxada Alta em Pé com Corda no Cabo Polia Alta', 'Remada Baixa Pegada Aberta', 'Remada Pronada Máquina Articulada', 'Rosca Concentrada com Halter', 'Rosca direta com halteres em Pé', 'Rosca Direta no Cabo Polia Baixa com Corda', 'Rosca Direta Sentado no Banco com Halteres']
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Posteriores e Glúteos + Cárdio',
+                        descricao: '6 exercícios',
+                        classe: 'treino-d',
+                        exercicios: ['Ativação de Posterior e Glúteos Solo intercalado', 'Leg Press 45 (pés alinhados)', 'Cadeira Fletora (ajuste na panturrilha)', 'Leg Press Horizontal (pés afastados)', 'Cadeira Abdutora (empurra com joelho)', 'Corrida na Esteira em Trote']
+                    },
+                    {
+                        letra: 'E',
+                        nome: 'Ombro - Trapézio - Abdômen',
+                        descricao: '8 exercícios',
+                        classe: 'treino-e',
+                        exercicios: ['Desenvolvimento Ombro com Halteres (em pé)', 'Elevação Frontal com Anilha', 'Elevação Frontal Sentado com Halteres', 'Remada Alta com Barra Reta no Cabo Polia Baixa', 'Encolhimento de Ombros Costas no Cabo Polia Baixa', 'Abdominal Infra Solo (pernas flexionadas)', 'Abdominal obliquo - Prancha lateral com movimento', 'Abdominal Oblíquo em Solo (foto touch)']
+                    }
+                ]
+            },
+            // 2 - ABC Jacke (3 treinos)
+            {
+                nome: 'ABC Jacke',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito - Tríceps - Ombros',
+                        descricao: '9 exercícios',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Vertical', 'Supino com Halteres inclinado 30 graus', 'Crossover no Cabo Polia Alta (Peitoral Inclinado)', 'Tríceps TopHead Deitado no Banco com Anilha', 'Desenvolvimento Ombro com Halteres em pé', 'Elevação Frontal sentado com Halteres', 'Remada Alta com Barra Reta no Cabo Polia Baixa', 'Crucifixo Máquina', 'Tríceps supinado anilha']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Quadríceps - Posteriores - Panturrilha - Cardio',
+                        descricao: '7 exercícios',
+                        classe: 'treino-b',
+                        exercicios: ['Agachamento com Halter', 'Cadeira Extensora', 'Cadeira Adutora', 'Leg Press 45', 'Cadeira Abdutora', 'Leg Press Horizontal', 'Corrida Esteira']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Costas - Bíceps - Trapézio - Abdômen',
+                        descricao: '10 exercícios',
+                        classe: 'treino-c',
+                        exercicios: ['Puxada Aberta Barra Reta (sentado)', 'Remada Pronada Máquina Articulada', 'Rosca Direta no Cabo Polia Baixa com Corda', 'Rosca Direta Banco 45 ° com Halteres', 'Encolhimento de Ombros Costas no Cabo Polia Baixo', 'Abdominal Infra Solo (pernas flexionadas)', 'Abdominal Oblíquo - Prancha Lateral com movimento', 'Abdominal Oblíquo em Solo (foto touch)', 'Rosca direta com barra em w', 'Remada Serrote']
+                    }
+                ]
+            },
+            // 3 - ABCD Chatgpt (4 treinos)
+            {
+                nome: 'ABCD Chatgpt',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Costas e Bíceps',
+                        descricao: '6 exercícios • Alta intensidade',
+                        classe: 'treino-a',
+                        exercicios: ['Puxada Alta pegada pronada', 'Remada curvada máquina', 'Serrote Halteres', 'Remada baixa cabo/maquina', 'Rosca direta barra', 'Rosca Alternada inclinada']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Pernas',
+                        descricao: '7 exercícios • Força máxima',
+                        classe: 'treino-b',
+                        exercicios: ['Agachamento maquina', 'Leg press', 'Cadeira extensora', 'Mesa flexora', 'Glúteo cabo ou máquina', 'Panturrilha em pé', 'Abdominal com cabo']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Peito, ombro e tríceps',
+                        descricao: '7 exercícios • Força e massa',
+                        classe: 'treino-c',
+                        exercicios: ['Supino reto maquina', 'Supino inclinado com Halteres', 'Supino declinado com halteres', 'Desenvolvimento máquina', 'Elevação lateral', 'Tríceps testa corda', 'Tríceps corda']
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Posterior, Ombro, Trapézio, panturrilha',
+                        descricao: '6 exercícios • Delts e abdomen',
+                        classe: 'treino-d',
+                        exercicios: ['Levantamento Terra Romeno', 'Cadeira Flexora', 'Crucifixo invertido', 'Encolhimento halteres', 'Panturrilha sentado', 'Abdominal cabo']
+                    }
+                ]
+            },
+            // 4 - ABC do Zanca (3 treinos)
+            {
+                nome: 'ABC do Zanca',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Push (Empurrar)',
+                        descricao: '5 exercícios • Peito/ombros/tríceps',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto', 'Desenvolvimento', 'Supino Inclinado', 'Elevação Lateral', 'Tríceps Pulley']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Pull (Puxar)',
+                        descricao: '5 exercícios • Costas/bíceps',
+                        classe: 'treino-b',
+                        exercicios: ['Puxada Frontal', 'Remada Curvada', 'Remada Cavalinho', 'Rosca Direta', 'Rosca Martelo']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Legs (Pernas)',
+                        descricao: '5 exercícios • Membros inferiores',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento', 'Leg Press', 'Stiff', 'Extensora', 'Panturrilha']
+                    }
+                ]
+            },
+            // 5 - ABC Pacho (3 treinos)
+            {
+                nome: 'ABC Pacho',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito, Ombros e Tríceps',
+                        descricao: '7 exercícios',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto Barra/Maq', 'Supino inclinado Halter', 'Crucifixo Maq/Cabos', 'Desen. Front. Hal. Sent', 'Elevação lateral leve', 'Elevação frontal sentado com Halteres', 'Tríceps corda combinado com testa']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas, Bíceps e Abdômen',
+                        descricao: '8 exercícios',
+                        classe: 'treino-b',
+                        exercicios: ['Puxa frente pega aber', 'Serrote', 'Remada baixa triangulo', 'Puxa Neutra/supinada', 'Rosca direta. Barra W', 'Rosca Alt Alteres', 'Prancha Frontal', 'Elevação de pernas']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas e Glúteos',
+                        descricao: '6 exercícios',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento Halteres', 'Leg press 45°', 'Cadeira extensora', 'Cadeira Fletora', 'Stiff com Halteres lev', 'Panturrilha em pé/sent']
+                    }
+                ]
+            },
+            // 6 - ABDCE (5 treinos)
+            {
+                nome: 'ABDCE',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito e Tríceps',
+                        descricao: '6 exercícios • Empurrar',
+                        classe: 'treino-a',
+                        exercicios: ['Panturrilha em pé na máquina ou smith com step', 'Panturrilha sentada', 'Supino inclinado smith ou máquina', 'Supino reto halteres', 'Supino inclinado com halteres combinado com crucifixo inclinado com halteres', 'Supino declinado']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas e Bíceps',
+                        descricao: '5 exercícios • Puxar',
+                        classe: 'treino-b',
+                        exercicios: ['Abdominal supra na prancha', 'Abdominal infra na torre', 'Remada curvada pronada', 'Remada baixa pegada aberta', 'Serrote']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas',
+                        descricao: '5 exercícios • Membros inferiores',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento Livre', 'Leg 45º', 'Cadeira Extensora', 'Flexor deitado', 'Flexor sentado']
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Ombros',
+                        descricao: '5 exercícios • Deltoides',
+                        classe: 'treino-d',
+                        exercicios: ['Panturrilha em pé na máquina ou smith com step', 'Panturrilha sentada', 'Desenvolvimento sentado com halteres', 'Elevação frontal corda', 'Elevação lateral']
+                    },
+                    {
+                        letra: 'E',
+                        nome: 'Treino E - Braços',
+                        descricao: '6 exercícios • Bíceps e tríceps',
+                        classe: 'treino-e',
+                        exercicios: ['Abdominal supra na prancha', 'Abdominal infra na torre', 'Rosca direta barra em pé', 'Rosca scott na máquina ou no cross 21', 'Rosca direta com halteres sentado na gravs', 'Rosca direta corda']
+                    }
+                ]
+            }
+        ];
+
+        // =============================================
+        //  INICIALIZAÇÃO
+        // =============================================
+
+        // Normaliza exercícios: aceita string ou objeto {nome,...}
+        function normalizarExercicios(lista) {
+            if (!Array.isArray(lista)) return lista;
+            return lista.map(function(tipo) {
+                if (!tipo || !Array.isArray(tipo.treinos)) return tipo;
+                tipo.treinos = tipo.treinos.map(function(t) {
+                    if (!Array.isArray(t.exercicios)) return t;
+                    t.exercicios = t.exercicios.map(function(ex) {
+                        return (typeof ex === 'object' && ex !== null && ex.nome) ? ex.nome : String(ex);
+                    });
+                    return t;
+                });
+                return tipo;
+            });
+        }
+            console.log('?? Inicializando Treinos Marcelo com 7 tipos...');
+            carregarTreinosSalvos();
+            carregarTreinos();
+
+            // Fechar modal com Escape
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') fecharModal();
+            });
+
+            console.log('? App carregado!');
+        });
+
+        function carregarTreinosSalvos() {
+            // Suporta chave nova ('marceloTreinos') e legada ('marceloTreinosV2', 'treinos')
+            const raw = localStorage.getItem('marceloTreinos')
+                     || localStorage.getItem('marceloTreinosV2')
+                     || localStorage.getItem('treinos');
+            if (!raw) return;
+            try {
+                const dados = JSON.parse(raw);
+                const lista = Array.isArray(dados) ? dados : (dados.treinos || dados.tipos || []);
+                if (!Array.isArray(lista) || lista.length === 0) return;
+                const normalizada = normalizarExercicios(lista);
+                normalizada.forEach((tipo, i) => {
+                    if (!tipo || !tipo.treinos) return;
+                    if (i < todosTipos.length) {
+                        todosTipos[i] = tipo;
+                    } else {
+                        todosTipos.push(tipo);
+                    }
+                });
+                // Migra histórico legado (chave 'historicoTreinos' ? 'marceloHistorico')
+                const histLegado = localStorage.getItem('historicoTreinos');
+                if (histLegado && !localStorage.getItem('marceloHistorico')) {
+                    localStorage.setItem('marceloHistorico', histLegado);
+                }
+                console.log('? Treinos carregados (' + normalizada.length + ' tipos)');
+            } catch (e) {
+                console.warn('?? Erro ao carregar treinos salvos, usando padrões');
+            }
+        }
+
+        function salvarTodosOsTreinos() {
+            localStorage.setItem('marceloTreinos', JSON.stringify(todosTipos));
+        }
+
+        // =============================================
+        //  NAVEGAÇÃO PRINCIPAL
+        // =============================================
+        function carregarTreinos() {
+            const tipoSelector = document.getElementById('tipoSelector');
+            tipoSelector.innerHTML = '';
+
+            todosTipos.forEach((tipo, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'tipo-btn' + (index === tipoAtualIndex ? ' active' : '');
+                btn.textContent = tipo.nome;
+                btn.onclick = () => selecionarTipo(index);
+                tipoSelector.appendChild(btn);
+            });
+
+            carregarTreinosTipo(tipoAtualIndex);
+        }
+
+        function selecionarTipo(index) {
+            tipoAtualIndex = index;
+            document.querySelectorAll('.tipo-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            carregarTreinosTipo(index);
+        }
+
+        function carregarTreinosTipo(tipoIndex) {
+            const container = document.getElementById('treinosContainer');
+            const tipo = todosTipos[tipoIndex];
+            container.innerHTML = '';
+
+            tipo.treinos.forEach((treino, index) => {
+                const card = document.createElement('div');
+                card.className = 'treino-card ' + treino.classe;
+
+                // Contar exercícios concluídos
+                let totalConcluidos = 0;
+                treino.exercicios.forEach((_, i) => {
+                    if (localStorage.getItem(`concluido_${tipoIndex}_${index}_${i}`) === 'true') totalConcluidos++;
+                });
+                const progresso = treino.exercicios.length > 0
+                    ? Math.round((totalConcluidos / treino.exercicios.length) * 100) : 0;
+
+                card.innerHTML = `
+                    <div class="treino-header">
+                        <div class="treino-letra">${esc(treino.letra)}</div>
+                        <div class="treino-info">
+                            <h3>${esc(treino.nome)}</h3>
+                            <p>${esc(treino.descricao)}</p>
+                            ${progresso > 0 ? `<span class="serie-badge ${progresso === 100 ? 'completo' : ''}">
+                                ${progresso === 100 ? '?' : '??'} ${progresso}% feito
+                            </span>` : ''}
+                        </div>
+                    </div>
+                    <div class="treino-actions">
+                        <button class="btn-iniciar" onclick="iniciarTreino(${index})">
+                            ?? Iniciar Treino
+                        </button>
+                        <button class="btn-edit" onclick="editarTreino(${index})" title="Editar treino">
+                            ??
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // =============================================
+        //  MODAL INICIAR TREINO
+        // =============================================
+        function iniciarTreino(index) {
+            const treino = todosTipos[tipoAtualIndex].treinos[index];
+            pararTimer(); // garante que não haja timer ativo de outra sessão
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            // Fechar clicando no overlay (fora do conteúdo)
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) fecharModal();
+            });
+
+            // Timer HTML com tempo de descanso padrão de 60s
+            const timerHtml = criarTimerHTML(60);
+
+            // Exercícios HTML
+            const exerciciosDiv = document.createElement('div');
+            exerciciosDiv.id = 'exerciciosListaTreino';
+
+            treino.exercicios.forEach((exercicio, i) => {
+                const pesoKey      = `peso_${tipoAtualIndex}_${index}_${i}`;
+                const serieKey     = `series_${tipoAtualIndex}_${index}_${i}`;
+                const concluidoKey = `concluido_${tipoAtualIndex}_${index}_${i}`;
+                const pesoSalvo    = localStorage.getItem(pesoKey) || '';
+                const seriesSalvas = parseInt(localStorage.getItem(serieKey)) || 0;
+                const concluido    = localStorage.getItem(concluidoKey) === 'true';
+
+                const item = document.createElement('div');
+                item.className = 'exercicio-item' + (concluido ? ' concluido' : '');
+                item.dataset.exercicio = i;
+
+                // Série display
+                const seriesText = seriesSalvas > 0 ? `${seriesSalvas} série(s) feita(s)` : '';
+
+                item.innerHTML = `
+                    <div class="exercicio-info">
+                        <div class="exercicio-nome">${esc(exercicio)}</div>
+                        <div class="series-info" id="seriesInfo_${i}">${seriesText}</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+                        <div class="exercicio-controls">
+                            <input type="number"
+                                   class="peso-input"
+                                   id="pesoInput_${i}"
+                                   placeholder="Peso"
+                                   value="${esc(pesoSalvo)}"
+                                   min="0"
+                                   step="0.5"
+                                   onchange="salvarPeso(${tipoAtualIndex}, ${index}, ${i}, this.value)">
+                            <span style="color:#ccc;">kg</span>
+                            <button class="btn-concluir ${concluido ? 'concluido' : ''}"
+                                    id="btnConcluir_${i}"
+                                    onclick="toggleConcluido(${tipoAtualIndex}, ${index}, ${i}, this)">
+                                ${concluido ? '? Feito' : 'Concluir'}
+                            </button>
+                        </div>
+                        <div class="series-controles">
+                            <button class="serie-btn menos" onclick="ajustarSeries(${tipoAtualIndex}, ${index}, ${i}, -1)">-</button>
+                            <span class="serie-contador" id="serieCount_${i}">${seriesSalvas}</span>
+                            <button class="serie-btn mais" onclick="ajustarSeries(${tipoAtualIndex}, ${index}, ${i}, 1)">+</button>
+                            <span style="font-size:0.8em; color:#9ca3af;">séries</span>
+                        </div>
+                    </div>
+                `;
+
+                exerciciosDiv.appendChild(item);
+            });
+
+            // Monta modal
+            const conteudo = document.createElement('div');
+            conteudo.className = 'modal-content';
+            conteudo.innerHTML = `
+                <div class="modal-header">
+                    <h2>${esc(treino.nome)}</h2>
+                    <p>${esc(treino.descricao)}</p>
+                </div>
+                ${timerHtml}
+            `;
+            conteudo.appendChild(exerciciosDiv);
+            conteudo.innerHTML += `
+                <div class="modal-footer">
+                    <button class="btn-fechar" onclick="fecharTreinoModal(${tipoAtualIndex}, ${index})">
+                        ?? Finalizar Treino
+                    </button>
+                </div>
+            `;
+
+            modal.appendChild(conteudo);
+            document.body.appendChild(modal);
+
+            // Inicializa display do timer
+            timerTotal = 60;
+            timerAtual = 60;
+            atualizarDisplayTimer();
+        }
+
+        function fecharTreinoModal(tipoIndex, treinoIndex) {
+            pararTimer();
+            fecharModal();
+            carregarTreinosTipo(tipoIndex); // atualiza progresso nos cards
+            mostrarNotificacao('?? Treino finalizado! Ótimo trabalho! ??');
+        }
+
+        // =============================================
+        //  PESO / SÉRIES / CONCLUSÃO
+        // =============================================
+        function salvarPeso(tipoIndex, treinoIndex, exercicioIndex, peso) {
+            // BUG FIX: rejeitar negativos
+            const val = parseFloat(peso);
+            const input = document.getElementById(`pesoInput_${exercicioIndex}`);
+            if (isNaN(val) || val < 0) {
+                if (input) input.value = '';
+                localStorage.removeItem(`peso_${tipoIndex}_${treinoIndex}_${exercicioIndex}`);
+                mostrarNotificacao('?? Peso deve ser 0 ou positivo', 'warning');
+                return;
+            }
+            localStorage.setItem(`peso_${tipoIndex}_${treinoIndex}_${exercicioIndex}`, val);
+        }
+
+        function ajustarSeries(tipoIndex, treinoIndex, exercicioIndex, delta) {
+            const key     = `series_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const atual   = parseInt(localStorage.getItem(key)) || 0;
+            const novo    = Math.max(0, atual + delta);
+            localStorage.setItem(key, novo);
+
+            const contador = document.getElementById(`serieCount_${exercicioIndex}`);
+            const info     = document.getElementById(`seriesInfo_${exercicioIndex}`);
+            if (contador) contador.textContent = novo;
+            if (info) info.textContent = novo > 0 ? `${novo} série(s) feita(s)` : '';
+
+            // Auto-iniciar timer ao confirmar uma série
+            if (delta > 0) {
+                resetarTimer();
+                iniciarTimer();
+                mostrarNotificacao('?? Timer de descanso iniciado!');
+            }
+        }
+
+        function toggleConcluido(tipoIndex, treinoIndex, exercicioIndex, button) {
+            const key = `concluido_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const item = button.closest('.exercicio-item');
+            const jaFeito = item.classList.contains('concluido');
+
+            if (jaFeito) {
+                item.classList.remove('concluido');
+                button.classList.remove('concluido');
+                button.textContent = 'Concluir';
+                localStorage.removeItem(key);
+                mostrarNotificacao('?? Exercício desmarcado');
+            } else {
+                item.classList.add('concluido');
+                button.classList.add('concluido');
+                button.textContent = '? Feito';
+                localStorage.setItem(key, 'true');
+                mostrarNotificacao('? Exercício concluído!');
+            }
+        }
+
+        // =============================================
+        //  MODAL EDITAR TREINO
+        // =============================================
+        function editarTreino(index) {
+            const treino = todosTipos[tipoAtualIndex].treinos[index];
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) fecharModal();
+            });
+
+            const exerciciosDiv = document.createElement('div');
+            exerciciosDiv.className = 'exercicios-lista';
+            exerciciosDiv.id = 'exercicios-lista';
+
+            treino.exercicios.forEach((exercicio, i) => {
+                exerciciosDiv.appendChild(criarItemExercicioEdicao(exercicio, i));
+            });
+
+            const btnAdd = document.createElement('button');
+            btnAdd.className = 'btn-add';
+            btnAdd.textContent = '? Adicionar Exercício';
+            btnAdd.onclick = adicionarExercicio;
+            exerciciosDiv.appendChild(btnAdd);
+
+            const conteudo = document.createElement('div');
+            conteudo.className = 'modal-content';
+            conteudo.style.maxWidth = '600px';
+
+            const nomeInput = document.createElement('input');
+            nomeInput.type = 'text';
+            nomeInput.id = 'edit-nome';
+            nomeInput.value = treino.nome;
+            nomeInput.placeholder = 'Ex: Treino A - Peito';
+            nomeInput.style.cssText = 'width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:white;font-size:16px;';
+
+            const descInput = document.createElement('input');
+            descInput.type = 'text';
+            descInput.id = 'edit-descricao';
+            descInput.value = treino.descricao;
+            descInput.placeholder = 'Ex: 5 exercícios • Força';
+            descInput.style.cssText = nomeInput.style.cssText;
+
+            conteudo.innerHTML = `
+                <div class="modal-header">
+                    <h2>?? Editar Treino</h2>
+                    <p>Personalize seu treino como desejar</p>
+                </div>
+                <div class="form-group">
+                    <label for="edit-nome">Nome do Treino:</label>
+                </div>
+            `;
+            conteudo.querySelector('[for="edit-nome"]').after(nomeInput);
+
+            const descGroup = document.createElement('div');
+            descGroup.className = 'form-group';
+            descGroup.innerHTML = '<label for="edit-descricao">Descrição:</label>';
+            descGroup.appendChild(descInput);
+            conteudo.appendChild(descGroup);
+
+            const exGroup = document.createElement('div');
+            exGroup.className = 'form-group';
+            exGroup.innerHTML = '<label>Exercícios:</label>';
+            exGroup.appendChild(exerciciosDiv);
+            conteudo.appendChild(exGroup);
+
+            const actions = document.createElement('div');
+            actions.className = 'form-actions';
+            actions.innerHTML = `
+                <button class="btn-salvar"   onclick="salvarEdicaoTreino(${index})">?? Salvar</button>
+                <button class="btn-cancelar" onclick="fecharModal()">? Cancelar</button>
+            `;
+            conteudo.appendChild(actions);
+
+            modal.appendChild(conteudo);
+            document.body.appendChild(modal);
+        }
+
+        function criarItemExercicioEdicao(nomeExercicio, i) {
+            const div = document.createElement('div');
+            div.className = 'exercicio-edit';
+
+            const btn = document.createElement('button');
+            btn.className = 'btn-remove';
+            btn.textContent = '×';
+            btn.onclick = () => removerExercicio(div);
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = nomeExercicio; // valor definido via .value — sem risco de XSS
+            input.className = 'exercicio-input';
+            input.dataset.index = i;
+            input.placeholder = 'Nome do exercício';
+
+            div.appendChild(btn);
+            div.appendChild(input);
+            return div;
+        }
+
+        function removerExercicio(itemDiv) {
+            const lista   = document.getElementById('exercicios-lista');
+            const itens   = lista.querySelectorAll('.exercicio-edit');
+            if (itens.length <= 1) {
+                mostrarNotificacao('?? Não é possível remover o último exercício!', 'warning');
+                return;
+            }
+            itemDiv.remove();
+            // Reindexar data-index
+            lista.querySelectorAll('.exercicio-edit').forEach((el, idx) => {
+                el.querySelector('.exercicio-input').dataset.index = idx;
+            });
+            mostrarNotificacao('??? Exercício removido!', 'warning');
+        }
+
+        function adicionarExercicio() {
+            const lista     = document.getElementById('exercicios-lista');
+            const btnAdd    = lista.querySelector('.btn-add');
+            const novos     = lista.querySelectorAll('.exercicio-edit');
+            const novoItem  = criarItemExercicioEdicao('Novo Exercício', novos.length);
+            lista.insertBefore(novoItem, btnAdd);
+            const inp = novoItem.querySelector('.exercicio-input');
+            inp.focus();
+            inp.select();
+            mostrarNotificacao('? Novo exercício adicionado!');
+        }
+
+        function salvarEdicaoTreino(index) {
+            const novoNome = document.getElementById('edit-nome').value.trim();
+            const novaDesc = document.getElementById('edit-descricao').value.trim();
+
+            if (!novoNome) {
+                mostrarNotificacao('?? Nome do treino é obrigatório!', 'warning');
+                return;
+            }
+
+            const inputs = document.querySelectorAll('#exercicios-lista .exercicio-input');
+            const novosExercicios = [];
+            inputs.forEach(inp => {
+                const v = inp.value.trim();
+                if (v) novosExercicios.push(v);
+            });
+
+            if (novosExercicios.length === 0) {
+                mostrarNotificacao('?? Pelo menos um exercício é obrigatório!', 'warning');
+                return;
+            }
+
+            todosTipos[tipoAtualIndex].treinos[index].nome       = novoNome;
+            todosTipos[tipoAtualIndex].treinos[index].descricao  = novaDesc;
+            todosTipos[tipoAtualIndex].treinos[index].exercicios = novosExercicios;
+
+            salvarTodosOsTreinos();
+            fecharModal();
+            carregarTreinos();
+            mostrarNotificacao('?? Treino salvo com sucesso!');
+        }
+
+        // =============================================
+        //  FECHAR MODAIS
+        // =============================================
+        function fecharModal() {
+            pararTimer();
+            document.querySelectorAll('.modal-overlay').forEach(m => {
+                if (document.body.contains(m)) document.body.removeChild(m);
+            });
+        }
+
+        // =============================================
+        //  HISTÓRICO DE TREINOS
+        // =============================================
+        function registrarHistorico(treinoNome, exercicios) {
+            const hist = JSON.parse(localStorage.getItem('marceloHistorico') || '[]');
+            hist.unshift({
+                data: new Date().toLocaleString('pt-BR'),
+                nome: treinoNome,
+                exercicios: exercicios.map((ex, i) => {
+                    const peso = localStorage.getItem(`peso_extra_${i}`) || '';
+                    return peso ? `${ex} (${peso}kg)` : ex;
+                })
+            });
+            // Mantém no máximo 50 registros
+            if (hist.length > 50) hist.pop();
+            localStorage.setItem('marceloHistorico', JSON.stringify(hist));
+        }
+
+        function verHistorico() {
+            const hist = JSON.parse(localStorage.getItem('marceloHistorico') || '[]');
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
+
+            const conteudo = document.createElement('div');
+            conteudo.className = 'modal-content';
+
+            let itensHtml = '';
+            if (hist.length === 0) {
+                itensHtml = '<p style="text-align:center;color:#9ca3af;padding:20px;">Nenhum treino registrado ainda.</p>';
+            } else {
+                hist.forEach(h => {
+                    itensHtml += `
+                        <div class="historico-item">
+                            <div class="historico-data">?? ${esc(h.data)}</div>
+                            <div class="historico-nome">?? ${esc(h.nome)}</div>
+                            <div class="historico-exercicios">${h.exercicios.map(e => esc(e)).join(' • ')}</div>
+                        </div>
+                    `;
+                });
+                itensHtml += `<button class="btn-limpar-hist" onclick="limparHistorico()">??? Limpar Histórico</button>`;
+            }
+
+            conteudo.innerHTML = `
+                <div class="modal-header">
+                    <h2>?? Histórico de Treinos</h2>
+                    <p>${hist.length} treino(s) registrado(s)</p>
+                </div>
+                <div style="max-height:60vh;overflow-y:auto;">${itensHtml}</div>
+                <div class="modal-footer">
+                    <button class="btn-fechar" onclick="fecharModal()">Fechar</button>
+                </div>
+            `;
+
+            modal.appendChild(conteudo);
+            document.body.appendChild(modal);
+        }
+
+        function limparHistorico() {
+            if (!confirm('Tem certeza que deseja apagar todo o histórico?')) return;
+            localStorage.removeItem('marceloHistorico');
+            fecharModal();
+            mostrarNotificacao('??? Histórico apagado!', 'warning');
+        }
+
+        // =============================================
+        //  EXPORTAR / IMPORTAR BACKUP
+        // =============================================
+        function exportarBackup() {
+            const dados = {
+                versao: '2.0',
+                data: new Date().toISOString(),
+                treinos: todosTipos,
+                historico: JSON.parse(localStorage.getItem('marceloHistorico') || '[]'),
+                pesos: {}
+            };
+            // Exportar todos os pesos salvos
+            for (let k in localStorage) {
+                if (k.startsWith('peso_') || k.startsWith('concluido_') || k.startsWith('series_')) {
+                    dados.pesos[k] = localStorage.getItem(k);
+                }
+            }
+
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            const dataStr = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
+            a.href     = url;
+            a.download = `treinos-backup-${dataStr}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            mostrarNotificacao('?? Backup exportado com sucesso!');
+        }
+
+        function importarBackup() {
+            document.getElementById('inputImportacao').click();
+        }
+
+        function processarImportacao(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const dados = JSON.parse(e.target.result);
+
+                    // Suporta três formatos:
+                    // 1) Novo: { versao, treinos: [...], historico, pesos }
+                    // 2) Legado: { tipos: [...] } ou { treinos: [...] } sem versao
+                    // 3) Array puro: [{nome, treinos:[...]}, ...]
+                    let listaTreinos, historicoImport, pesosImport;
+
+                    if (Array.isArray(dados)) {
+                        listaTreinos  = dados;
+                        historicoImport = null;
+                        pesosImport   = null;
+                    } else if (dados.treinos && Array.isArray(dados.treinos)) {
+                        listaTreinos  = dados.treinos;
+                        historicoImport = dados.historico || null;
+                        pesosImport   = dados.pesos     || null;
+                        // Formato v3.x: histórico dentro do objeto localStorage
+                        if (!historicoImport && dados.localStorage && dados.localStorage.historicoTreinos) {
+                            try { historicoImport = JSON.parse(dados.localStorage.historicoTreinos); } catch(e) {}
+                        }
+                        // Formato v3.x: pesos/concluidos dentro do objeto localStorage
+                        if (!pesosImport && dados.localStorage) {
+                            pesosImport = {};
+                            Object.entries(dados.localStorage).forEach(([k, v]) => {
+                                if (k.startsWith('peso_') || k.startsWith('concluido_') || k.startsWith('series_')) {
+                                    pesosImport[k] = v;
+                                }
+                            });
+                            if (Object.keys(pesosImport).length === 0) pesosImport = null;
+                        }
+                    } else if (dados.tipos && Array.isArray(dados.tipos)) {
+                        listaTreinos  = dados.tipos;
+                        historicoImport = dados.historico || null;
+                        pesosImport   = dados.pesos     || null;
+                    } else {
+                        mostrarNotificacao('? Arquivo de backup inválido!', 'error');
+                        event.target.value = '';
+                        return;
+                    }
+
+                    // Normaliza exercícios (objetos {nome,...} ? strings)
+                    listaTreinos = normalizarExercicios(listaTreinos);
+
+                    // Validação mínima: ao menos 1 tipo com array de treinos
+                    const validos = listaTreinos.filter(t => t && Array.isArray(t.treinos));
+                    if (validos.length === 0) {
+                        mostrarNotificacao('? Backup não contém treinos válidos!', 'error');
+                        event.target.value = '';
+                        return;
+                    }
+
+                    const dataStr = dados.data
+                        ? new Date(dados.data).toLocaleString('pt-BR')
+                        : 'versão antiga';
+
+                    if (!confirm(`Restaurar backup de ${dataStr}?\n\n${validos.length} tipo(s) encontrado(s). Isso vai substituir os dados atuais.`)) {
+                        event.target.value = '';
+                        return;
+                    }
+
+                    // Restaurar treinos
+                    listaTreinos.forEach((tipo, i) => {
+                        if (!tipo || !tipo.treinos) return;
+                        if (i < todosTipos.length) {
+                            todosTipos[i] = tipo;
+                        } else {
+                            todosTipos.push(tipo);
+                        }
+                    });
+                    salvarTodosOsTreinos();
+
+                    // Restaurar histórico (se disponível)
+                    if (historicoImport) {
+                        const hist = Array.isArray(historicoImport) ? historicoImport : [];
+                        localStorage.setItem('marceloHistorico', JSON.stringify(hist));
+                    }
+
+                    // Restaurar pesos/séries/concluídos (se disponível)
+                    if (pesosImport) {
+                        Object.entries(pesosImport).forEach(([k, v]) => {
+                            localStorage.setItem(k, v);
+                        });
+                    }
+
+                    carregarTreinos();
+                    mostrarNotificacao('?? Backup restaurado com sucesso! (' + validos.length + ' tipos)');
+                } catch (err) {
+                    mostrarNotificacao('? Erro ao ler arquivo de backup!', 'error');
+                }
+                event.target.value = '';
+            };
+            reader.readAsText(file);
+        }
+
+        // =============================================
+        //  NOVO TIPO DE TREINO
+        // =============================================
+        function novoTipoTreino() {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
+
+            const conteudo = document.createElement('div');
+            conteudo.className = 'modal-content';
+            conteudo.innerHTML = `
+                <div class="modal-header">
+                    <h2>? Novo Tipo de Treino</h2>
+                    <p>Crie um tipo personalizado com seus próprios treinos</p>
+                </div>
+                <div class="form-group">
+                    <label>Nome do tipo (ex: "Meu Push Pull"):</label>
+                    <div class="tipo-novo-form">
+                        <input type="text" id="novoTipoNome" placeholder="Nome do tipo de treino..." maxlength="40">
+                        <button class="btn-criar-tipo" onclick="criarNovoTipo()">Criar</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-fechar" onclick="fecharModal()">Cancelar</button>
+                </div>
+            `;
+
+            modal.appendChild(conteudo);
+            document.body.appendChild(modal);
+            setTimeout(() => document.getElementById('novoTipoNome')?.focus(), 100);
+        }
+
+        function criarNovoTipo() {
+            const nome = document.getElementById('novoTipoNome').value.trim();
+            if (!nome) {
+                mostrarNotificacao('?? Digite um nome para o tipo de treino', 'warning');
+                return;
+            }
+
+            const novoTipo = {
+                nome: nome,
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A',
+                        descricao: 'Meu treino personalizado',
+                        classe: 'treino-a',
+                        exercicios: ['Exercício 1', 'Exercício 2', 'Exercício 3']
+                    }
+                ]
+            };
+
+            todosTipos.push(novoTipo);
+            salvarTodosOsTreinos();
+            fecharModal();
+            carregarTreinos();
+            // Selecionar o novo tipo automaticamente
+            selecionarTipo(todosTipos.length - 1);
+            mostrarNotificacao(`? Tipo "${nome}" criado! Edite os treinos conforme desejar.`);
+        }
+
+        // =============================================
+        //  NOTIFICAÇÕES
+        // =============================================
+        function mostrarNotificacao(mensagem, tipo = 'success') {
+            // Remove notificação existente para não acumular
+            const existente = document.querySelector('.notification');
+            if (existente) existente.remove();
+
+            const notif = document.createElement('div');
+            notif.className = `notification ${tipo}`;
+            notif.textContent = mensagem;
+            document.body.appendChild(notif);
+
+            setTimeout(() => {
+                if (document.body.contains(notif)) notif.remove();
+            }, 3000);
+        }
+
+        console.log('?? Treinos Marcelo v2.0 carregado!');
+    </script>
+</body>
+</html>

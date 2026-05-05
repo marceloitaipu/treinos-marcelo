@@ -1,0 +1,1174 @@
+{
+  "treinos": [
+    {
+      "nome": "ABCD Marcelo",
+      "treinos": [
+        {
+          "letra": "A",
+          "nome": "Treino A - Peito, Ombros e Tríceps",
+          "descricao": "8 exercícios",
+          "classe": "treino-a",
+          "exercicios": [
+            {
+              "nome": "Supino reto barra ou maq",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Supino inclinado halteres",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Voador",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Desenvolvimento Máquina",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação  lateral halter",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps testa corda",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps Corda",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Supino declinado com alteres",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "B",
+          "nome": "Treino B - Pernas",
+          "descricao": "7 exercícios • Puxadas e rosca",
+          "classe": "treino-b",
+          "exercicios": [
+            {
+              "nome": "Agachamento máquina",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Leg Press",
+              "series": "4",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Extensora",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Mesa Flexora",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Panturrilha em pé",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Abdominal com cabo",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Glúteo cabo ou máquina",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "C",
+          "nome": "Treino C - Costas e Bíceps",
+          "descricao": "6 exercícios • Membros inferiores",
+          "classe": "treino-c",
+          "exercicios": [
+            {
+              "nome": "Puxada Alta pega Pronada",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Remada Curvada Máquina",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Serrote unilateral Halteres",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Remada baixa cabo ou máquina",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca direta barra",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca Alternada, inclinada, alteres",
+              "series": "4",
+              "reps": "20",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "D",
+          "nome": "Treino D - Ombro, Posterior e Panturrilha",
+          "descricao": "Exercícios",
+          "classe": "treino-d",
+          "exercicios": [
+            {
+              "nome": "Levantamento Terra Romeno",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Flexora",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação Lateral",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação posterior crucifixo invertido ou máquina",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Encolhimento Halter ou Barra",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Panturrilha sentado",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Abdominal com cabo",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Treino Jacke",
+      "treinos": [
+        {
+          "letra": "A",
+          "nome": "Segunda Peito - Tríceps",
+          "descricao": "4 exercícios • Corpo todo",
+          "classe": "treino-a",
+          "exercicios": [
+            {
+              "nome": "Tríceps Supinada com Anilha",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps TopHead Deitado no Banco com Anilha",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps Francês Sentado com Anilha",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Supino Vertical",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Supino Inclinado Máquina pronada",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps Paralela Sentado Máquina",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Crossover no Cabo Polia Alta",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps no Cabo Polia Alta",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "B",
+          "nome": "Quadriceps - Panturrilha + Cárdio",
+          "descricao": "4 exercícios • Condicionamento",
+          "classe": "treino-b",
+          "exercicios": [
+            {
+              "nome": "Avanço com Afundo Unilateral (combinado)",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Agachamento com Halter",
+              "series": "4",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Extensora (banco afastado)",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Adutora (empurra com joelho)",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Panturrilha na Parede",
+              "series": "3",
+              "reps": "30",
+              "peso": ""
+            },
+            {
+              "nome": "Corrida na Esteira com Trote",
+              "series": "1",
+              "reps": "20",
+              "peso": "min"
+            }
+          ]
+        },
+        {
+          "letra": "C",
+          "nome": "Quarta Costas - Biceps",
+          "descricao": "8 exercícios",
+          "classe": "treino-c",
+          "exercicios": [
+            {
+              "nome": "Puxada Aberta Barra Reta (sentado)",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Puxada Alta em Pé com Corda no Cabo Polia Alta",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Remada Baixa Pegada Aberta",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Remada Pronada Máquina Articulada",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca Concentrada com Halter",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca direta com halteres em Pé",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca Direta no Cabo Polia Baixa com Corda",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca Direta Sentado no Banco com Halteres",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "D",
+          "nome": "Posteriores e Glúteos + Cárdio",
+          "descricao": "0 exercícios • Configure",
+          "classe": "treino-d",
+          "exercicios": [
+            {
+              "nome": "Ativação de Posterior e Glúteos Solo intercalado",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Leg Press 45 (pés alinhados)",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Fletora (ajuste na panturrilha)",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Leg Press Horizontal (pés afastados)",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Abdutora (empurra com joelho)",
+              "series": "3",
+              "reps": "30",
+              "peso": ""
+            },
+            {
+              "nome": "Corrida na Esteira em Trote",
+              "series": "20",
+              "reps": "1",
+              "peso": "seg"
+            }
+          ]
+        },
+        {
+          "letra": "E",
+          "nome": "Ombro - Trapézio - Abdômen",
+          "descricao": "0 exercícios • Configure",
+          "classe": "treino-e",
+          "exercicios": [
+            {
+              "nome": "Desenvolvimento Ombro com Halteres (em pé)",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação Frontal com Anilha",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação Frontal Sentado com Halteres",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Remada Alta com Barra Reta no Cabo Polia Baixa",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Encolhimento de Ombros Costas no Cabo Polia Baixa",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Abdominal Infra Solo (pernas flexionadas)",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Abdominal obliquo - Prancha lateral com movimento",
+              "series": "3",
+              "reps": "8",
+              "peso": "rep"
+            },
+            {
+              "nome": "Abdominal Oblíquo em Solo (foto touch)",
+              "series": "3",
+              "reps": "20",
+              "peso": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "ABC Jacke",
+      "treinos": [
+        {
+          "letra": "A",
+          "nome": "Treino A - Peito - Tríceps - Ombros",
+          "descricao": "6 exercícios • Membros superiores",
+          "classe": "treino-a",
+          "exercicios": [
+            {
+              "nome": "Supino Vertical",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Supino com Halteres inclinado 30 graus",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Crossover no Cabo Polia Alta (Peitoral Inclinado)",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps TopHead Deitado no Banco com Anilha",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Desenvolvimento Ombro com Halteres em pé",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação Frontal sentado com Halteres",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Remada Alta com Barra Reta no Cabo Polia Baixa",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Crucifixo Máquina",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps supinado anilha",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "B",
+          "nome": "Treino B - Quadríceps - Posteriores - Panturrilha - Cardio",
+          "descricao": "5 exercícios • Membros inferiores",
+          "classe": "treino-b",
+          "exercicios": [
+            {
+              "nome": "Agachamento com Halter",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Extensora",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Adutora",
+              "series": "3",
+              "reps": "20",
+              "peso": ""
+            },
+            {
+              "nome": "Leg Press 45",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Abdutora",
+              "series": "3",
+              "reps": "20",
+              "peso": ""
+            },
+            {
+              "nome": "Leg Press Horizontal",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Corrida Esteira",
+              "series": "1",
+              "reps": "20",
+              "peso": "min"
+            }
+          ]
+        },
+        {
+          "letra": "C",
+          "nome": "Treino C - Costas - Bíceps - Trapézio - Abdômen",
+          "descricao": "Exercícios",
+          "classe": "treino-c",
+          "exercicios": [
+            {
+              "nome": "Puxada Aberta Barra Reta (sentado)",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Remada Pronada Máquina Articulada",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca Direta no Cabo Polia Baixa com Corda",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca Direta Banco 45 ° com Halteres",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Encolhimento de Ombros Costas no Cabo Polia Baixo",
+              "series": "3",
+              "reps": "20",
+              "peso": ""
+            },
+            {
+              "nome": "Abdominal Infra Solo (pernas flexionadas)",
+              "series": "3",
+              "reps": "20",
+              "peso": ""
+            },
+            {
+              "nome": "Abdominal Oblíquo - Prancha Lateral com movimento",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Abdominal Oblíquo em Solo (foto touch)",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca direta com barra em w",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Remada Serrote",
+              "series": "3",
+              "reps": "20",
+              "peso": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "ABCD Chatgpt",
+      "treinos": [
+        {
+          "letra": "A",
+          "nome": "Treino A - Costas e Bíceps",
+          "descricao": "6 exercícios • Alta intensidade",
+          "classe": "treino-a",
+          "exercicios": [
+            {
+              "nome": "Puxada Alta pegada pronada",
+              "series": "4",
+              "reps": "8",
+              "peso": ""
+            },
+            {
+              "nome": "Remada curvada máquina",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Serrote Halteres",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Remada baixa cabo/maquina",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca direta barra",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca Alternada inclinada",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "B",
+          "nome": "Treino B - Pernas",
+          "descricao": "6 exercícios • Força máxima",
+          "classe": "treino-b",
+          "exercicios": [
+            {
+              "nome": "Agachamento maquina",
+              "series": "4",
+              "reps": "8",
+              "peso": ""
+            },
+            {
+              "nome": "Leg press",
+              "series": "4",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira extensora",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Mesa flexora",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Glúteo cabo ou máquina",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Panturrilha em pé",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Abdominal com cabo",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "C",
+          "nome": "Treino C - Peito, ombro e tríceps",
+          "descricao": "7 exercícios • Força e massa",
+          "classe": "treino-c",
+          "exercicios": [
+            {
+              "nome": "Supino reto maquina",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Supino inclinado com Halteres",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Supino declinado com halteres",
+              "series": "4",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Desenvolvimento máquina",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação lateral",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps testa corda",
+              "series": "4",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps corda",
+              "series": "4",
+              "reps": "10",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "D",
+          "nome": "Treino D - Posterior, Ombro, Trapézio, panturrilha",
+          "descricao": "6 exercícios • Delts e abdomen",
+          "classe": "treino-d",
+          "exercicios": [
+            {
+              "nome": "Levantamento Terra Romeno",
+              "series": "4",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Flexora",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Crucifixo invertido",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Encolhimento halteres",
+              "series": "3",
+              "reps": "10",
+              "peso": ""
+            },
+            {
+              "nome": "Panturrilha sentado",
+              "series": "4",
+              "reps": "12",
+              "peso": "seg"
+            },
+            {
+              "nome": "Abdominal cabo",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "ABC do Zanca",
+      "treinos": [
+        {
+          "letra": "A",
+          "nome": "Treino A - Push (Empurrar)",
+          "descricao": "5 exercícios • Peito/ombros/tríceps",
+          "classe": "treino-a",
+          "exercicios": [
+            "Supino Reto",
+            "Desenvolvimento",
+            "Supino Inclinado",
+            "Elevação Lateral",
+            "Tríceps Pulley"
+          ]
+        },
+        {
+          "letra": "B",
+          "nome": "Treino B - Pull (Puxar)",
+          "descricao": "5 exercícios • Costas/bíceps",
+          "classe": "treino-b",
+          "exercicios": [
+            "Puxada Frontal",
+            "Remada Curvada",
+            "Remada Cavalinho",
+            "Rosca Direta",
+            "Rosca Martelo"
+          ]
+        },
+        {
+          "letra": "C",
+          "nome": "Treino C - Legs (Pernas)",
+          "descricao": "5 exercícios • Membros inferiores",
+          "classe": "treino-c",
+          "exercicios": [
+            "Agachamento",
+            "Leg Press",
+            "Stiff",
+            "Extensora",
+            "Panturrilha"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "ABC Pacho",
+      "treinos": [
+        {
+          "letra": "A",
+          "nome": "Treino A - Peito, Ombros e Tríceps",
+          "descricao": "7 exercícios",
+          "classe": "treino-a",
+          "exercicios": [
+            {
+              "nome": "Supino Reto Barra/Maq",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Supino inclinado Halter",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Crucifixo Maq/Cabos",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Desen. Front. Hal. Sent",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação lateral leve",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Elevação frontal sentado com Halteres",
+              "series": "4",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Tríceps corda combinado com testa",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            }
+          ]
+        },
+        {
+          "letra": "B",
+          "nome": "Treino B - Costas, Bíceps e Abdômen",
+          "descricao": "8 exercícios",
+          "classe": "treino-b",
+          "exercicios": [
+            {
+              "nome": "Puxa frente pega aber",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Serrote",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Remada baixa triangulo",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Puxa Neutra/supinada",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca direta. Barra W",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Rosca Alt Alteres",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Prancha Frontal",
+              "series": "3",
+              "reps": "60",
+              "peso": "seg"
+            },
+            {
+              "nome": "Elevação de pernas",
+              "series": "3",
+              "reps": "15",
+              "peso": "seg"
+            }
+          ]
+        },
+        {
+          "letra": "C",
+          "nome": "Treino C - Pernas e Glúteos",
+          "descricao": "6 exercícios",
+          "classe": "treino-c",
+          "exercicios": [
+            {
+              "nome": "Agachamento Halteres",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Leg press 45°",
+              "series": "4",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira extensora",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Cadeira Fletora",
+              "series": "3",
+              "reps": "15",
+              "peso": ""
+            },
+            {
+              "nome": "Stiff com Halteres lev",
+              "series": "3",
+              "reps": "12",
+              "peso": ""
+            },
+            {
+              "nome": "Panturrilha em pé/sent",
+              "series": "4",
+              "reps": "20",
+              "peso": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "ABDCE",
+      "treinos": [
+        {
+          "letra": "A",
+          "nome": "Treino A - Peito e Tríceps",
+          "descricao": "6 exercícios • Empurrar",
+          "classe": "treino-a",
+          "exercicios": [
+            "Panturrilha em pé na máquina ou smith com step",
+            "Panturrilha sentada",
+            "Supino inclinado smith ou máquina",
+            "Supino reto halteres",
+            "Supino inclinado com halteres combinado com crucifixo inclinado com halteres",
+            "Supino declinado"
+          ]
+        },
+        {
+          "letra": "B",
+          "nome": "Treino B - Costas e Bíceps",
+          "descricao": "5 exercícios • Puxar",
+          "classe": "treino-b",
+          "exercicios": [
+            "Abdominal supra na prancha",
+            "Abdominal infra na torre",
+            "Remada curvada pronada",
+            "Remada baixa pegada aberta",
+            "Serrote"
+          ]
+        },
+        {
+          "letra": "C",
+          "nome": "Treino C - Pernas",
+          "descricao": "5 exercícios • Membros inferiores",
+          "classe": "treino-c",
+          "exercicios": [
+            "Agachamento Livre",
+            "Leg 45º",
+            "Cadeira Extensora",
+            "Flexor deitado",
+            "Flexor sentado"
+          ]
+        },
+        {
+          "letra": "D",
+          "nome": "Treino D - Ombros",
+          "descricao": "5 exercícios • Deltoides",
+          "classe": "treino-d",
+          "exercicios": [
+            "Panturrilha em pé na máquina ou smith com step",
+            "Panturrilha sentada",
+            "Desenvolvimento sentado com halteres",
+            "Elevação frontal corda",
+            "Elevação lateral"
+          ]
+        },
+        {
+          "letra": "E",
+          "nome": "Treino E - Braços",
+          "descricao": "6 exercícios • Bíceps e tríceps",
+          "classe": "treino-e",
+          "exercicios": [
+            "Abdominal supra na prancha",
+            "Abdominal infra na torre",
+            "Rosca direta barra em pé",
+            "Rosca scott na máquina ou no cross 21",
+            "Rosca direta com halteres sentado na gravs",
+            "Rosca direta corda"
+          ]
+        }
+      ]
+    }
+  ],
+  "localStorage": {
+    "concluido_3_3_0": "true",
+    "theraflow_initialized": "true",
+    "concluido_3_3_1": "true",
+    "concluido_0_3_0": "true",
+    "serie_concluida_0_0_0_3": "true",
+    "concluido_2_2_1": "true",
+    "concluido_0_1_2": "true",
+    "concluido_3_0_3": "true",
+    "concluido_3_1_1": "true",
+    "serie_concluida_0_0_2_1": "true",
+    "concluido_3_1_0": "true",
+    "serie_concluida_0_0_0_4": "true",
+    "concluido_0_3_1": "true",
+    "serie_concluida_5_0_0_1": "false",
+    "concluido_0_0_2": "true",
+    "concluido_0_1_0": "true",
+    "concluido_0_0_1": "true",
+    "concluido_5_0_0": "false",
+    "concluido_0_3_5": "true",
+    "serie_concluida_0_1_3_4": "true",
+    "theraflow_onboarding": "true",
+    "theraflow_profile": "{\"nome\":\"Terapeuta\",\"displayName\":\"Terapeuta\",\"email\":\"terapeuta@theraflow.com\",\"telefone\":\"(11) 99999-9999\",\"especialidade\":\"Massoterapia\",\"duracaoPadrao\":60,\"servicos\":[\"Massagem Relaxante\",\"Massagem Desportiva\",\"Drenagem Linfática\",\"Shiatsu\",\"Reiki\",\"Reflexologia\"],\"createdAt\":\"2026-01-13\"}",
+    "serie_concluida_0_0_0_2": "true",
+    "theraflow_packages": "[{\"clienteId\":1769806850331,\"clienteNome\":\"Julia skau\",\"nome\":\"Pacote 4 sessões - Massagem Desportiva\",\"sessoesTotal\":4,\"valorTotal\":570,\"tipo\":\"Massagem Desportiva\",\"id\":1769807016071,\"createdAt\":\"2026-01-30\",\"sessoesRestantes\":0,\"sessoesUsadas\":4,\"ultimoUso\":\"2026-01-30\"}]",
+    "concluido_0_3_4": "true",
+    "concluido_2_2_0": "true",
+    "serie_concluida_0_0_2_3": "true",
+    "concluido_0_0_8": "true",
+    "concluido_2_2_2": "true",
+    "theraflow_sessions": "[{\"clienteId\":1769806827045,\"clienteNome\":\"marcelo batista dos santos\",\"data\":\"2026-02-10\",\"hora\":\"09:00\",\"tipo\":\"Massagem Relaxante\",\"valor\":150,\"notas\":\"\",\"status\":\"confirmado\",\"pagamento\":\"pago\",\"usouPacote\":false,\"pacoteId\":null,\"id\":1769806939467},{\"clienteId\":1769806850331,\"clienteNome\":\"Julia skau\",\"data\":\"2026-01-30\",\"hora\":\"09:00\",\"tipo\":\"Massagem Desportiva\",\"valor\":0,\"notas\":\"Sessão do pacote\",\"status\":\"confirmado\",\"pagamento\":\"pago\",\"usouPacote\":true,\"pacoteId\":1769807016071,\"id\":1769807016072},{\"clienteId\":1769806850331,\"clienteNome\":\"Julia skau\",\"data\":\"2026-02-06\",\"hora\":\"09:00\",\"tipo\":\"Massagem Desportiva\",\"valor\":0,\"notas\":\"Sessão do pacote\",\"status\":\"faltou\",\"pagamento\":\"pago\",\"usouPacote\":true,\"pacoteId\":1769807016071,\"id\":1769807016073},{\"clienteId\":1769806850331,\"clienteNome\":\"Julia skau\",\"data\":\"2026-02-13\",\"hora\":\"09:00\",\"tipo\":\"Massagem Desportiva\",\"valor\":0,\"notas\":\"Sessão do pacote\",\"status\":\"confirmado\",\"pagamento\":\"pago\",\"usouPacote\":true,\"pacoteId\":1769807016071,\"id\":1769807016074},{\"clienteId\":1769806850331,\"clienteNome\":\"Julia skau\",\"data\":\"2026-02-20\",\"hora\":\"09:00\",\"tipo\":\"Massagem Desportiva\",\"valor\":0,\"notas\":\"Sessão do pacote\",\"status\":\"confirmado\",\"pagamento\":\"pago\",\"usouPacote\":true,\"pacoteId\":1769807016071,\"id\":1769807016075}]",
+    "serie_concluida_0_0_0_1": "true",
+    "concluido_3_1_6": "true",
+    "serie_concluida_0_1_3_1": "true",
+    "theraflow_email": "novo@usuario.com",
+    "serie_concluida_0_0_2_2": "true",
+    "theraflow_clients": "[{\"nome\":\"Julia skau\",\"telefone\":\"4599999999\",\"email\":\"\",\"notas\":\"\",\"id\":1769806850331,\"sessoes\":4,\"createdAt\":\"2026-01-30\"},{\"nome\":\"marcelo batista dos santos\",\"telefone\":\"45999829144\",\"email\":\"marcelo.itaipu@gmail.com\",\"notas\":\"\",\"id\":1769806827045,\"sessoes\":1,\"createdAt\":\"2026-01-30\"}]",
+    "concluido_3_1_5": "true",
+    "concluido_3_3_2": "true",
+    "theraflow_logged": "true",
+    "serie_concluida_0_3_1_1": "true",
+    "concluido_0_0_0": "true",
+    "serie_concluida_2_2_2_1": "true",
+    "concluido_3_1_2": "true",
+    "reps_0_0_0_serie4": "10",
+    "concluido_3_2_1": "true",
+    "concluido_3_0_0": "true",
+    "marceloTreinos": "[{\"nome\":\"ABCD Marcelo\",\"treinos\":[{\"letra\":\"A\",\"nome\":\"Treino A - Peito, Ombros e Tríceps\",\"descricao\":\"8 exercícios\",\"classe\":\"treino-a\",\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Voador\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Desenvolvimento Máquina\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Elevação  lateral halter\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Tríceps testa corda\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Tríceps Corda\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Supino declinado com alteres\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"}]},{\"letra\":\"B\",\"nome\":\"Treino B - Pernas\",\"descricao\":\"7 exercícios • Puxadas e rosca\",\"classe\":\"treino-b\",\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Leg Press\",\"series\":\"4\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Cadeira Extensora\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Mesa Flexora\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Panturrilha em pé\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Abdominal com cabo\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Glúteo cabo ou máquina\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"}]},{\"letra\":\"C\",\"nome\":\"Treino C - Costas e Bíceps\",\"descricao\":\"6 exercícios • Membros inferiores\",\"classe\":\"treino-c\",\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Serrote unilateral Halteres\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Rosca direta barra\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Rosca Alternada, inclinada, alteres\",\"series\":\"4\",\"reps\":\"20\",\"peso\":\"\"}]},{\"letra\":\"D\",\"nome\":\"Treino D - Ombro, Posterior e Panturrilha\",\"descricao\":\"Exercícios\",\"classe\":\"treino-d\",\"exercicios\":[{\"nome\":\"Levantamento Terra Romeno\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Cadeira Flexora\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Elevação Lateral\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Elevação posterior crucifixo invertido ou máquina\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Encolhimento Halter ou Barra\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Panturrilha sentado\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Abdominal com cabo\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"}]}]},{\"nome\":\"Treino Jacke\",\"treinos\":[{\"letra\":\"A\",\"nome\":\"Segunda Peito - Tríceps\",\"descricao\":\"4 exercícios • Corpo todo\",\"classe\":\"treino-a\",\"exercicios\":[{\"nome\":\"Tríceps Supinada com Anilha\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Tríceps TopHead Deitado no Banco com Anilha\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Tríceps Francês Sentado com Anilha\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Supino Vertical\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Supino Inclinado Máquina pronada\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Tríceps Paralela Sentado Máquina\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Crossover no Cabo Polia Alta\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Tríceps no Cabo Polia Alta\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"}]},{\"letra\":\"B\",\"nome\":\"Quadriceps - Panturrilha + Cárdio\",\"descricao\":\"4 exercícios • Condicionamento\",\"classe\":\"treino-b\",\"exercicios\":[{\"nome\":\"Avanço com Afundo Unilateral (combinado)\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Agachamento com Halter\",\"series\":\"4\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Cadeira Extensora (banco afastado)\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Cadeira Adutora (empurra com joelho)\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Panturrilha na Parede\",\"series\":\"3\",\"reps\":\"30\",\"peso\":\"\"},{\"nome\":\"Corrida na Esteira com Trote\",\"series\":\"1\",\"reps\":\"20\",\"peso\":\"min\"}]},{\"letra\":\"C\",\"nome\":\"Quarta Costas - Biceps\",\"descricao\":\"8 exercícios\",\"classe\":\"treino-c\",\"exercicios\":[{\"nome\":\"Puxada Aberta Barra Reta (sentado)\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Puxada Alta em Pé com Corda no Cabo Polia Alta\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Remada Baixa Pegada Aberta\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Remada Pronada Máquina Articulada\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Rosca Concentrada com Halter\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Rosca direta com halteres em Pé\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Rosca Direta no Cabo Polia Baixa com Corda\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Rosca Direta Sentado no Banco com Halteres\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"}]},{\"letra\":\"D\",\"nome\":\"Posteriores e Glúteos + Cárdio\",\"descricao\":\"0 exercícios • Configure\",\"classe\":\"treino-d\",\"exercicios\":[{\"nome\":\"Ativação de Posterior e Glúteos Solo intercalado\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Leg Press 45 (pés alinhados)\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Cadeira Fletora (ajuste na panturrilha)\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Leg Press Horizontal (pés afastados)\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Cadeira Abdutora (empurra com joelho)\",\"series\":\"3\",\"reps\":\"30\",\"peso\":\"\"},{\"nome\":\"Corrida na Esteira em Trote\",\"series\":\"20\",\"reps\":\"1\",\"peso\":\"seg\"}]},{\"letra\":\"E\",\"nome\":\"Ombro - Trapézio - Abdômen\",\"descricao\":\"0 exercícios • Configure\",\"classe\":\"treino-e\",\"exercicios\":[{\"nome\":\"Desenvolvimento Ombro com Halteres (em pé)\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Elevação Frontal com Anilha\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Elevação Frontal Sentado com Halteres\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Remada Alta com Barra Reta no Cabo Polia Baixa\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Encolhimento de Ombros Costas no Cabo Polia Baixa\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Abdominal Infra Solo (pernas flexionadas)\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Abdominal obliquo - Prancha lateral com movimento\",\"series\":\"3\",\"reps\":\"8\",\"peso\":\"rep\"},{\"nome\":\"Abdominal Oblíquo em Solo (foto touch)\",\"series\":\"3\",\"reps\":\"20\",\"peso\":\"\"}]}]},{\"nome\":\"ABC Jacke\",\"treinos\":[{\"letra\":\"A\",\"nome\":\"Treino A - Peito - Tríceps - Ombros\",\"descricao\":\"6 exercícios • Membros superiores\",\"classe\":\"treino-a\",\"exercicios\":[{\"nome\":\"Supino Vertical\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Supino com Halteres inclinado 30 graus\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Crossover no Cabo Polia Alta (Peitoral Inclinado)\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Tríceps TopHead Deitado no Banco com Anilha\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Desenvolvimento Ombro com Halteres em pé\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Elevação Frontal sentado com Halteres\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Remada Alta com Barra Reta no Cabo Polia Baixa\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Crucifixo Máquina\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Tríceps supinado anilha\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"}]},{\"letra\":\"B\",\"nome\":\"Treino B - Quadríceps - Posteriores - Panturrilha - Cardio\",\"descricao\":\"5 exercícios • Membros inferiores\",\"classe\":\"treino-b\",\"exercicios\":[{\"nome\":\"Agachamento com Halter\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Cadeira Extensora\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Cadeira Adutora\",\"series\":\"3\",\"reps\":\"20\",\"peso\":\"\"},{\"nome\":\"Leg Press 45\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Cadeira Abdutora\",\"series\":\"3\",\"reps\":\"20\",\"peso\":\"\"},{\"nome\":\"Leg Press Horizontal\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Corrida Esteira\",\"series\":\"1\",\"reps\":\"20\",\"peso\":\"min\"}]},{\"letra\":\"C\",\"nome\":\"Treino C - Costas - Bíceps - Trapézio - Abdômen\",\"descricao\":\"Exercícios\",\"classe\":\"treino-c\",\"exercicios\":[{\"nome\":\"Puxada Aberta Barra Reta (sentado)\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Remada Pronada Máquina Articulada\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Rosca Direta no Cabo Polia Baixa com Corda\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Rosca Direta Banco 45 ° com Halteres\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Encolhimento de Ombros Costas no Cabo Polia Baixo\",\"series\":\"3\",\"reps\":\"20\",\"peso\":\"\"},{\"nome\":\"Abdominal Infra Solo (pernas flexionadas)\",\"series\":\"3\",\"reps\":\"20\",\"peso\":\"\"},{\"nome\":\"Abdominal Oblíquo - Prancha Lateral com movimento\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Abdominal Oblíquo em Solo (foto touch)\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Rosca direta com barra em w\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Remada Serrote\",\"series\":\"3\",\"reps\":\"20\",\"peso\":\"\"}]}]},{\"nome\":\"ABCD Chatgpt\",\"treinos\":[{\"letra\":\"A\",\"nome\":\"Treino A - Costas e Bíceps\",\"descricao\":\"6 exercícios • Alta intensidade\",\"classe\":\"treino-a\",\"exercicios\":[{\"nome\":\"Puxada Alta pegada pronada\",\"series\":\"4\",\"reps\":\"8\",\"peso\":\"\"},{\"nome\":\"Remada curvada máquina\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Serrote Halteres\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Remada baixa cabo/maquina\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Rosca direta barra\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Rosca Alternada inclinada\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"}]},{\"letra\":\"B\",\"nome\":\"Treino B - Pernas\",\"descricao\":\"6 exercícios • Força máxima\",\"classe\":\"treino-b\",\"exercicios\":[{\"nome\":\"Agachamento maquina\",\"series\":\"4\",\"reps\":\"8\",\"peso\":\"\"},{\"nome\":\"Leg press\",\"series\":\"4\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Cadeira extensora\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Mesa flexora\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Glúteo cabo ou máquina\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Panturrilha em pé\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Abdominal com cabo\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"}]},{\"letra\":\"C\",\"nome\":\"Treino C - Peito, ombro e tríceps\",\"descricao\":\"7 exercícios • Força e massa\",\"classe\":\"treino-c\",\"exercicios\":[{\"nome\":\"Supino reto maquina\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Supino inclinado com Halteres\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Supino declinado com halteres\",\"series\":\"4\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Desenvolvimento máquina\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Elevação lateral\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Tríceps testa corda\",\"series\":\"4\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Tríceps corda\",\"series\":\"4\",\"reps\":\"10\",\"peso\":\"\"}]},{\"letra\":\"D\",\"nome\":\"Treino D - Posterior, Ombro, Trapézio, panturrilha\",\"descricao\":\"6 exercícios • Delts e abdomen\",\"classe\":\"treino-d\",\"exercicios\":[{\"nome\":\"Levantamento Terra Romeno\",\"series\":\"4\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Cadeira Flexora\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Crucifixo invertido\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Encolhimento halteres\",\"series\":\"3\",\"reps\":\"10\",\"peso\":\"\"},{\"nome\":\"Panturrilha sentado\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"seg\"},{\"nome\":\"Abdominal cabo\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"}]}]},{\"nome\":\"ABC do Zanca\",\"treinos\":[{\"letra\":\"A\",\"nome\":\"Treino A - Push (Empurrar)\",\"descricao\":\"5 exercícios • Peito/ombros/tríceps\",\"classe\":\"treino-a\",\"exercicios\":[\"Supino Reto\",\"Desenvolvimento\",\"Supino Inclinado\",\"Elevação Lateral\",\"Tríceps Pulley\"]},{\"letra\":\"B\",\"nome\":\"Treino B - Pull (Puxar)\",\"descricao\":\"5 exercícios • Costas/bíceps\",\"classe\":\"treino-b\",\"exercicios\":[\"Puxada Frontal\",\"Remada Curvada\",\"Remada Cavalinho\",\"Rosca Direta\",\"Rosca Martelo\"]},{\"letra\":\"C\",\"nome\":\"Treino C - Legs (Pernas)\",\"descricao\":\"5 exercícios • Membros inferiores\",\"classe\":\"treino-c\",\"exercicios\":[\"Agachamento\",\"Leg Press\",\"Stiff\",\"Extensora\",\"Panturrilha\"]}]},{\"nome\":\"ABC Pacho\",\"treinos\":[{\"letra\":\"A\",\"nome\":\"Treino A - Peito, Ombros e Tríceps\",\"descricao\":\"7 exercícios\",\"classe\":\"treino-a\",\"exercicios\":[{\"nome\":\"Supino Reto Barra/Maq\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Supino inclinado Halter\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Crucifixo Maq/Cabos\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Desen. Front. Hal. Sent\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Elevação lateral leve\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Elevação frontal sentado com Halteres\",\"series\":\"4\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Tríceps corda combinado com testa\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"}]},{\"letra\":\"B\",\"nome\":\"Treino B - Costas, Bíceps e Abdômen\",\"descricao\":\"8 exercícios\",\"classe\":\"treino-b\",\"exercicios\":[{\"nome\":\"Puxa frente pega aber\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Serrote\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Remada baixa triangulo\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Puxa Neutra/supinada\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Rosca direta. Barra W\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Rosca Alt Alteres\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Prancha Frontal\",\"series\":\"3\",\"reps\":\"60\",\"peso\":\"seg\"},{\"nome\":\"Elevação de pernas\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"seg\"}]},{\"letra\":\"C\",\"nome\":\"Treino C - Pernas e Glúteos\",\"descricao\":\"6 exercícios\",\"classe\":\"treino-c\",\"exercicios\":[{\"nome\":\"Agachamento Halteres\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Leg press 45°\",\"series\":\"4\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Cadeira extensora\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Cadeira Fletora\",\"series\":\"3\",\"reps\":\"15\",\"peso\":\"\"},{\"nome\":\"Stiff com Halteres lev\",\"series\":\"3\",\"reps\":\"12\",\"peso\":\"\"},{\"nome\":\"Panturrilha em pé/sent\",\"series\":\"4\",\"reps\":\"20\",\"peso\":\"\"}]}]},{\"nome\":\"ABDCE\",\"treinos\":[{\"letra\":\"A\",\"nome\":\"Treino A - Peito e Tríceps\",\"descricao\":\"6 exercícios • Empurrar\",\"classe\":\"treino-a\",\"exercicios\":[\"Panturrilha em pé na máquina ou smith com step\",\"Panturrilha sentada\",\"Supino inclinado smith ou máquina\",\"Supino reto halteres\",\"Supino inclinado com halteres combinado com crucifixo inclinado com halteres\",\"Supino declinado\"]},{\"letra\":\"B\",\"nome\":\"Treino B - Costas e Bíceps\",\"descricao\":\"5 exercícios • Puxar\",\"classe\":\"treino-b\",\"exercicios\":[\"Abdominal supra na prancha\",\"Abdominal infra na torre\",\"Remada curvada pronada\",\"Remada baixa pegada aberta\",\"Serrote\"]},{\"letra\":\"C\",\"nome\":\"Treino C - Pernas\",\"descricao\":\"5 exercícios • Membros inferiores\",\"classe\":\"treino-c\",\"exercicios\":[\"Agachamento Livre\",\"Leg 45º\",\"Cadeira Extensora\",\"Flexor deitado\",\"Flexor sentado\"]},{\"letra\":\"D\",\"nome\":\"Treino D - Ombros\",\"descricao\":\"5 exercícios • Deltoides\",\"classe\":\"treino-d\",\"exercicios\":[\"Panturrilha em pé na máquina ou smith com step\",\"Panturrilha sentada\",\"Desenvolvimento sentado com halteres\",\"Elevação frontal corda\",\"Elevação lateral\"]},{\"letra\":\"E\",\"nome\":\"Treino E - Braços\",\"descricao\":\"6 exercícios • Bíceps e tríceps\",\"classe\":\"treino-e\",\"exercicios\":[\"Abdominal supra na prancha\",\"Abdominal infra na torre\",\"Rosca direta barra em pé\",\"Rosca scott na máquina ou no cross 21\",\"Rosca direta com halteres sentado na gravs\",\"Rosca direta corda\"]}]}]",
+    "theraflow_schedule_client": "1767892723367",
+    "concluido_3_1_3": "true",
+    "historicoTreinos": "[{\"data\":\"2026-04-30T23:56:30.534Z\",\"tipoNome\":\"ABCD Chatgpt\",\"treinoNome\":\"Treino D - Posterior, Ombro, Trapézio, panturrilha\",\"tipoIndex\":3,\"treinoIndex\":3,\"exercicios\":[{\"nome\":\"Levantamento Terra Romeno\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crucifixo invertido\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-04-29T00:15:40.817Z\",\"tipoNome\":\"ABCD Chatgpt\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":3,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento maquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Panturrilha em pé\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Abdominal com cabo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-04-29T00:15:35.790Z\",\"tipoNome\":\"ABCD Chatgpt\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":3,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento maquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Panturrilha em pé\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Abdominal com cabo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-04-29T00:00:53.569Z\",\"tipoNome\":\"ABCD Chatgpt\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":3,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento maquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Panturrilha em pé\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-04-25T20:04:58.869Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino D - Ombro, Posterior e Panturrilha\",\"tipoIndex\":0,\"treinoIndex\":3,\"exercicios\":[{\"nome\":\"Levantamento Terra Romeno\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Encolhimento Halter ou Barra\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Panturrilha sentado\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-04-11T16:13:40.085Z\",\"tipoNome\":\"ABCD Chatgpt\",\"treinoNome\":\"Treino C - Peito, ombro e tríceps\",\"tipoIndex\":3,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Supino reto maquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado com Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino declinado com halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-04-10T00:20:23.820Z\",\"tipoNome\":\"ABCD Chatgpt\",\"treinoNome\":\"Treino D - Posterior, Ombro, Trapézio, panturrilha\",\"tipoIndex\":3,\"treinoIndex\":3,\"exercicios\":[{\"nome\":\"Levantamento Terra Romeno\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crucifixo invertido\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Panturrilha sentado\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-04-10T00:13:19.219Z\",\"tipoNome\":\"ABCD Chatgpt\",\"treinoNome\":\"Treino D - Posterior, Ombro, Trapézio, panturrilha\",\"tipoIndex\":3,\"treinoIndex\":3,\"exercicios\":[{\"nome\":\"Levantamento Terra Romeno\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crucifixo invertido\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-29T14:34:03.970Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Desenvolvimento Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino declinado com alteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-29T14:21:57.821Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino declinado com alteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-29T14:10:32.889Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino declinado com alteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-26T00:20:12.169Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":0,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg Press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-12T00:16:55.915Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":0,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg Press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-10T00:42:05.080Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crossover alto -> baixo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-10T00:42:03.330Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crossover alto -> baixo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-10T00:42:02.478Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crossover alto -> baixo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-07T00:15:00.099Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-03T00:50:33.477Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crossover alto -> baixo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-03T00:50:31.525Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crossover alto -> baixo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-03-03T00:50:29.083Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Crossover alto -> baixo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-02-27T00:07:14.628Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-02-20T00:02:30.798Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-02-13T00:33:35.832Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino D - Ombro, Posterior e Panturrilha\",\"tipoIndex\":0,\"treinoIndex\":3,\"exercicios\":[{\"nome\":\"Levantamento Terra Romeno\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Elevação Lateral\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Elevação posterior crucifixo invertido ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-02-06T00:52:53.797Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino D - Ombro, Posterior e Panturrilha\",\"tipoIndex\":0,\"treinoIndex\":3,\"exercicios\":[{\"nome\":\"Levantamento Terra Romeno\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Elevação Lateral\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Elevação posterior crucifixo invertido ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-30T00:13:02.572Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-21T23:49:00.548Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Serrote unilateral Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-21T23:48:57.503Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-18T14:15:59.327Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Desenvolvimento Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-18T14:15:57.180Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Desenvolvimento Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-18T14:15:46.447Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Desenvolvimento Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-16T23:47:50.861Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Serrote unilateral Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-14T00:05:14.038Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":0,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg Press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-14T00:05:12.470Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":0,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg Press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-11T13:38:29.738Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Desenvolvimento Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Elevação  Frontal halter\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-11T13:38:27.800Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Elevação  Frontal halter\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-07T23:03:32.690Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Serrote unilateral Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Rosca direta barra ou halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-07T23:03:09.345Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Serrote unilateral Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-07T22:45:07.043Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-06T00:24:29.418Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":0,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg Press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Panturrilha em pé\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Abdominal com cabo\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-06T00:23:17.652Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":0,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg Press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Panturrilha em pé\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-06T00:23:12.302Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":0,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg Press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Mesa Flexora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-06T00:23:09.277Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino B - Pernas\",\"tipoIndex\":0,\"treinoIndex\":1,\"exercicios\":[{\"nome\":\"Agachamento máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Leg Press\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Cadeira Extensora\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-04T14:06:42.906Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-04T13:43:04.891Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Voador\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-04T13:43:02.856Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Supino inclinado halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2026-01-04T13:42:59.255Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Supino reto barra ou maq\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2025-12-30T23:28:08.441Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino A - Peito, Ombros e Tríceps\",\"tipoIndex\":0,\"treinoIndex\":0,\"exercicios\":[{\"nome\":\"Elevação  Frontal halter\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps testa corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Corda\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Tríceps Francês Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2025-12-28T14:07:41.802Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Serrote unilateral Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2025-12-28T14:01:34.875Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada Curvada Máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Serrote unilateral Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]},{\"data\":\"2025-12-28T13:29:29.259Z\",\"tipoNome\":\"ABCD Marcelo\",\"treinoNome\":\"Treino C - Costas e Bíceps\",\"tipoIndex\":0,\"treinoIndex\":2,\"exercicios\":[{\"nome\":\"Puxada Alta pega Pronada\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Serrote unilateral Halteres\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"},{\"nome\":\"Remada baixa cabo ou máquina\",\"peso\":\"\",\"series\":\"\",\"reps\":\"\"}]}]"
+  },
+  "versao": "3.4.1",
+  "data": "2026-05-05T19:47:04.098Z",
+  "info": "Backup completo incluindo histórico de séries individuais"
+}
