@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>💪 Treinos Marcelo - 7 Tipos</title>
+    <meta name="description" content="App completo de treinos com controle de peso e edição">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a1a">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 10px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            touch-action: manipulation;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tipo-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .tipo-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tipo-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tipo-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .treinos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .treino-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .treino-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .treino-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .treino-letra {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 15px;
+        }
+
+        .treino-a .treino-letra { background: linear-gradient(45deg, #ff6b6b, #ff8e8e); }
+        .treino-b .treino-letra { background: linear-gradient(45deg, #4ecdc4, #7fdbda); }
+        .treino-c .treino-letra { background: linear-gradient(45deg, #45b7d1, #78d1f0); }
+        .treino-d .treino-letra { background: linear-gradient(45deg, #ffd93d, #ffe66d); }
+        .treino-e .treino-letra { background: linear-gradient(45deg, #a8e6cf, #c1f0d8); }
+
+        .treino-info h3 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .treino-info p {
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .treino-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-iniciar {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-iniciar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-edit {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-edit:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Modal para execução do treino */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .exercicio-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .exercicio-item.concluido {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .exercicio-info {
+            flex: 1;
+        }
+
+        .exercicio-nome {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .exercicio-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .peso-input {
+            width: 70px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+        }
+
+        .peso-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-concluir {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(76, 175, 80, 0.7);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-concluir:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+
+        .btn-concluir.concluido {
+            background: rgba(255, 193, 7, 0.7);
+        }
+
+        .btn-concluir.concluido:hover {
+            background: rgba(255, 193, 7, 1);
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .btn-fechar {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-fechar:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Modal de edição */
+        .modal-edicao {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            padding: 20px;
+        }
+
+        .modal-edicao .modal-content {
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ffd93d;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .exercicios-lista {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .exercicio-edit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .exercicio-input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-remove {
+            background: rgba(244, 67, 54, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(76, 175, 80, 0.7);
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .btn-add:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-salvar {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-salvar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-cancelar {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancelar:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Notificações otimizadas para mobile */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            z-index: 2000;
+            animation: slideInMobile 0.4s ease;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.success {
+            background: rgba(76, 175, 80, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(255, 193, 7, 0.9);
+        }
+
+        @keyframes slideInMobile {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Animações suaves para interações */
+        .treino-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0); /* Força aceleração por hardware */
+        }
+
+        .treino-card:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        /* Melhoria no feedback dos botões */
+        .tipo-btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-iniciar:active {
+            transform: scale(0.95);
+        }
+
+        .btn-edit:active {
+            transform: scale(0.95);
+        }
+
+        .btn-concluir:active {
+            transform: scale(0.95);
+        }
+
+        /* Responsivo otimizado para Poco X7 Pro e outros celulares */
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            
+            .header {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+            
+            .header h1 { 
+                font-size: 2em; 
+                margin-bottom: 8px;
+            }
+            
+            .header p {
+                font-size: 0.95em;
+                opacity: 0.9;
+            }
+            
+            .tipo-selector {
+                gap: 8px;
+                margin-bottom: 16px;
+                padding: 0 4px;
+            }
+            
+            .tipo-btn { 
+                padding: 12px 16px; 
+                font-size: 0.9em;
+                min-width: auto;
+                flex: 1;
+                max-width: 140px;
+            }
+            
+            .treinos-grid { 
+                grid-template-columns: 1fr;
+                gap: 16px;
+                max-width: 100%;
+            }
+            
+            .treino-card {
+                padding: 18px;
+                margin: 0;
+            }
+            
+            .treino-header {
+                margin-bottom: 12px;
+            }
+            
+            .treino-letra {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1em;
+                margin-right: 12px;
+            }
+            
+            .treino-info h3 {
+                font-size: 1.1em;
+                line-height: 1.3;
+                margin-bottom: 4px;
+            }
+            
+            .treino-info p {
+                font-size: 0.85em;
+                line-height: 1.2;
+            }
+            
+            .treino-actions {
+                gap: 8px;
+                margin-top: 12px;
+            }
+            
+            .btn-iniciar {
+                padding: 14px;
+                font-size: 0.95em;
+            }
+            
+            .btn-edit {
+                padding: 14px 18px;
+                font-size: 1.1em;
+            }
+        }
+
+        /* Otimização específica para telas grandes de celular (Poco X7 Pro) */
+        @media (min-width: 390px) and (max-width: 768px) {
+            .tipo-selector {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding: 0 8px 8px 8px;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            
+            .tipo-selector::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .tipo-btn {
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
+            
+            .treinos-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 14px;
+            }
+        }
+
+        /* Modal responsivo */
+        @media (max-width: 768px) {
+            .modal-overlay {
+                padding: 12px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+            
+            .modal-content { 
+                padding: 20px;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                max-height: calc(100vh - 40px);
+                border-radius: 16px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.4em;
+                margin-bottom: 8px;
+            }
+            
+            .modal-header p {
+                font-size: 0.9em;
+            }
+            
+            .exercicio-item {
+                padding: 14px;
+                margin-bottom: 12px;
+                border-radius: 8px;
+            }
+            
+            .exercicio-nome {
+                font-size: 0.95em;
+                line-height: 1.3;
+            }
+            
+            .exercicio-controls {
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            
+            .peso-input {
+                width: 65px;
+                padding: 10px 8px;
+                font-size: 16px; /* Evita zoom no iOS */
+            }
+            
+            .btn-concluir {
+                padding: 10px 12px;
+                font-size: 0.9em;
+                white-space: nowrap;
+            }
+            
+            .form-group {
+                margin-bottom: 16px;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 14px;
+                font-size: 16px; /* Evita zoom no iOS */
+                border-radius: 10px;
+            }
+            
+            .exercicios-lista {
+                max-height: 250px;
+                padding: 12px;
+            }
+            
+            .exercicio-edit {
+                padding: 8px;
+                margin-bottom: 8px;
+                gap: 8px;
+            }
+            
+            .exercicio-input {
+                padding: 10px;
+                font-size: 16px; /* Evita zoom no iOS */
+            }
+            
+            .btn-remove {
+                width: 32px;
+                height: 32px;
+                font-size: 1.1em;
+            }
+            
+            .btn-add {
+                padding: 14px;
+                font-size: 0.95em;
+                margin-top: 8px;
+            }
+            
+            .form-actions {
+                gap: 12px;
+                margin-top: 20px;
+            }
+            
+            .btn-salvar,
+            .btn-cancelar {
+                padding: 14px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+            
+            .btn-fechar {
+                padding: 14px 24px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+            
+            .notification {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                padding: 14px 16px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Otimização para telas muito pequenas */
+        @media (max-width: 360px) {
+            .header h1 { 
+                font-size: 1.7em; 
+            }
+            
+            .tipo-btn { 
+                padding: 10px 12px; 
+                font-size: 0.85em;
+                max-width: 120px;
+            }
+            
+            .treino-card {
+                padding: 16px;
+            }
+            
+            .treino-letra {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+                margin-right: 10px;
+            }
+            
+            .btn-iniciar {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+            
+            .btn-edit {
+                padding: 12px 16px;
+            }
+        }
+
+        /* Melhorias para interação touch */
+        @media (hover: none) and (pointer: coarse) {
+            .tipo-btn,
+            .btn-iniciar,
+            .btn-edit,
+            .btn-concluir,
+            .btn-salvar,
+            .btn-cancelar,
+            .btn-fechar {
+                min-height: 44px; /* Área mínima recomendada para touch */
+            }
+            
+            .btn-remove {
+                min-width: 44px;
+                min-height: 44px;
+            }
+            
+            .peso-input {
+                min-height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💪 Treinos Marcelo</h1>
+        <p>Controle completo de treinos com peso e edição personalizada</p>
+    </div>
+
+    <div class="tipo-selector" id="tipoSelector">
+        <!-- Botões dos tipos serão inseridos aqui -->
+    </div>
+
+    <div class="treinos-grid" id="treinosContainer">
+        <!-- Cards dos treinos serão inseridos aqui -->
+    </div>
+
+    <script>
+        // Estado da aplicação
+        let tipoAtualIndex = 0;
+
+        // Dados dos treinos - Array com 7 tipos
+        const todosTipos = [
+            // 0 - ABCD Clássico (5 treinos)
+            {
+                nome: 'ABCD Clássico',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito e Tríceps',
+                        descricao: '5 exercícios • Força e volume',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto', 'Supino Inclinado', 'Crucifixo', 'Tríceps Testa', 'Tríceps Pulley']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas e Bíceps',
+                        descricao: '5 exercícios • Puxadas e rosca',
+                        classe: 'treino-b',
+                        exercicios: ['Puxada Frontal', 'Remada Curvada', 'Pullover', 'Rosca Direta', 'Rosca Martelo']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas',
+                        descricao: '6 exercícios • Membros inferiores',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento Livre', 'Leg Press', 'Stiff', 'Extensora', 'Flexora', 'Panturrilha']
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Ombros e Abs',
+                        descricao: '5 exercícios • Delts e core',
+                        classe: 'treino-d',
+                        exercicios: ['Desenvolvimento', 'Elevação Lateral', 'Elevação Posterior', 'Encolhimento', 'Abdominal']
+                    },
+                    {
+                        letra: 'E',
+                        nome: 'Treino E - Cardio e Funcional',
+                        descricao: '5 exercícios • Condicionamento',
+                        classe: 'treino-e',
+                        exercicios: ['Esteira', 'Bike Ergométrica', 'Elíptico', 'Corda Naval', 'Burpees']
+                    }
+                ]
+            },
+            // 1 - Adaptação Muscular (2 treinos)
+            {
+                nome: 'Adaptação Muscular',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Adaptação A - Full Body',
+                        descricao: '4 exercícios • Corpo todo',
+                        classe: 'treino-a',
+                        exercicios: ['Agachamento', 'Flexão', 'Remada', 'Prancha']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Adaptação B - Resistência',
+                        descricao: '4 exercícios • Condicionamento',
+                        classe: 'treino-b',
+                        exercicios: ['Leg Press', 'Puxada', 'Desenvolvimento', 'Bicicleta']
+                    }
+                ]
+            },
+            // 2 - AB 2x Semana (2 treinos)
+            {
+                nome: 'AB 2x Semana',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Superior',
+                        descricao: '6 exercícios • Membros superiores',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto', 'Puxada Frontal', 'Desenvolvimento', 'Rosca Direta', 'Tríceps Testa', 'Elevação Lateral']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Inferior',
+                        descricao: '5 exercícios • Membros inferiores',
+                        classe: 'treino-b',
+                        exercicios: ['Agachamento', 'Stiff', 'Leg Press', 'Extensora', 'Panturrilha']
+                    }
+                ]
+            },
+            // 3 - ABCD Avançado (4 treinos)
+            {
+                nome: 'ABCD Avançado',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito/Tríceps Power',
+                        descricao: '6 exercícios • Alta intensidade',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto', 'Supino Inclinado', 'Crucifixo Inclinado', 'Paralelas', 'Tríceps Testa', 'Tríceps Corda']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas/Bíceps Power',
+                        descricao: '6 exercícios • Força máxima',
+                        classe: 'treino-b',
+                        exercicios: ['Barra Fixa', 'Remada Curvada', 'Puxada Frontal', 'Remada Unilateral', 'Rosca Direta', 'Rosca 21']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas Power',
+                        descricao: '7 exercícios • Força e massa',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento Livre', 'Leg Press', 'Stiff', 'Afundo', 'Extensora', 'Flexora', 'Panturrilha']
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Ombros/Core Power',
+                        descricao: '6 exercícios • Delts e abdomen',
+                        classe: 'treino-d',
+                        exercicios: ['Desenvolvimento', 'Elevação Lateral', 'Elevação Frontal', 'Elevação Posterior', 'Encolhimento', 'Prancha']
+                    }
+                ]
+            },
+            // 4 - ABC do Zanca (3 treinos)
+            {
+                nome: 'ABC do Zanca',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Push (Empurrar)',
+                        descricao: '5 exercícios • Peito/ombros/tríceps',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto', 'Desenvolvimento', 'Supino Inclinado', 'Elevação Lateral', 'Tríceps Pulley']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Pull (Puxar)',
+                        descricao: '5 exercícios • Costas/bíceps',
+                        classe: 'treino-b',
+                        exercicios: ['Puxada Frontal', 'Remada Curvada', 'Remada Cavalinho', 'Rosca Direta', 'Rosca Martelo']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Legs (Pernas)',
+                        descricao: '5 exercícios • Membros inferiores',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento', 'Leg Press', 'Stiff', 'Extensora', 'Panturrilha']
+                    }
+                ]
+            },
+            // 5 - ABC Clássico (3 treinos)
+            {
+                nome: 'ABC Clássico',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito e Tríceps',
+                        descricao: '4 exercícios • Empurrar',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto', 'Supino Inclinado', 'Tríceps Testa', 'Tríceps Pulley']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas e Bíceps',
+                        descricao: '4 exercícios • Puxar',
+                        classe: 'treino-b',
+                        exercicios: ['Puxada Frontal', 'Remada Curvada', 'Rosca Direta', 'Rosca Martelo']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas e Ombros',
+                        descricao: '4 exercícios • Inferior e delts',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento', 'Stiff', 'Desenvolvimento', 'Elevação Lateral']
+                    }
+                ]
+            },
+            // 6 - ABDCE (5 treinos)
+            {
+                nome: 'ABDCE',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito e Tríceps',
+                        descricao: '6 exercícios • Empurrar',
+                        classe: 'treino-a',
+                        exercicios: ['Panturrilha em pé na máquina ou smith com step', 'Panturrilha sentada', 'Supino inclinado smith ou máquina', 'Supino reto halteres', 'Supino inclinado com halteres combinado com crucifixo inclinado com halteres', 'Supino declinado']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas e Bíceps',
+                        descricao: '5 exercícios • Puxar',
+                        classe: 'treino-b',
+                        exercicios: ['Abdominal supra na prancha', 'Abdominal infra na torre', 'Remada curvada pronada', 'Remada baixa pegada aberta', 'Serrote']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas',
+                        descricao: '5 exercícios • Membros inferiores',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento Livre', 'Leg 45º', 'Cadeira Extensora', 'Flexor deitado', 'Flexor sentado']
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Ombros',
+                        descricao: '5 exercícios • Deltoides',
+                        classe: 'treino-d',
+                        exercicios: ['Panturrilha em pé na máquina ou smith com step', 'Panturrilha sentada', 'Desenvolvimento sentado com halteres', 'Elevação frontal corda', 'Elevação lateral']
+                    },
+                    {
+                        letra: 'E',
+                        nome: 'Treino E - Braços',
+                        descricao: '6 exercícios • Bíceps e tríceps',
+                        classe: 'treino-e',
+                        exercicios: ['Abdominal supra na prancha', 'Abdominal infra na torre', 'Rosca direta barra em pé', 'Rosca scott na máquina ou no cross 21', 'Rosca direta com halteres sentado na gravs', 'Rosca direta corda']
+                    }
+                ]
+            }
+        ];
+
+        // Inicializar app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('💪 Inicializando Treinos Marcelo com 7 tipos...');
+            
+            // Carregar treinos salvos do localStorage
+            const treinosSalvos = localStorage.getItem('marceloTreinos');
+            if (treinosSalvos) {
+                try {
+                    const treinosCarregados = JSON.parse(treinosSalvos);
+                    if (Array.isArray(treinosCarregados) && treinosCarregados.length >= 6) {
+                        // Substituir apenas se tiver 6 ou mais tipos válidos
+                        treinosCarregados.forEach((tipo, index) => {
+                            if (tipo && tipo.treinos && Array.isArray(tipo.treinos) && index < todosTipos.length) {
+                                todosTipos[index] = tipo;
+                            }
+                        });
+                        console.log('✅ Treinos personalizados carregados do localStorage');
+                    }
+                } catch (error) {
+                    console.log('⚠️ Erro ao carregar treinos salvos, usando padrões');
+                }
+            }
+            
+            carregarTreinos();
+            console.log('✅ App carregado!');
+        });
+
+        function carregarTreinos() {
+            console.log('🔄 Carregando treinos...');
+            
+            // Carregar seletor de tipos
+            const tipoSelector = document.getElementById('tipoSelector');
+            tipoSelector.innerHTML = '';
+            
+            todosTipos.forEach((tipo, index) => {
+                const btn = document.createElement('button');
+                btn.className = `tipo-btn ${index === tipoAtualIndex ? 'active' : ''}`;
+                btn.textContent = tipo.nome;
+                btn.onclick = () => selecionarTipo(index);
+                tipoSelector.appendChild(btn);
+            });
+            
+            // Carregar treinos do tipo atual
+            carregarTreinosTipo(tipoAtualIndex);
+        }
+
+        function selecionarTipo(index) {
+            console.log(`🎯 Selecionando tipo: ${todosTipos[index].nome}`);
+            tipoAtualIndex = index;
+            
+            // Atualizar botões
+            document.querySelectorAll('.tipo-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            
+            // Carregar treinos
+            carregarTreinosTipo(index);
+        }
+
+        function carregarTreinosTipo(tipoIndex) {
+            const container = document.getElementById('treinosContainer');
+            const tipo = todosTipos[tipoIndex];
+            
+            console.log(`📋 Carregando ${tipo.treinos.length} treinos do tipo: ${tipo.nome}`);
+            
+            container.innerHTML = '';
+            
+            tipo.treinos.forEach((treino, index) => {
+                const card = document.createElement('div');
+                card.className = `treino-card ${treino.classe}`;
+                
+                card.innerHTML = `
+                    <div class="treino-header">
+                        <div class="treino-letra">${treino.letra}</div>
+                        <div class="treino-info">
+                            <h3>${treino.nome}</h3>
+                            <p>${treino.descricao}</p>
+                        </div>
+                    </div>
+                    <div class="treino-actions">
+                        <button class="btn-iniciar" onclick="iniciarTreino(${index})">
+                            🚀 Iniciar Treino
+                        </button>
+                        <button class="btn-edit" onclick="editarTreino(${index})" title="Editar treino">
+                            ✏️
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            console.log(`✅ ${tipo.treinos.length} treinos carregados!`);
+        }
+
+        function iniciarTreino(index) {
+            const treino = todosTipos[tipoAtualIndex].treinos[index];
+            console.log(`🚀 Iniciando treino: ${treino.nome}`);
+            
+            // Criar modal
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            let exerciciosHtml = '';
+            treino.exercicios.forEach((exercicio, i) => {
+                // Carregar peso salvo
+                const pesoKey = `peso_${tipoAtualIndex}_${index}_${i}`;
+                const pesoSalvo = localStorage.getItem(pesoKey) || '';
+                
+                // Verificar se exercício foi concluído
+                const concluidoKey = `concluido_${tipoAtualIndex}_${index}_${i}`;
+                const concluido = localStorage.getItem(concluidoKey) === 'true';
+                
+                exerciciosHtml += `
+                    <div class="exercicio-item ${concluido ? 'concluido' : ''}" data-exercicio="${i}">
+                        <div class="exercicio-info">
+                            <div class="exercicio-nome">${exercicio}</div>
+                        </div>
+                        <div class="exercicio-controls">
+                            <input type="number" 
+                                   class="peso-input" 
+                                   placeholder="Peso" 
+                                   value="${pesoSalvo}"
+                                   onchange="salvarPeso(${tipoAtualIndex}, ${index}, ${i}, this.value)">
+                            <span style="color: #ccc;">kg</span>
+                            <button class="btn-concluir ${concluido ? 'concluido' : ''}" 
+                                    onclick="toggleConcluido(${tipoAtualIndex}, ${index}, ${i}, this)">
+                                ${concluido ? '✓ Feito' : 'Concluir'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${treino.nome}</h2>
+                        <p>${treino.descricao}</p>
+                    </div>
+                    <div class="exercicios-list">
+                        ${exerciciosHtml}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-fechar" onclick="fecharModal()">Fechar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function salvarPeso(tipoIndex, treinoIndex, exercicioIndex, peso) {
+            const key = `peso_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            localStorage.setItem(key, peso);
+            console.log(`💾 Peso salvo: ${peso}kg para exercício ${exercicioIndex}`);
+        }
+
+        function toggleConcluido(tipoIndex, treinoIndex, exercicioIndex, button) {
+            const key = `concluido_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const exercicioItem = button.closest('.exercicio-item');
+            const jaFeito = exercicioItem.classList.contains('concluido');
+            
+            if (jaFeito) {
+                // Desfazer
+                exercicioItem.classList.remove('concluido');
+                button.classList.remove('concluido');
+                button.textContent = 'Concluir';
+                localStorage.removeItem(key);
+                mostrarNotificacao('↩️ Exercício desmarcado');
+            } else {
+                // Marcar como feito
+                exercicioItem.classList.add('concluido');
+                button.classList.add('concluido');
+                button.textContent = '✓ Feito';
+                localStorage.setItem(key, 'true');
+                mostrarNotificacao('✅ Exercício concluído!');
+            }
+            
+            console.log(`${jaFeito ? '↩️ Desmarcado' : '✅ Concluído'} exercício ${exercicioIndex}`);
+        }
+
+        function editarTreino(index) {
+            console.log(`✏️ Editando treino ${index}`);
+            const treino = todosTipos[tipoAtualIndex].treinos[index];
+            
+            // Criar modal de edição
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            let exerciciosHtml = '';
+            treino.exercicios.forEach((exercicio, i) => {
+                exerciciosHtml += `
+                    <div class="exercicio-edit">
+                        <button class="btn-remove" onclick="removerExercicio(${i})">×</button>
+                        <input type="text" 
+                               value="${exercicio}" 
+                               class="exercicio-input"
+                               data-index="${i}"
+                               placeholder="Nome do exercício">
+                    </div>
+                `;
+            });
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>✏️ Editar Treino</h2>
+                        <p>Personalize seu treino como desejar</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-nome">Nome do Treino:</label>
+                        <input type="text" id="edit-nome" value="${treino.nome}" placeholder="Ex: Treino A - Peito">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-descricao">Descrição:</label>
+                        <input type="text" id="edit-descricao" value="${treino.descricao}" placeholder="Ex: 5 exercícios • Força">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Exercícios:</label>
+                        <div class="exercicios-lista" id="exercicios-lista">
+                            ${exerciciosHtml}
+                            <button class="btn-add" onclick="adicionarExercicio()">➕ Adicionar Exercício</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-salvar" onclick="salvarEdicaoTreino(${index})">💾 Salvar</button>
+                        <button class="btn-cancelar" onclick="fecharModal()">❌ Cancelar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function removerExercicio(exercicioIndex) {
+            const exerciciosLista = document.getElementById('exercicios-lista');
+            const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
+            
+            if (exercicios.length > 1) {
+                exercicios[exercicioIndex].remove();
+                
+                // Reindexar os exercícios restantes
+                const exerciciosRestantes = exerciciosLista.querySelectorAll('.exercicio-edit');
+                exerciciosRestantes.forEach((ex, i) => {
+                    const input = ex.querySelector('.exercicio-input');
+                    input.setAttribute('data-index', i);
+                    const btnRemove = ex.querySelector('.btn-remove');
+                    btnRemove.setAttribute('onclick', `removerExercicio(${i})`);
+                });
+                
+                mostrarNotificacao('🗑️ Exercício removido!', 'warning');
+            } else {
+                mostrarNotificacao('⚠️ Não é possível remover o último exercício!', 'warning');
+            }
+        }
+
+        function adicionarExercicio() {
+            const exerciciosLista = document.getElementById('exercicios-lista');
+            const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
+            const novoIndex = exercicios.length;
+            
+            const novoExercicio = document.createElement('div');
+            novoExercicio.className = 'exercicio-edit';
+            novoExercicio.innerHTML = `
+                <button class="btn-remove" onclick="removerExercicio(${novoIndex})">×</button>
+                <input type="text" 
+                       value="Novo Exercício" 
+                       class="exercicio-input"
+                       data-index="${novoIndex}"
+                       placeholder="Nome do exercício">
+            `;
+            
+            // Inserir antes do botão "Adicionar"
+            const btnAdd = exerciciosLista.querySelector('.btn-add');
+            exerciciosLista.insertBefore(novoExercicio, btnAdd);
+            
+            // Focar no novo input
+            const novoInput = novoExercicio.querySelector('.exercicio-input');
+            novoInput.focus();
+            novoInput.select();
+            
+            mostrarNotificacao('➕ Novo exercício adicionado!');
+        }
+
+        function salvarEdicaoTreino(index) {
+            const novoNome = document.getElementById('edit-nome').value.trim();
+            const novaDescricao = document.getElementById('edit-descricao').value.trim();
+            
+            if (!novoNome) {
+                mostrarNotificacao('⚠️ Nome do treino é obrigatório!', 'warning');
+                return;
+            }
+            
+            // Coletar exercícios
+            const inputs = document.querySelectorAll('.exercicio-input');
+            const novosExercicios = [];
+            
+            inputs.forEach(input => {
+                const valor = input.value.trim();
+                if (valor) {
+                    novosExercicios.push(valor);
+                }
+            });
+            
+            if (novosExercicios.length === 0) {
+                mostrarNotificacao('⚠️ Pelo menos um exercício é obrigatório!', 'warning');
+                return;
+            }
+            
+            // Atualizar treino
+            todosTipos[tipoAtualIndex].treinos[index].nome = novoNome;
+            todosTipos[tipoAtualIndex].treinos[index].descricao = novaDescricao;
+            todosTipos[tipoAtualIndex].treinos[index].exercicios = novosExercicios;
+            
+            // Salvar no localStorage
+            localStorage.setItem('marceloTreinos', JSON.stringify(todosTipos));
+            
+            fecharModal();
+            carregarTreinos();
+            mostrarNotificacao('💾 Treino salvo com sucesso!');
+            
+            console.log('💾 Treino editado e salvo:', {
+                nome: novoNome,
+                descricao: novaDescricao,
+                exercicios: novosExercicios
+            });
+        }
+
+        function fecharModal() {
+            const modals = document.querySelectorAll('.modal-overlay');
+            modals.forEach(modal => {
+                if (document.body.contains(modal)) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        function mostrarNotificacao(mensagem, tipo = 'success') {
+            const notificacao = document.createElement('div');
+            notificacao.className = `notification ${tipo}`;
+            notificacao.textContent = mensagem;
+            
+            document.body.appendChild(notificacao);
+            
+            setTimeout(() => {
+                if (document.body.contains(notificacao)) {
+                    document.body.removeChild(notificacao);
+                }
+            }, 3000);
+        }
+
+        // Debug
+        console.log('💪 Treinos Marcelo - 7 Tipos Completos!');
+        console.log('📊 Tipos disponíveis:', todosTipos.map(t => t.nome));
+    </script>
+</body>
+</html>

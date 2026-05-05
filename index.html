@@ -1,0 +1,4395 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>💪 Treinos Marcelo - v3.5.1 Preview</title>
+    <meta name="description" content="App de treinos com carga progressiva individual por série - v3.5.1 - Build: 20251028">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a1a">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 10px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            touch-action: manipulation;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-config {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-config:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .tipo-selector {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 8px;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+            position: relative;
+            overflow-x: auto;
+            overflow-y: visible;
+            padding: 20px 10px 14px 10px;
+            margin-top: 5px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x proximity;
+            z-index: 50;
+        }
+
+        .tipo-selector::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .tipo-selector::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 10px;
+        }
+
+        .tipo-selector::-webkit-scrollbar-thumb {
+            background: rgba(255, 193, 7, 0.6);
+            border-radius: 10px;
+        }
+
+        .tipo-selector::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 193, 7, 0.8);
+        }
+
+        .tipo-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+        }
+
+        .tipo-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tipo-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .tipo-btn-container {
+            position: relative;
+            display: inline-block;
+            z-index: 100;
+        }
+
+        .btn-menu-tipo {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            color: white;
+            cursor: pointer;
+            font-size: 1.4em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            line-height: 1;
+        }
+
+        .btn-menu-tipo:hover {
+            background: rgba(255, 255, 255, 0.45);
+            transform: scale(1.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .dropdown-menu-tipo {
+            position: absolute;
+            top: 25px;
+            right: -8px;
+            background: rgba(30, 30, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 160px;
+            z-index: 3000;
+            display: none;
+            overflow: hidden;
+            animation: fadeInDown 0.2s ease;
+        }
+
+        .dropdown-menu-tipo.show {
+            display: block;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item-tipo {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 0.9em;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item-tipo:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item-tipo.edit {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item-tipo.edit:hover {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .dropdown-item-tipo.delete:hover {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .btn-add-tipo {
+            padding: 12px 20px;
+            border: 2px dashed rgba(76, 175, 80, 0.6);
+            border-radius: 25px;
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-add-tipo:hover {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: rgba(76, 175, 80, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .treinos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5px;
+        }
+
+        .treino-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .treino-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .treino-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            flex: 1;
+            position: relative;
+        }
+        
+        .btn-menu-treino-card {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-menu-treino-card:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.1);
+        }
+
+        .treino-letra {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .treino-a .treino-letra { background: linear-gradient(45deg, #ff6b6b, #ff8e8e); }
+        .treino-b .treino-letra { background: linear-gradient(45deg, #4ecdc4, #7fdbda); }
+        .treino-c .treino-letra { background: linear-gradient(45deg, #45b7d1, #78d1f0); }
+        .treino-d .treino-letra { background: linear-gradient(45deg, #ffd93d, #ffe66d); }
+        .treino-e .treino-letra { background: linear-gradient(45deg, #a8e6cf, #c1f0d8); }
+
+        .treino-info h3 {
+            font-size: 1em;
+            margin-bottom: 5px;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        .treino-info p {
+            color: #ccc;
+            font-size: 0.85em;
+        }
+
+        .treino-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .btn-iniciar {
+            flex: 1;
+            padding: 14px 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: #000;
+            font-weight: bold;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-iniciar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .dropdown-menu-treino {
+            position: absolute;
+            top: 30px;
+            right: -5px;
+            background: rgba(30, 30, 30, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 160px;
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+            animation: fadeInDown 0.2s ease;
+        }
+
+        .dropdown-menu-treino.show {
+            display: block;
+        }
+
+        .dropdown-item-treino {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 0.9em;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item-treino:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item-treino.edit {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item-treino.edit:hover {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .dropdown-item-treino.delete:hover {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .btn-edit {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-edit:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Modal para execução do treino */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .exercicio-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .exercicio-item.concluido {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .exercicio-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .exercicio-nome {
+            font-weight: bold;
+            font-size: 1em;
+            color: #fff;
+            flex: 1;
+        }
+
+        .exercicio-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .series-config-input {
+            width: 45px;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .series-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .serie-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .serie-row:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .serie-label {
+            font-weight: bold;
+            color: #ffd93d;
+            font-size: 0.85em;
+            min-width: 25px;
+        }
+
+        .reps-serie-input {
+            width: 50px;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        .peso-serie-input {
+            width: 60px;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 107, 107, 0.2);
+            color: white;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .peso-serie-input:focus {
+            background: rgba(255, 107, 107, 0.3);
+            outline: none;
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-check-serie {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(76, 175, 80, 0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .btn-check-serie.concluida {
+            background: rgba(76, 175, 80, 0.8);
+            color: #fff;
+        }
+
+        .btn-check-serie:hover {
+            transform: scale(1.1);
+            background: rgba(76, 175, 80, 0.4);
+        }
+
+        .exercicio-footer {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .btn-timer-small {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            cursor: pointer;
+            font-size: 0.75em;
+            transition: all 0.2s ease;
+            font-weight: bold;
+        }
+
+        .btn-timer-small:hover {
+            background: rgba(255, 193, 7, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .exercicio-info {
+            flex: 0 0 auto;
+            margin-right: 12px;
+        }
+
+        .exercicio-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .peso-input {
+            width: 70px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .series-input, .reps-input {
+            width: 50px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .peso-input::placeholder,
+        .series-input::placeholder,
+        .reps-input::placeholder,
+        .series-config-input::placeholder,
+        .reps-serie-input::placeholder,
+        .peso-serie-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .timer-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            z-index: 1500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 250px;
+        }
+
+        .timer-display {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-timer {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-timer:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .btn-timer.primary {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+        }
+
+        .btn-timer.danger {
+            background: linear-gradient(45deg, #f44336, #ff7043);
+        }
+
+        .peso-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-concluir {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(76, 175, 80, 0.7);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-concluir:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+
+        .btn-concluir.concluido {
+            background: rgba(255, 193, 7, 0.7);
+        }
+
+        .btn-concluir.concluido:hover {
+            background: rgba(255, 193, 7, 1);
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .btn-fechar {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-fechar:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Modal de edição */
+        .modal-edicao {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            padding: 20px;
+        }
+
+        .modal-edicao .modal-content {
+            max-width: 600px;
+        }
+
+        /* Estilos específicos para o modal de cadastro de exercício */
+        .modal-exercicio {
+            max-width: 500px !important;
+        }
+
+        .form-exercicio {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-preview {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-preview h4 {
+            margin: 0 0 10px 0;
+            color: #4ecdc4;
+            font-size: 0.9em;
+        }
+
+        .preview-exercicio {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .preview-dados {
+            color: #ccc;
+            font-size: 0.8em;
+        }
+
+        .btn-edit-exercicio {
+            background: rgba(255, 193, 61, 0.2);
+            color: #ffd93d;
+            border: 1px solid rgba(255, 193, 61, 0.3);
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .btn-edit-exercicio:hover {
+            background: rgba(255, 193, 61, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Histórico de carga progressiva */
+        .carga-progressiva {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .carga-progressiva h5 {
+            margin: 0 0 8px 0;
+            color: #4caf50;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .series-historico-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .serie-historico-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .sugestao-mini {
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            padding: 6px 8px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            font-size: 0.8em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-aplicar-mini {
+            background: rgba(76, 175, 80, 0.7);
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .btn-aplicar-mini:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+
+        .historico-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .historico-mini-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .historico-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 10px;
+            margin: 4px 0;
+            border-radius: 5px;
+            font-size: 0.8em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sugestao-carga {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-size: 0.85em;
+            color: #8bc34a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-usar-sugestao {
+            background: rgba(76, 175, 80, 0.8);
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .btn-usar-sugestao:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+
+        /* ========================================
+           OTIMIZAÇÕES POCO X7 PRO (393px width)
+           ======================================== */
+        
+        @media (max-width: 393px) {
+            /* Modal otimizado */
+            .modal-content {
+                max-width: 95vw !important;
+                margin: 10px auto !important;
+                padding: 15px !important;
+                max-height: 90vh !important;
+                overflow-y: auto !important;
+            }
+            
+            .modal-exercicio {
+                max-width: 95% !important;
+                margin: 10px auto !important;
+                max-height: 85vh !important;
+                overflow-y: auto !important;
+            }
+            
+            .form-exercicio {
+                gap: 15px !important;
+            }
+            
+            .form-exercicio input,
+            .form-exercicio select {
+                font-size: 16px !important;
+                padding: 12px !important;
+            }
+            
+            .form-exercicio label {
+                font-size: 0.95em !important;
+                margin-bottom: 5px !important;
+            }
+            
+            /* Header ajustado */
+            .header h1 {
+                font-size: 1.8em !important;
+            }
+            
+            .header p {
+                font-size: 0.85em !important;
+            }
+            
+            /* Seletor de tipos responsivo */
+            .tipo-selector {
+                gap: 8px !important;
+                padding: 0 5px !important;
+            }
+            
+            .tipo-btn-container {
+                flex: 0 0 auto;
+                z-index: 100 !important;
+            }
+            
+            .tipo-btn {
+                padding: 10px 16px !important;
+                font-size: 0.85em !important;
+                white-space: nowrap;
+            }
+            
+            /* Botão de menu do tipo maior no mobile */
+            .btn-menu-tipo {
+                width: 32px !important;
+                height: 32px !important;
+                top: 2px !important;
+                right: 2px !important;
+                font-size: 1.4em !important;
+                background: rgba(255, 255, 255, 0.4) !important;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+                border: 2px solid rgba(255, 255, 255, 0.3) !important;
+                z-index: 2000 !important;
+            }
+            
+            .btn-menu-tipo:active {
+                transform: scale(0.95) !important;
+                background: rgba(255, 255, 255, 0.5) !important;
+            }
+            
+            .dropdown-menu-tipo {
+                z-index: 3000 !important;
+                min-width: 150px !important;
+                top: 28px !important;
+            }
+            
+            .btn-add-tipo {
+                padding: 10px 16px !important;
+                font-size: 0.85em !important;
+            }
+            
+            /* Grid de treinos */
+            .treinos-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+                padding: 0 5px !important;
+            }
+            
+            /* Cards de treino */
+            .treino-card {
+                padding: 15px !important;
+            }
+            
+            .btn-menu-treino-card {
+                width: 40px !important;
+                height: 40px !important;
+                top: -10px !important;
+                right: -10px !important;
+                font-size: 2em !important;
+                background: rgba(255, 255, 255, 0.35) !important;
+            }
+
+            .treino-header {
+                flex-direction: row;
+                gap: 10px;
+            }
+            
+            .treino-letra {
+                width: 50px !important;
+                height: 50px !important;
+                font-size: 1.5em !important;
+            }
+            
+            /* Formulários */
+            .form-row {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                font-size: 16px !important; /* Evita zoom no iOS */
+            }
+            
+            /* Preview de exercício */
+            .preview-exercicio {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            /* Botões de edição */
+            .btn-edit-exercicio {
+                padding: 6px;
+                font-size: 0.8em;
+            }
+            
+            /* Séries individuais */
+            .serie-row {
+                flex-wrap: wrap;
+                gap: 6px !important;
+                padding: 10px 8px !important;
+            }
+            
+            .serie-label {
+                min-width: 30px !important;
+            }
+            
+            .reps-serie-input,
+            .peso-serie-input {
+                flex: 1;
+                min-width: 60px;
+            }
+            
+            /* Footer de exercícios com timers */
+            .exercicio-footer {
+                flex-wrap: wrap;
+                gap: 5px !important;
+            }
+            
+            .btn-timer-small {
+                flex: 1;
+                min-width: 70px;
+                padding: 8px 10px !important;
+                font-size: 0.7em !important;
+            }
+            
+            /* Dropdown menus */
+            .dropdown-menu-tipo,
+            .dropdown-menu-treino {
+                min-width: 140px !important;
+                right: 0 !important;
+            }
+            
+            .btn-iniciar {
+                flex: 1 !important;
+                font-size: 0.9em !important;
+                padding: 12px 10px !important;
+            }
+            
+            .treino-actions {
+                gap: 10px !important;
+            }
+            
+            /* Histórico de séries */
+            .series-historico-container {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Botões de ação */
+            .form-actions {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            
+            .btn-salvar,
+            .btn-cancelar,
+            .btn-fechar {
+                width: 100% !important;
+            }
+            
+            /* Exercícios list */
+            .exercicios-lista {
+                max-height: 250px !important;
+            }
+            
+            /* Input de nome de treino ao criar novo tipo */
+            #novoTipoNome {
+                font-size: 16px !important;
+                width: 100% !important;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ffd93d;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .exercicios-lista {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .exercicio-edit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .exercicio-preview-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .exercicio-preview-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 4px;
+            margin: -4px;
+        }
+        
+        .exercicio-nome-preview {
+            font-size: 1em;
+            font-weight: 500;
+            color: white;
+            line-height: 1.3;
+        }
+        
+        .exercicio-dados-preview {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .exercicio-dados-preview span {
+            font-size: 0.85em;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #ccc;
+            white-space: nowrap;
+        }
+        
+        .badge-series {
+            background: rgba(76, 175, 80, 0.3) !important;
+            color: #a8e6cf !important;
+        }
+        
+        .badge-reps {
+            background: rgba(33, 150, 243, 0.3) !important;
+            color: #7fdbda !important;
+        }
+        
+        .badge-peso {
+            background: rgba(255, 193, 7, 0.3) !important;
+            color: #ffd93d !important;
+        }
+
+        .exercicio-input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-remove {
+            background: rgba(244, 67, 54, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(76, 175, 80, 0.7);
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .btn-add:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-salvar {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-salvar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-cancelar {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancelar:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Notificações otimizadas para mobile */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            z-index: 2000;
+            animation: slideInMobile 0.4s ease;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.success {
+            background: rgba(76, 175, 80, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(255, 193, 7, 0.9);
+        }
+
+        @keyframes slideInMobile {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Animações suaves para interações */
+        .treino-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0); /* Força aceleração por hardware */
+        }
+
+        .treino-card:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        /* Melhoria no feedback dos botões */
+        .tipo-btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-iniciar:active {
+            transform: scale(0.95);
+        }
+
+        .btn-edit:active {
+            transform: scale(0.95);
+        }
+
+        .btn-concluir:active {
+            transform: scale(0.95);
+        }
+
+        /* Otimização específica para Poco X7 Pro (6.67" - 1080x2400px) */
+        @media (max-width: 768px) {
+            body {
+                padding: 6px;
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+            
+            .header {
+                padding: 12px 16px;
+                margin-bottom: 12px;
+                border-radius: 12px;
+            }
+            
+            .header h1 { 
+                font-size: 1.8em; 
+                margin-bottom: 6px;
+                line-height: 1.2;
+            }
+            
+            .header p {
+                font-size: 0.85em;
+                opacity: 0.9;
+                line-height: 1.3;
+            }
+            
+            .btn-config {
+                width: 36px;
+                height: 36px;
+                top: 12px;
+                right: 12px;
+                font-size: 1.1em;
+            }
+            
+            .tipo-selector {
+                gap: 6px;
+                margin-bottom: 12px;
+                padding: 0 2px;
+                justify-content: flex-start;
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                padding-bottom: 4px;
+            }
+            
+            .tipo-selector::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .tipo-btn-container {
+                flex-shrink: 0;
+                position: relative;
+            }
+            
+            .tipo-btn { 
+                padding: 10px 14px; 
+                font-size: 0.85em;
+                min-width: 120px;
+                white-space: nowrap;
+                border-radius: 20px;
+            }
+            
+            .btn-edit-tipo {
+                width: 18px;
+                height: 18px;
+                font-size: 0.6em;
+                top: -4px;
+                right: -4px;
+            }
+            
+            .treinos-grid { 
+                grid-template-columns: 1fr;
+                gap: 12px;
+                max-width: 100%;
+                padding: 0 2px;
+            }
+            
+            .treino-card {
+                padding: 16px;
+                margin: 0;
+                border-radius: 12px;
+            }
+            
+            .treino-header {
+                margin-bottom: 12px;
+            }
+            
+            .treino-letra {
+                width: 42px;
+                height: 42px;
+                font-size: 1em;
+                margin-right: 12px;
+            }
+            
+            .treino-info h3 {
+                font-size: 1.05em;
+                line-height: 1.3;
+                margin-bottom: 4px;
+            }
+            
+            .treino-info p {
+                font-size: 0.8em;
+                line-height: 1.2;
+            }
+            
+            .treino-actions {
+                gap: 8px;
+                margin-top: 12px;
+            }
+            
+            .btn-iniciar {
+                padding: 12px;
+                font-size: 0.9em;
+                border-radius: 10px;
+            }
+            
+            .btn-edit {
+                padding: 12px 16px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+        }
+
+        /* Otimização específica para Poco X7 Pro (6.67" - 1080x2400px - ~393px CSS width) */
+        @media (min-width: 380px) and (max-width: 420px) and (min-height: 800px) {
+            body {
+                padding: 4px;
+            }
+            
+            .header {
+                padding: 10px 14px;
+                margin-bottom: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.75em;
+                margin-bottom: 4px;
+            }
+            
+            .header p {
+                font-size: 0.8em;
+            }
+            
+            .btn-config {
+                width: 34px;
+                height: 34px;
+                top: 10px;
+                right: 10px;
+            }
+            
+            .tipo-selector {
+                gap: 4px;
+                margin-bottom: 10px;
+                padding: 0 4px 6px 4px;
+                justify-content: flex-start;
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            
+            .tipo-selector::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .tipo-btn-container {
+                flex-shrink: 0;
+            }
+            
+            .tipo-btn {
+                padding: 8px 12px;
+                font-size: 0.8em;
+                min-width: 110px;
+                white-space: nowrap;
+                border-radius: 18px;
+            }
+            
+            .btn-edit-tipo {
+                width: 16px;
+                height: 16px;
+                font-size: 0.5em;
+                top: -3px;
+                right: -3px;
+            }
+            
+            .treinos-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 0 4px;
+            }
+            
+            .treino-card {
+                padding: 14px;
+                border-radius: 10px;
+            }
+            
+            .treino-letra {
+                width: 38px;
+                height: 38px;
+                font-size: 0.95em;
+                margin-right: 10px;
+            }
+            
+            .treino-info h3 {
+                font-size: 1em;
+                line-height: 1.2;
+            }
+            
+            .treino-info p {
+                font-size: 0.75em;
+            }
+            
+            .btn-iniciar {
+                padding: 10px;
+                font-size: 0.85em;
+            }
+            
+            .btn-edit {
+                padding: 10px 14px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Modal responsivo otimizado para Poco X7 Pro */
+        @media (max-width: 768px) {
+            .modal-overlay {
+                padding: 8px;
+                align-items: flex-start;
+                padding-top: 15px;
+            }
+            
+            .modal-content { 
+                padding: 16px;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                max-height: calc(100vh - 30px);
+                border-radius: 12px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.3em;
+                margin-bottom: 6px;
+            }
+            
+            .modal-header p {
+                font-size: 0.85em;
+            }
+            
+            .exercicio-item {
+                padding: 12px;
+                margin-bottom: 10px;
+                border-radius: 8px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            
+            .exercicio-info {
+                margin-right: 0;
+                margin-bottom: 6px;
+            }
+            
+            .exercicio-nome {
+                font-size: 0.9em;
+                line-height: 1.3;
+                margin-bottom: 0;
+                text-align: center;
+            }
+            
+            .exercicio-controls {
+                gap: 6px;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .peso-input, .series-input, .reps-input {
+                padding: 8px 6px;
+                font-size: 16px; /* Evita zoom no iOS */
+                border-radius: 6px;
+            }
+            
+            .peso-input {
+                width: 60px;
+            }
+            
+            .series-input, .reps-input {
+                width: 40px;
+            }
+            
+            .btn-timer {
+                padding: 6px 8px;
+                font-size: 0.9em;
+                border-radius: 6px;
+            }
+            
+            .btn-concluir {
+                padding: 8px 10px;
+                font-size: 0.85em;
+                white-space: nowrap;
+                border-radius: 6px;
+            }
+            
+            .timer-container {
+                padding: 16px;
+                min-width: 180px;
+                border-radius: 16px;
+            }
+            
+            .timer-display {
+                font-size: 2.2em;
+                margin-bottom: 12px;
+            }
+            
+            .timer-controls {
+                gap: 8px;
+            }
+            
+            .btn-timer {
+                padding: 8px 12px;
+                font-size: 0.85em;
+                border-radius: 8px;
+            }
+            
+            .form-group {
+                margin-bottom: 14px;
+            }
+            
+            .form-group label {
+                margin-bottom: 6px;
+                font-size: 0.9em;
+            }
+            
+            .exercicio-edit {
+                padding: 10px !important;
+                gap: 8px !important;
+            }
+            
+            .exercicio-nome-preview {
+                font-size: 0.95em !important;
+            }
+            
+            .exercicio-dados-preview {
+                gap: 6px !important;
+            }
+            
+            .exercicio-dados-preview span {
+                font-size: 0.75em !important;
+                padding: 3px 8px !important;
+            }
+            
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 12px;
+                font-size: 16px; /* Evita zoom no iOS */
+                border-radius: 8px;
+            }
+            
+            .exercicios-lista {
+                max-height: 220px;
+                padding: 10px;
+                border-radius: 8px;
+            }
+            
+            .exercicio-edit {
+                padding: 6px;
+                margin-bottom: 6px;
+                gap: 6px;
+                border-radius: 6px;
+            }
+            
+            .exercicio-input {
+                padding: 8px;
+                font-size: 16px; /* Evita zoom no iOS */
+                border-radius: 6px;
+            }
+            
+            .btn-remove {
+                width: 28px;
+                height: 28px;
+                font-size: 1em;
+            }
+            
+            .btn-add {
+                padding: 12px;
+                font-size: 0.9em;
+                margin-top: 6px;
+                border-radius: 8px;
+            }
+            
+            .form-actions {
+                gap: 10px;
+                margin-top: 16px;
+            }
+            
+            .btn-salvar,
+            .btn-cancelar {
+                padding: 12px;
+                font-size: 0.95em;
+                border-radius: 8px;
+            }
+            
+            .btn-fechar {
+                padding: 12px 20px;
+                font-size: 0.95em;
+                border-radius: 8px;
+            }
+            
+            .notification {
+                top: 8px;
+                right: 8px;
+                left: 8px;
+                padding: 12px 14px;
+                font-size: 0.85em;
+                border-radius: 10px;
+            }
+        }
+
+        /* Otimização específica para modal no Poco X7 Pro */
+        @media (min-width: 380px) and (max-width: 420px) and (min-height: 800px) {
+            .modal-overlay {
+                padding: 6px;
+                padding-top: 12px;
+            }
+            
+            .modal-content {
+                padding: 14px;
+                max-height: calc(100vh - 24px);
+                border-radius: 10px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.2em;
+                margin-bottom: 4px;
+            }
+            
+            .modal-header p {
+                font-size: 0.8em;
+            }
+            
+            .exercicio-item {
+                padding: 10px;
+                margin-bottom: 8px;
+                flex-direction: row;
+                align-items: center;
+                gap: 6px;
+            }
+            
+            .exercicio-info {
+                flex: 0 0 auto;
+                margin-right: 8px;
+                margin-bottom: 0;
+                min-width: 120px;
+                max-width: 120px;
+            }
+            
+            .exercicio-nome {
+                font-size: 0.85em;
+                margin-bottom: 0;
+                text-align: left;
+                line-height: 1.2;
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            
+            .exercicio-controls {
+                gap: 4px;
+                flex-wrap: nowrap;
+                align-items: center;
+                justify-content: flex-end;
+                flex: 1;
+            }
+            
+            .peso-input {
+                width: 55px;
+                padding: 6px 4px;
+                font-size: 14px;
+            }
+            
+            .series-input, .reps-input {
+                width: 35px;
+                padding: 6px 4px;
+                font-size: 14px;
+            }
+            
+            .btn-timer {
+                padding: 5px 6px;
+                font-size: 0.8em;
+                min-width: 32px;
+                min-height: 32px;
+            }
+            
+            .btn-concluir {
+                padding: 6px 8px;
+                font-size: 0.8em;
+                white-space: nowrap;
+                min-width: 50px;
+            }
+            
+            .timer-container {
+                padding: 12px;
+                min-width: 160px;
+            }
+            
+            .timer-display {
+                font-size: 2em;
+                margin-bottom: 10px;
+            }
+            
+            .notification {
+                top: 6px;
+                right: 6px;
+                left: 6px;
+                padding: 10px 12px;
+                font-size: 0.8em;
+            }
+        }
+
+        /* Otimização para telas pequenas (até 360px) */
+        @media (max-width: 360px) {
+            body {
+                padding: 3px;
+            }
+            
+            .header {
+                padding: 8px 12px;
+                margin-bottom: 8px;
+            }
+            
+            .header h1 { 
+                font-size: 1.6em; 
+                margin-bottom: 3px;
+            }
+            
+            .header p {
+                font-size: 0.75em;
+            }
+            
+            .btn-config {
+                width: 32px;
+                height: 32px;
+                top: 8px;
+                right: 8px;
+                font-size: 1em;
+            }
+            
+            .tipo-selector {
+                gap: 3px;
+                margin-bottom: 8px;
+                padding: 0 3px 4px 3px;
+            }
+            
+            .tipo-btn { 
+                padding: 8px 10px; 
+                font-size: 0.75em;
+                min-width: 100px;
+                border-radius: 16px;
+            }
+            
+            .btn-edit-tipo {
+                width: 14px;
+                height: 14px;
+                font-size: 0.45em;
+                top: -2px;
+                right: -2px;
+            }
+            
+            .treinos-grid {
+                gap: 8px;
+                padding: 0 3px;
+            }
+            
+            .treino-card {
+                padding: 12px;
+                border-radius: 8px;
+            }
+            
+            .treino-letra {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9em;
+                margin-right: 8px;
+            }
+            
+            .treino-info h3 {
+                font-size: 0.95em;
+            }
+            
+            .treino-info p {
+                font-size: 0.7em;
+            }
+            
+            .btn-iniciar {
+                padding: 10px;
+                font-size: 0.8em;
+            }
+            
+            .btn-edit {
+                padding: 10px 12px;
+                font-size: 0.85em;
+            }
+        }
+
+        /* Suporte específico para Poco X7 Pro em modo paisagem */
+        @media (min-width: 800px) and (max-width: 900px) and (max-height: 420px) and (orientation: landscape) {
+            body {
+                padding: 4px;
+            }
+            
+            .header {
+                padding: 8px 16px;
+                margin-bottom: 8px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+                margin-bottom: 2px;
+            }
+            
+            .header p {
+                font-size: 0.75em;
+            }
+            
+            .tipo-selector {
+                margin-bottom: 8px;
+                gap: 4px;
+            }
+            
+            .tipo-btn {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+            
+            .treinos-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .treino-card {
+                padding: 12px;
+            }
+            
+            .treino-letra {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9em;
+            }
+            
+            .modal-content {
+                max-height: calc(100vh - 20px);
+                padding: 12px;
+            }
+            
+            .exercicio-item {
+                padding: 8px;
+                margin-bottom: 6px;
+            }
+            
+            .exercicio-controls {
+                gap: 4px;
+            }
+        }
+
+        /* Melhorias para interação touch - Poco X7 Pro otimizado */
+        @media (hover: none) and (pointer: coarse) {
+            .tipo-btn,
+            .btn-iniciar,
+            .btn-edit,
+            .btn-concluir,
+            .btn-salvar,
+            .btn-cancelar,
+            .btn-fechar {
+                min-height: 44px; /* Área mínima recomendada para touch */
+                -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+                touch-action: manipulation;
+            }
+            
+            .btn-remove {
+                min-width: 44px;
+                min-height: 44px;
+            }
+            
+            .peso-input, .series-input, .reps-input {
+                min-height: 44px;
+                -webkit-appearance: none;
+                -moz-appearance: textfield;
+                appearance: none;
+            }
+            
+            .btn-timer {
+                min-height: 40px;
+                min-width: 40px;
+            }
+            
+            .btn-edit-tipo {
+                min-width: 32px;
+                min-height: 32px;
+            }
+            
+            .btn-config {
+                min-width: 44px;
+                min-height: 44px;
+            }
+            
+            /* Remover spinners dos inputs number */
+            .peso-input::-webkit-outer-spin-button,
+            .peso-input::-webkit-inner-spin-button,
+            .series-input::-webkit-outer-spin-button,
+            .series-input::-webkit-inner-spin-button,
+            .reps-input::-webkit-outer-spin-button,
+            .reps-input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                appearance: none;
+                margin: 0;
+            }
+            
+            /* Melhor feedback visual para touch */
+            .tipo-btn:active,
+            .btn-iniciar:active,
+            .btn-edit:active,
+            .btn-concluir:active,
+            .btn-timer:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease;
+            }
+            
+            /* Scrolling suave para listas */
+            .tipo-selector,
+            .exercicios-lista,
+            .modal-content {
+                -webkit-overflow-scrolling: touch;
+                scroll-behavior: smooth;
+            }
+            
+            /* Otimização de performance para animações */
+            .treino-card,
+            .exercicio-item,
+            .tipo-btn,
+            .modal-content {
+                will-change: transform;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+        }
+
+        /* Viewport específico para Poco X7 Pro */
+        @media screen and (device-width: 393px) and (device-height: 851px) and (-webkit-device-pixel-ratio: 2.75) {
+            /* Meta viewport já está otimizado no HTML */
+            html {
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+                text-size-adjust: 100%;
+            }
+            
+            body {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                text-rendering: optimizeLegibility;
+            }
+            
+            /* Otimização para tela AMOLED */
+            .header,
+            .treino-card,
+            .modal-content,
+            .timer-container {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💪 Treinos Marcelo</h1>
+        <p>Controle completo de treinos com peso e edição personalizada</p>
+        <span style="position: absolute; bottom: 5px; right: 10px; font-size: 0.7em; color: rgba(255,255,255,0.5); font-weight: bold; background: rgba(76,175,80,0.3); padding: 2px 8px; border-radius: 10px;">v3.5.1</span>
+        <button class="btn-config" onclick="abrirConfiguracoes()" title="Configurações">⚙️</button>
+    </div>
+
+    <div class="tipo-selector" id="tipoSelector">
+        <!-- Botões dos tipos serão inseridos aqui -->
+    </div>
+
+    <div class="treinos-grid" id="treinosContainer">
+        <!-- Cards dos treinos serão inseridos aqui -->
+    </div>
+
+    <script>
+        // Estado da aplicação
+        let tipoAtualIndex = 0;
+
+        // Validação de Schema de Dados
+        function validarTreino(treino) {
+            if (!treino || typeof treino !== 'object') return false;
+            if (!treino.letra || !treino.nome || !treino.descricao || !treino.classe) return false;
+            if (!Array.isArray(treino.exercicios)) return false;
+            // Permitir treinos sem exercícios (será editado depois)
+            return true;
+        }
+
+        function validarTipoTreino(tipo) {
+            if (!tipo || typeof tipo !== 'object') return false;
+            if (!tipo.nome || !Array.isArray(tipo.treinos)) return false;
+            return tipo.treinos.every(validarTreino);
+        }
+
+        function validarExercicio(exercicio) {
+            if (typeof exercicio === 'string') return exercicio.trim() !== '';
+            if (typeof exercicio === 'object') {
+                return exercicio.nome && 
+                       exercicio.nome.trim() !== '' && 
+                       exercicio.nome.length <= 100;
+            }
+            return false;
+        }
+
+        // Salvar com validação
+        function salvarTreinosComValidacao() {
+            try {
+                // Validar antes de salvar
+                if (!Array.isArray(todosTipos)) {
+                    console.error('❌ Erro: todosTipos não é um array');
+                    return false;
+                }
+                
+                const dadosValidos = todosTipos.every(validarTipoTreino);
+                if (!dadosValidos) {
+                    console.error('❌ Erro: Dados de treino inválidos');
+                    mostrarNotificacao('⚠️ Erro ao salvar: dados inválidos', 'warning');
+                    return false;
+                }
+
+                localStorage.setItem('marceloTreinos', JSON.stringify(todosTipos));
+                console.log('✅ Treinos salvos com sucesso');
+                return true;
+            } catch (error) {
+                console.error('❌ Erro ao salvar treinos:', error);
+                mostrarNotificacao('❌ Erro ao salvar dados!', 'warning');
+                return false;
+            }
+        }
+
+        // Dados dos treinos - Array com 7 tipos
+        const todosTipos = [
+            // 0 - ABCD Clássico (5 treinos)
+            {
+                nome: 'ABCD Clássico',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito e Tríceps',
+                        descricao: '5 exercícios • Força e volume',
+                        classe: 'treino-a',
+                        exercicios: [
+                            { nome: 'Supino Reto', series: '3', reps: '12', peso: '' },
+                            { nome: 'Supino Inclinado', series: '3', reps: '10', peso: '' },
+                            { nome: 'Crucifixo', series: '3', reps: '15', peso: '' },
+                            { nome: 'Tríceps Testa', series: '3', reps: '12', peso: '' },
+                            { nome: 'Tríceps Pulley', series: '3', reps: '15', peso: '' }
+                        ]
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas e Bíceps',
+                        descricao: '5 exercícios • Puxadas e rosca',
+                        classe: 'treino-b',
+                        exercicios: [
+                            { nome: 'Puxada Frontal', series: '3', reps: '12', peso: '' },
+                            { nome: 'Remada Curvada', series: '3', reps: '10', peso: '' },
+                            { nome: 'Pullover', series: '3', reps: '15', peso: '' },
+                            { nome: 'Rosca Direta', series: '3', reps: '12', peso: '' },
+                            { nome: 'Rosca Martelo', series: '3', reps: '15', peso: '' }
+                        ]
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas',
+                        descricao: '6 exercícios • Membros inferiores',
+                        classe: 'treino-c',
+                        exercicios: [
+                            { nome: 'Agachamento Livre', series: '4', reps: '10', peso: '' },
+                            { nome: 'Leg Press', series: '3', reps: '15', peso: '' },
+                            { nome: 'Stiff', series: '3', reps: '12', peso: '' },
+                            { nome: 'Extensora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Flexora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Panturrilha', series: '4', reps: '20', peso: '' }
+                        ]
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Ombros e Abs',
+                        descricao: '5 exercícios • Delts e core',
+                        classe: 'treino-d',
+                        exercicios: [
+                            { nome: 'Desenvolvimento', series: '3', reps: '12', peso: '' },
+                            { nome: 'Elevação Lateral', series: '3', reps: '15', peso: '' },
+                            { nome: 'Elevação Posterior', series: '3', reps: '15', peso: '' },
+                            { nome: 'Encolhimento', series: '3', reps: '12', peso: '' },
+                            { nome: 'Abdominal', series: '3', reps: '20', peso: '' }
+                        ]
+                    },
+                    {
+                        letra: 'E',
+                        nome: 'Treino E - Cardio e Funcional',
+                        descricao: '5 exercícios • Condicionamento',
+                        classe: 'treino-e',
+                        exercicios: [
+                            { nome: 'Esteira', series: '1', reps: '20', peso: 'min' },
+                            { nome: 'Bike Ergométrica', series: '1', reps: '15', peso: 'min' },
+                            { nome: 'Elíptico', series: '1', reps: '10', peso: 'min' },
+                            { nome: 'Corda Naval', series: '3', reps: '30', peso: 'seg' },
+                            { nome: 'Burpees', series: '3', reps: '15', peso: '' }
+                        ]
+                    }
+                ]
+            },
+            // 1 - Adaptação Muscular (2 treinos)
+            {
+                nome: 'Adaptação Muscular',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Adaptação A - Full Body',
+                        descricao: '4 exercícios • Corpo todo',
+                        classe: 'treino-a',
+                        exercicios: [
+                            { nome: 'Agachamento', series: '3', reps: '15', peso: '' },
+                            { nome: 'Flexão', series: '3', reps: '12', peso: '' },
+                            { nome: 'Remada', series: '3', reps: '12', peso: '' },
+                            { nome: 'Prancha', series: '3', reps: '30', peso: 'seg' }
+                        ]
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Adaptação B - Resistência',
+                        descricao: '4 exercícios • Condicionamento',
+                        classe: 'treino-b',
+                        exercicios: [
+                            { nome: 'Leg Press', series: '3', reps: '15', peso: '' },
+                            { nome: 'Puxada', series: '3', reps: '12', peso: '' },
+                            { nome: 'Desenvolvimento', series: '3', reps: '12', peso: '' },
+                            { nome: 'Bicicleta', series: '1', reps: '15', peso: 'min' }
+                        ]
+                    }
+                ]
+            },
+            // 2 - AB 2x Semana (2 treinos)
+            {
+                nome: 'AB 2x Semana',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Superior',
+                        descricao: '6 exercícios • Membros superiores',
+                        classe: 'treino-a',
+                        exercicios: [
+                            { nome: 'Supino Reto', series: '4', reps: '8', peso: '' },
+                            { nome: 'Puxada Frontal', series: '4', reps: '8', peso: '' },
+                            { nome: 'Desenvolvimento', series: '3', reps: '10', peso: '' },
+                            { nome: 'Rosca Direta', series: '3', reps: '12', peso: '' },
+                            { nome: 'Tríceps Testa', series: '3', reps: '12', peso: '' },
+                            { nome: 'Elevação Lateral', series: '3', reps: '15', peso: '' }
+                        ]
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Inferior',
+                        descricao: '5 exercícios • Membros inferiores',
+                        classe: 'treino-b',
+                        exercicios: [
+                            { nome: 'Agachamento', series: '4', reps: '10', peso: '' },
+                            { nome: 'Stiff', series: '3', reps: '12', peso: '' },
+                            { nome: 'Leg Press', series: '3', reps: '15', peso: '' },
+                            { nome: 'Extensora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Panturrilha', series: '4', reps: '20', peso: '' }
+                        ]
+                    }
+                ]
+            },
+            // 3 - ABCD Avançado (4 treinos)
+            {
+                nome: 'ABCD Avançado',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito/Tríceps Power',
+                        descricao: '6 exercícios • Alta intensidade',
+                        classe: 'treino-a',
+                        exercicios: [
+                            { nome: 'Supino Reto', series: '4', reps: '6', peso: '' },
+                            { nome: 'Supino Inclinado', series: '4', reps: '8', peso: '' },
+                            { nome: 'Crucifixo Inclinado', series: '3', reps: '12', peso: '' },
+                            { nome: 'Paralelas', series: '3', reps: '10', peso: '' },
+                            { nome: 'Tríceps Testa', series: '3', reps: '12', peso: '' },
+                            { nome: 'Tríceps Corda', series: '3', reps: '15', peso: '' }
+                        ]
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas/Bíceps Power',
+                        descricao: '6 exercícios • Força máxima',
+                        classe: 'treino-b',
+                        exercicios: [
+                            { nome: 'Barra Fixa', series: '4', reps: '8', peso: '' },
+                            { nome: 'Remada Curvada', series: '4', reps: '8', peso: '' },
+                            { nome: 'Puxada Frontal', series: '3', reps: '10', peso: '' },
+                            { nome: 'Remada Unilateral', series: '3', reps: '12', peso: '' },
+                            { nome: 'Rosca Direta', series: '3', reps: '12', peso: '' },
+                            { nome: 'Rosca 21', series: '3', reps: '21', peso: '' }
+                        ]
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas Power',
+                        descricao: '7 exercícios • Força e massa',
+                        classe: 'treino-c',
+                        exercicios: [
+                            { nome: 'Agachamento Livre', series: '4', reps: '8', peso: '' },
+                            { nome: 'Leg Press', series: '4', reps: '12', peso: '' },
+                            { nome: 'Stiff', series: '3', reps: '10', peso: '' },
+                            { nome: 'Afundo', series: '3', reps: '12', peso: '' },
+                            { nome: 'Extensora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Flexora', series: '3', reps: '15', peso: '' },
+                            { nome: 'Panturrilha', series: '4', reps: '20', peso: '' }
+                        ]
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Ombros/Core Power',
+                        descricao: '6 exercícios • Delts e abdomen',
+                        classe: 'treino-d',
+                        exercicios: [
+                            { nome: 'Desenvolvimento', series: '3', reps: '10', peso: '' },
+                            { nome: 'Elevação Lateral', series: '3', reps: '15', peso: '' },
+                            { nome: 'Elevação Frontal', series: '3', reps: '15', peso: '' },
+                            { nome: 'Elevação Posterior', series: '3', reps: '15', peso: '' },
+                            { nome: 'Encolhimento', series: '3', reps: '12', peso: '' },
+                            { nome: 'Prancha', series: '3', reps: '60', peso: 'seg' }
+                        ]
+                    }
+                ]
+            },
+            // 4 - ABC do Zanca (3 treinos)
+            {
+                nome: 'ABC do Zanca',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Push (Empurrar)',
+                        descricao: '5 exercícios • Peito/ombros/tríceps',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto', 'Desenvolvimento', 'Supino Inclinado', 'Elevação Lateral', 'Tríceps Pulley']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Pull (Puxar)',
+                        descricao: '5 exercícios • Costas/bíceps',
+                        classe: 'treino-b',
+                        exercicios: ['Puxada Frontal', 'Remada Curvada', 'Remada Cavalinho', 'Rosca Direta', 'Rosca Martelo']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Legs (Pernas)',
+                        descricao: '5 exercícios • Membros inferiores',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento', 'Leg Press', 'Stiff', 'Extensora', 'Panturrilha']
+                    }
+                ]
+            },
+            // 5 - ABC Clássico (3 treinos)
+            {
+                nome: 'ABC Clássico',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito e Tríceps',
+                        descricao: '4 exercícios • Empurrar',
+                        classe: 'treino-a',
+                        exercicios: ['Supino Reto', 'Supino Inclinado', 'Tríceps Testa', 'Tríceps Pulley']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas e Bíceps',
+                        descricao: '4 exercícios • Puxar',
+                        classe: 'treino-b',
+                        exercicios: ['Puxada Frontal', 'Remada Curvada', 'Rosca Direta', 'Rosca Martelo']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas e Ombros',
+                        descricao: '4 exercícios • Inferior e delts',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento', 'Stiff', 'Desenvolvimento', 'Elevação Lateral']
+                    }
+                ]
+            },
+            // 6 - ABDCE (5 treinos)
+            {
+                nome: 'ABDCE',
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Peito e Tríceps',
+                        descricao: '6 exercícios • Empurrar',
+                        classe: 'treino-a',
+                        exercicios: ['Panturrilha em pé na máquina ou smith com step', 'Panturrilha sentada', 'Supino inclinado smith ou máquina', 'Supino reto halteres', 'Supino inclinado com halteres combinado com crucifixo inclinado com halteres', 'Supino declinado']
+                    },
+                    {
+                        letra: 'B',
+                        nome: 'Treino B - Costas e Bíceps',
+                        descricao: '5 exercícios • Puxar',
+                        classe: 'treino-b',
+                        exercicios: ['Abdominal supra na prancha', 'Abdominal infra na torre', 'Remada curvada pronada', 'Remada baixa pegada aberta', 'Serrote']
+                    },
+                    {
+                        letra: 'C',
+                        nome: 'Treino C - Pernas',
+                        descricao: '5 exercícios • Membros inferiores',
+                        classe: 'treino-c',
+                        exercicios: ['Agachamento Livre', 'Leg 45º', 'Cadeira Extensora', 'Flexor deitado', 'Flexor sentado']
+                    },
+                    {
+                        letra: 'D',
+                        nome: 'Treino D - Ombros',
+                        descricao: '5 exercícios • Deltoides',
+                        classe: 'treino-d',
+                        exercicios: ['Panturrilha em pé na máquina ou smith com step', 'Panturrilha sentada', 'Desenvolvimento sentado com halteres', 'Elevação frontal corda', 'Elevação lateral']
+                    },
+                    {
+                        letra: 'E',
+                        nome: 'Treino E - Braços',
+                        descricao: '6 exercícios • Bíceps e tríceps',
+                        classe: 'treino-e',
+                        exercicios: ['Abdominal supra na prancha', 'Abdominal infra na torre', 'Rosca direta barra em pé', 'Rosca scott na máquina ou no cross 21', 'Rosca direta com halteres sentado na gravs', 'Rosca direta corda']
+                    }
+                ]
+            }
+        ];
+
+        // Inicializar app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('💪 Inicializando Treinos Marcelo v3.1 com validação...');
+            
+            // Carregar treinos salvos do localStorage com validação
+            const treinosSalvos = localStorage.getItem('marceloTreinos');
+            if (treinosSalvos) {
+                try {
+                    const treinosCarregados = JSON.parse(treinosSalvos);
+                    if (Array.isArray(treinosCarregados) && treinosCarregados.length >= 6) {
+                        // Validar cada tipo antes de carregar
+                        let dadosValidos = true;
+                        treinosCarregados.forEach((tipo, index) => {
+                            if (tipo && tipo.treinos && Array.isArray(tipo.treinos) && index < todosTipos.length) {
+                                if (validarTipoTreino(tipo)) {
+                                    todosTipos[index] = tipo;
+                                } else {
+                                    console.warn(`⚠️ Tipo ${index} inválido, usando padrão`);
+                                    dadosValidos = false;
+                                }
+                            }
+                        });
+                        
+                        if (dadosValidos) {
+                            console.log('✅ Treinos personalizados carregados e validados');
+                        } else {
+                            console.log('⚠️ Alguns dados inválidos foram ignorados');
+                            mostrarNotificacao('⚠️ Alguns dados foram restaurados aos padrões', 'warning');
+                        }
+                    }
+                } catch (error) {
+                    console.error('⚠️ Erro ao carregar treinos salvos:', error);
+                    mostrarNotificacao('⚠️ Erro ao carregar dados salvos, usando padrões', 'warning');
+                }
+            }
+            
+            carregarTreinos();
+            console.log('✅ App v3.5.1 Preview Visual carregado com sucesso!');
+            
+            // Verificar atualizações do Service Worker
+            verificarAtualizacoes();
+        });
+
+        // Verificar atualizações do Service Worker
+        function verificarAtualizacoes() {
+            if ('serviceWorker' in navigator) {
+                // Forçar atualização a cada 5 segundos
+                setInterval(() => {
+                    navigator.serviceWorker.getRegistration().then(reg => {
+                        if (reg) {
+                            reg.update();
+                        }
+                    });
+                }, 5000);
+
+                navigator.serviceWorker.getRegistration().then(reg => {
+                    if (reg) {
+                        reg.update();
+                        
+                        // Detectar nova versão e recarregar automaticamente
+                        reg.addEventListener('updatefound', () => {
+                            const newWorker = reg.installing;
+                            console.log('🔄 Nova versão detectada, instalando...');
+                            
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+                                    console.log('✅ Nova versão ativada! Recarregando...');
+                                    // Recarregar automaticamente após 1 segundo
+                                    setTimeout(() => {
+                                        window.location.reload(true);
+                                    }, 1000);
+                                }
+                            });
+                        });
+                    }
+                });
+
+                // Listener para quando o SW assumir controle
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    console.log('🔄 Service Worker atualizado! Recarregando página...');
+                    window.location.reload(true);
+                });
+            }
+        }
+
+        function carregarTreinos() {
+            console.log('🔄 Carregando treinos...');
+            
+            // Carregar seletor de tipos
+            const tipoSelector = document.getElementById('tipoSelector');
+            tipoSelector.innerHTML = '';
+            
+            todosTipos.forEach((tipo, index) => {
+                const container = document.createElement('div');
+                container.className = 'tipo-btn-container';
+                
+                const btn = document.createElement('button');
+                btn.className = `tipo-btn ${index === tipoAtualIndex ? 'active' : ''}`;
+                btn.textContent = tipo.nome;
+                btn.onclick = () => selecionarTipo(index);
+                
+                // Botão de menu (três pontos)
+                const menuBtn = document.createElement('button');
+                menuBtn.className = 'btn-menu-tipo';
+                menuBtn.innerHTML = '⋮';
+                menuBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleDropdownMenu(container, index);
+                };
+                menuBtn.title = 'Opções';
+                
+                // Menu dropdown
+                const dropdown = document.createElement('div');
+                dropdown.className = 'dropdown-menu-tipo';
+                
+                // Opção Editar
+                const editItem = document.createElement('button');
+                editItem.className = 'dropdown-item-tipo edit';
+                editItem.innerHTML = '✏️ Editar Nome';
+                editItem.onclick = (e) => {
+                    e.stopPropagation();
+                    editarNomeTipo(index);
+                    dropdown.classList.remove('show');
+                };
+                
+                // Opção Deletar
+                const deleteItem = document.createElement('button');
+                deleteItem.className = 'dropdown-item-tipo delete';
+                deleteItem.innerHTML = '🗑️ Deletar Tipo';
+                deleteItem.onclick = (e) => {
+                    e.stopPropagation();
+                    deletarTipoTreino(index);
+                    dropdown.classList.remove('show');
+                };
+                
+                dropdown.appendChild(editItem);
+                dropdown.appendChild(deleteItem);
+                
+                container.appendChild(btn);
+                container.appendChild(menuBtn);
+                container.appendChild(dropdown);
+                tipoSelector.appendChild(container);
+            });
+            
+            // Botão para adicionar novo tipo
+            const btnAddTipo = document.createElement('button');
+            btnAddTipo.className = 'btn-add-tipo';
+            btnAddTipo.innerHTML = '➕ Novo Tipo';
+            btnAddTipo.onclick = criarNovoTipoTreino;
+            tipoSelector.appendChild(btnAddTipo);
+            
+            // Carregar treinos do tipo atual
+            carregarTreinosTipo(tipoAtualIndex);
+        }
+
+        function selecionarTipo(index) {
+            console.log(`🎯 Selecionando tipo: ${todosTipos[index].nome}`);
+            tipoAtualIndex = index;
+            
+            // Atualizar botões
+            document.querySelectorAll('.tipo-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            
+            // Carregar treinos
+            carregarTreinosTipo(index);
+        }
+
+        function toggleDropdownMenu(container, index) {
+            const dropdown = container.querySelector('.dropdown-menu-tipo');
+            const isShowing = dropdown.classList.contains('show');
+            
+            // Fechar todos os menus abertos
+            document.querySelectorAll('.dropdown-menu-tipo').forEach(menu => {
+                menu.classList.remove('show');
+            });
+            
+            // Toggle do menu atual
+            if (!isShowing) {
+                dropdown.classList.add('show');
+                
+                // Fechar ao clicar fora
+                setTimeout(() => {
+                    const closeOnClickOutside = (e) => {
+                        if (!container.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                            document.removeEventListener('click', closeOnClickOutside);
+                        }
+                    };
+                    document.addEventListener('click', closeOnClickOutside);
+                }, 0);
+            }
+        }
+
+        function toggleDropdownMenuTreino(event, treinoIndex) {
+            event.stopPropagation();
+            const button = event.target;
+            const card = button.closest('.treino-card');
+            const dropdown = card.querySelector('.dropdown-menu-treino');
+            const isShowing = dropdown.classList.contains('show');
+            
+            // Fechar todos os menus abertos
+            document.querySelectorAll('.dropdown-menu-treino').forEach(menu => {
+                menu.classList.remove('show');
+            });
+            
+            // Toggle do menu atual
+            if (!isShowing) {
+                dropdown.classList.add('show');
+                
+                // Fechar ao clicar fora
+                setTimeout(() => {
+                    const closeOnClickOutside = (e) => {
+                        if (!actionsDiv.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                            document.removeEventListener('click', closeOnClickOutside);
+                        }
+                    };
+                    document.addEventListener('click', closeOnClickOutside);
+                }, 0);
+            }
+        }
+
+        function carregarTreinosTipo(tipoIndex) {
+            const container = document.getElementById('treinosContainer');
+            const tipo = todosTipos[tipoIndex];
+            
+            console.log(`📋 Carregando ${tipo.treinos.length} treinos do tipo: ${tipo.nome}`);
+            
+            container.innerHTML = '';
+            
+            tipo.treinos.forEach((treino, index) => {
+                const card = document.createElement('div');
+                card.className = `treino-card ${treino.classe}`;
+                
+                const numExercicios = treino.exercicios.length;
+                
+                card.innerHTML = `
+                    <div class="treino-header">
+                        <div class="treino-letra">${treino.letra}</div>
+                        <div class="treino-info">
+                            <h3>${treino.nome}</h3>
+                            <p>${numExercicios} exercício(s)</p>
+                        </div>
+                        <button class="btn-menu-treino-card" onclick="toggleDropdownMenuTreino(event, ${index})" title="Opções">
+                            ⋮
+                        </button>
+                    </div>
+                    <div class="treino-actions">
+                        <button class="btn-iniciar" onclick="iniciarTreino(${index})">
+                            🚀 Iniciar Treino
+                        </button>
+                    </div>
+                `;
+                
+                // Criar menu dropdown
+                const menuDropdown = document.createElement('div');
+                menuDropdown.className = 'dropdown-menu-treino';
+                menuDropdown.dataset.treinoIndex = index;
+                
+                // Opção Editar
+                const editItem = document.createElement('button');
+                editItem.className = 'dropdown-item-treino edit';
+                editItem.innerHTML = '✏️ Editar';
+                editItem.onclick = (e) => {
+                    e.stopPropagation();
+                    editarTreino(index);
+                    menuDropdown.classList.remove('show');
+                };
+                
+                menuDropdown.appendChild(editItem);
+                
+                // Opção Deletar
+                const deleteItem = document.createElement('button');
+                deleteItem.className = 'dropdown-item-treino delete';
+                deleteItem.innerHTML = '🗑️ Deletar';
+                deleteItem.onclick = (e) => {
+                    e.stopPropagation();
+                    deletarTreino(index);
+                    menuDropdown.classList.remove('show');
+                };
+                menuDropdown.appendChild(deleteItem);
+                
+                card.appendChild(menuDropdown);
+                
+                container.appendChild(card);
+            });
+            
+            // Adicionar botão para criar novo treino no tipo atual
+            const addTreinoCard = document.createElement('div');
+            addTreinoCard.className = 'treino-card';
+            addTreinoCard.style.border = '2px dashed rgba(76, 175, 80, 0.5)';
+            addTreinoCard.style.background = 'rgba(76, 175, 80, 0.05)';
+            addTreinoCard.style.cursor = 'pointer';
+            addTreinoCard.onclick = adicionarTreinoAoTipo;
+            
+            addTreinoCard.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px;">
+                    <div style="font-size: 3em; margin-bottom: 10px;">➕</div>
+                    <h3 style="color: #4caf50; margin-bottom: 5px;">Adicionar Treino</h3>
+                    <p style="color: #8bc34a; font-size: 0.9em;">Clique para criar um novo treino neste tipo</p>
+                </div>
+            `;
+            
+            container.appendChild(addTreinoCard);
+            
+            console.log(`✅ ${tipo.treinos.length} treinos carregados!`);
+        }
+
+        function iniciarTreino(index) {
+            const treino = todosTipos[tipoAtualIndex].treinos[index];
+            console.log(`🚀 Iniciando treino: ${treino.nome}`);
+            
+            // Criar modal
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            let exerciciosHtml = '';
+            treino.exercicios.forEach((exercicio, i) => {
+                // Pegar nome do exercício (compatibilidade com ambos formatos)
+                const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
+                const seriesPadrao = typeof exercicio === 'object' ? exercicio.series : '3';
+                const repsPadrao = typeof exercicio === 'object' ? exercicio.reps : '12';
+                const pesoPadrao = typeof exercicio === 'object' ? exercicio.peso : '';
+                
+                // Carregar dados salvos
+                const seriesKey = `series_${tipoAtualIndex}_${index}_${i}`;
+                const repsKey = `reps_${tipoAtualIndex}_${index}_${i}`;
+                const concluidoKey = `concluido_${tipoAtualIndex}_${index}_${i}`;
+                
+                const seriesSalvas = parseInt(localStorage.getItem(seriesKey) || seriesPadrao) || 3;
+                const repsSalvas = localStorage.getItem(repsKey) || repsPadrao;
+                const concluido = localStorage.getItem(concluidoKey) === 'true';
+                
+                // Gerar inputs de peso para cada série
+                let seriesInputsHtml = '';
+                for (let s = 1; s <= seriesSalvas; s++) {
+                    const pesoSerieKey = `peso_${tipoAtualIndex}_${index}_${i}_serie${s}`;
+                    const pesoSerieSalvo = localStorage.getItem(pesoSerieKey) || pesoPadrao;
+                    
+                    seriesInputsHtml += `
+                        <div class="serie-row">
+                            <span class="serie-label">${s}ª</span>
+                            <input type="number" 
+                                   class="reps-serie-input" 
+                                   placeholder="Reps"
+                                   value="${repsSalvas}"
+                                   onchange="salvarRepsSerie(${tipoAtualIndex}, ${index}, ${i}, ${s}, this.value)">
+                            <span style="color: #ccc; font-size: 0.8em;">×</span>
+                            <input type="text" 
+                                   class="peso-serie-input" 
+                                   placeholder="kg"
+                                   value="${pesoSerieSalvo}"
+                                   onchange="salvarPesoSerie(${tipoAtualIndex}, ${index}, ${i}, ${s}, this.value)">
+                            <span style="color: #ccc;">kg</span>
+                            <button class="btn-check-serie" onclick="toggleSerieConcluida(${tipoAtualIndex}, ${index}, ${i}, ${s}, this)" title="Marcar série como concluída">
+                                ${localStorage.getItem(`serie_concluida_${tipoAtualIndex}_${index}_${i}_${s}`) === 'true' ? '✓' : '○'}
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                exerciciosHtml += `
+                    <div class="exercicio-item ${concluido ? 'concluido' : ''}" data-exercicio="${i}">
+                        <div class="exercicio-header-row">
+                            <div class="exercicio-nome">${nomeExercicio}</div>
+                            <div class="exercicio-header-actions">
+                                <input type="number" 
+                                       class="series-config-input" 
+                                       placeholder="Séries" 
+                                       value="${seriesSalvas}"
+                                       min="1"
+                                       max="10"
+                                       onchange="atualizarNumeroSeries(${tipoAtualIndex}, ${index}, ${i}, this.value)"
+                                       title="Número de séries">
+                                <button class="btn-timer" onclick="mostrarHistoricoCarga(${tipoAtualIndex}, ${index}, ${i})" title="Histórico de carga">📊</button>
+                                <button class="btn-concluir ${concluido ? 'concluido' : ''}" 
+                                        onclick="toggleConcluido(${tipoAtualIndex}, ${index}, ${i}, this)">
+                                    ${concluido ? '✓' : '○'}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="series-container">
+                            ${seriesInputsHtml}
+                        </div>
+                        <div class="exercicio-footer">
+                            <button class="btn-timer-small" onclick="iniciarTimer(obterTempoDescanso())" title="Timer padrão">⏱️ Padrão</button>
+                            <button class="btn-timer-small" onclick="iniciarTimer(60)" title="Timer 1min">⏱️ 1:00</button>
+                            <button class="btn-timer-small" onclick="iniciarTimer(90)" title="Timer 1:30min">⏱️ 1:30</button>
+                            <button class="btn-timer-small" onclick="iniciarTimer(120)" title="Timer 2min">⏱️ 2:00</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${treino.nome}</h2>
+                        <p>${treino.descricao}</p>
+                    </div>
+                    <div class="exercicios-list">
+                        ${exerciciosHtml}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-fechar" onclick="fecharModal()">Fechar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function salvarPeso(tipoIndex, treinoIndex, exercicioIndex, peso) {
+            const key = `peso_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            localStorage.setItem(key, peso);
+            
+            // NOVO: Salvar no histórico de carga progressiva
+            salvarHistoricoCarga(tipoIndex, treinoIndex, exercicioIndex, peso);
+            
+            console.log(`💾 Peso salvo: ${peso}kg para exercício ${exercicioIndex}`);
+        }
+
+        // NOVAS FUNÇÕES: Carga Progressiva por Série
+        function salvarPesoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, peso) {
+            const key = `peso_${tipoIndex}_${treinoIndex}_${exercicioIndex}_serie${serieNum}`;
+            localStorage.setItem(key, peso);
+            
+            // Salvar no histórico
+            salvarHistoricoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, peso);
+            
+            console.log(`💾 Peso série ${serieNum} salvo: ${peso}kg`);
+            mostrarNotificacao(`💪 ${peso}kg salvo na ${serieNum}ª série`, 'success');
+        }
+
+        function salvarRepsSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, reps) {
+            const key = `reps_${tipoIndex}_${treinoIndex}_${exercicioIndex}_serie${serieNum}`;
+            localStorage.setItem(key, reps);
+            console.log(`💾 Reps série ${serieNum} salvo: ${reps}`);
+        }
+
+        function toggleSerieConcluida(tipoIndex, treinoIndex, exercicioIndex, serieNum, button) {
+            const key = `serie_concluida_${tipoIndex}_${treinoIndex}_${exercicioIndex}_${serieNum}`;
+            const isConcluida = localStorage.getItem(key) === 'true';
+            
+            localStorage.setItem(key, !isConcluida);
+            button.textContent = !isConcluida ? '✓' : '○';
+            button.classList.toggle('concluida');
+            
+            // Verificar se todas as séries foram concluídas
+            verificarExercicioConcluido(tipoIndex, treinoIndex, exercicioIndex);
+            
+            if (!isConcluida) {
+                mostrarNotificacao(`✅ ${serieNum}ª série concluída!`, 'success');
+            }
+        }
+
+        function verificarExercicioConcluido(tipoIndex, treinoIndex, exercicioIndex) {
+            const seriesKey = `series_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const numSeries = parseInt(localStorage.getItem(seriesKey) || 3);
+            
+            let todasConcluidas = true;
+            for (let s = 1; s <= numSeries; s++) {
+                const key = `serie_concluida_${tipoIndex}_${treinoIndex}_${exercicioIndex}_${s}`;
+                if (localStorage.getItem(key) !== 'true') {
+                    todasConcluidas = false;
+                    break;
+                }
+            }
+            
+            // Atualizar status do exercício completo
+            const concluidoKey = `concluido_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            localStorage.setItem(concluidoKey, todasConcluidas);
+            
+            if (todasConcluidas) {
+                mostrarNotificacao('🎉 Exercício completo!', 'success');
+            }
+        }
+
+        function atualizarNumeroSeries(tipoIndex, treinoIndex, exercicioIndex, numSeries) {
+            numSeries = parseInt(numSeries) || 3;
+            if (numSeries < 1) numSeries = 1;
+            if (numSeries > 10) numSeries = 10;
+            
+            const key = `series_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            localStorage.setItem(key, numSeries);
+            
+            // Recarregar o modal
+            fecharModal();
+            setTimeout(() => iniciarTreino(treinoIndex), 100);
+            
+            mostrarNotificacao(`📝 Número de séries atualizado: ${numSeries}`, 'info');
+        }
+
+        function salvarHistoricoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, peso) {
+            if (!peso || peso.trim() === '') return;
+            
+            const key = `historico_serie_${tipoIndex}_${treinoIndex}_${exercicioIndex}_${serieNum}`;
+            let historico = JSON.parse(localStorage.getItem(key) || '[]');
+            
+            historico.push({
+                data: new Date().toISOString(),
+                peso: parseFloat(peso) || 0
+            });
+            
+            // Manter últimos 10 registros
+            if (historico.length > 10) {
+                historico = historico.slice(-10);
+            }
+            
+            localStorage.setItem(key, JSON.stringify(historico));
+        }
+
+        // NOVA: Sistema de Carga Progressiva
+        function salvarHistoricoCarga(tipoIndex, treinoIndex, exercicioIndex, peso) {
+            if (!peso || peso.trim() === '') return;
+            
+            const treino = todosTipos[tipoIndex].treinos[treinoIndex];
+            const exercicio = treino.exercicios[exercicioIndex];
+            const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
+            
+            const key = `historicoCarga_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            let historico = JSON.parse(localStorage.getItem(key) || '[]');
+            
+            // Adicionar novo registro
+            historico.push({
+                data: new Date().toISOString(),
+                peso: parseFloat(peso) || 0,
+                exercicio: nomeExercicio
+            });
+            
+            // Manter apenas últimos 10 registros
+            if (historico.length > 10) {
+                historico = historico.slice(-10);
+            }
+            
+            localStorage.setItem(key, JSON.stringify(historico));
+            console.log(`📊 Histórico de carga atualizado para ${nomeExercicio}`);
+        }
+
+        function obterHistoricoCarga(tipoIndex, treinoIndex, exercicioIndex) {
+            const key = `historicoCarga_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            return JSON.parse(localStorage.getItem(key) || '[]');
+        }
+
+        function calcularSugestaoCarga(historico) {
+            if (historico.length === 0) return null;
+            
+            // Pegar últimos 3 registros
+            const ultimos = historico.slice(-3);
+            const media = ultimos.reduce((acc, h) => acc + h.peso, 0) / ultimos.length;
+            const ultimo = ultimos[ultimos.length - 1].peso;
+            
+            // Sugerir aumento progressivo de 2.5% a 5%
+            const incremento = ultimo * 0.025; // 2.5%
+            const sugestao = Math.ceil((ultimo + incremento) / 2.5) * 2.5; // Arredondar para 2.5kg
+            
+            return {
+                ultimo: ultimo,
+                media: media.toFixed(1),
+                sugestao: sugestao.toFixed(1),
+                tendencia: ultimo >= media ? '📈 Evoluindo' : '📉 Abaixo da média'
+            };
+        }
+
+        function mostrarHistoricoCarga(tipoIndex, treinoIndex, exercicioIndex) {
+            const treino = todosTipos[tipoIndex].treinos[treinoIndex];
+            const exercicio = treino.exercicios[exercicioIndex];
+            const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
+            
+            const seriesKey = `series_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const numSeries = parseInt(localStorage.getItem(seriesKey) || 3);
+            
+            let seriesHistoricoHtml = '';
+            
+            // Mostrar histórico de cada série
+            for (let s = 1; s <= numSeries; s++) {
+                const key = `historico_serie_${tipoIndex}_${treinoIndex}_${exercicioIndex}_${s}`;
+                const historico = JSON.parse(localStorage.getItem(key) || '[]');
+                
+                let serieHtml = `<div class="serie-historico-card">
+                    <h4 style="color: #ffd93d; margin-bottom: 8px;">${s}ª Série</h4>`;
+                
+                if (historico.length === 0) {
+                    serieHtml += '<p style="color: #999; font-size: 0.8em;">Sem histórico</p>';
+                } else {
+                    const ultimos = historico.slice(-3).reverse();
+                    const ultimo = historico[historico.length - 1];
+                    const sugestao = Math.ceil((ultimo.peso * 1.025) / 2.5) * 2.5;
+                    
+                    serieHtml += `<div class="sugestao-mini">
+                        <span>💡 Sugestão: <strong>${sugestao.toFixed(1)}kg</strong></span>
+                        <button class="btn-aplicar-mini" onclick="aplicarSugestaoSerie(${tipoIndex}, ${treinoIndex}, ${exercicioIndex}, ${s}, ${sugestao})">
+                            ↑
+                        </button>
+                    </div>`;
+                    
+                    serieHtml += '<div class="historico-mini">';
+                    ultimos.forEach(registro => {
+                        const data = new Date(registro.data);
+                        const dataFormatada = data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+                        serieHtml += `
+                            <div class="historico-mini-item">
+                                <span style="font-size: 0.75em; color: #999;">${dataFormatada}</span>
+                                <strong style="color: #4caf50;">${registro.peso}kg</strong>
+                            </div>
+                        `;
+                    });
+                    serieHtml += '</div>';
+                }
+                
+                serieHtml += '</div>';
+                seriesHistoricoHtml += serieHtml;
+            }
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 500px; max-height: 85vh; overflow-y: auto;">
+                    <div class="modal-header">
+                        <h2>📊 Histórico de Cargas</h2>
+                        <p>${nomeExercicio}</p>
+                    </div>
+                    
+                    <div class="series-historico-container">
+                        ${seriesHistoricoHtml}
+                    </div>
+                    
+                    <div class="form-actions" style="margin-top: 20px;">
+                        <button class="btn-fechar" onclick="fecharModal()">✅ Fechar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function aplicarSugestaoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, sugestao) {
+            // Encontrar o input da série e aplicar o valor
+            const inputs = document.querySelectorAll(`[data-exercicio="${exercicioIndex}"] .peso-serie-input`);
+            if (inputs[serieNum - 1]) {
+                inputs[serieNum - 1].value = sugestao.toFixed(1);
+                salvarPesoSerie(tipoIndex, treinoIndex, exercicioIndex, serieNum, sugestao.toFixed(1));
+                fecharModal();
+                mostrarNotificacao(`✅ ${sugestao.toFixed(1)}kg aplicado na ${serieNum}ª série!`, 'success');
+            }
+        }
+
+        function toggleConcluido(tipoIndex, treinoIndex, exercicioIndex, button) {
+            const key = `concluido_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const exercicioItem = button.closest('.exercicio-item');
+            const jaFeito = exercicioItem.classList.contains('concluido');
+            
+            if (jaFeito) {
+                // Desfazer
+                exercicioItem.classList.remove('concluido');
+                button.classList.remove('concluido');
+                button.textContent = 'Concluir';
+                localStorage.removeItem(key);
+                mostrarNotificacao('↩️ Exercício desmarcado');
+            } else {
+                // Marcar como feito
+                exercicioItem.classList.add('concluido');
+                button.classList.add('concluido');
+                button.textContent = '✓ Feito';
+                localStorage.setItem(key, 'true');
+                mostrarNotificacao('✅ Exercício concluído!');
+                
+                // Verificar se treino foi concluído e salvar no histórico
+                setTimeout(() => {
+                    const treino = todosTipos[tipoIndex].treinos[treinoIndex];
+                    let exerciciosConcluidos = 0;
+                    
+                    treino.exercicios.forEach((_, i) => {
+                        if (localStorage.getItem(`concluido_${tipoIndex}_${treinoIndex}_${i}`) === 'true') {
+                            exerciciosConcluidos++;
+                        }
+                    });
+                    
+                    // Se mais de 50% dos exercícios foram concluídos, salvar no histórico
+                    const percentualConcluido = (exerciciosConcluidos / treino.exercicios.length) * 100;
+                    if (percentualConcluido >= 50) {
+                        if (salvarTreinoNoHistorico(tipoIndex, treinoIndex)) {
+                            console.log(`📊 Treino salvo no histórico: ${percentualConcluido.toFixed(0)}% concluído`);
+                        }
+                    }
+                }, 100);
+            }
+            
+            console.log(`${jaFeito ? '↩️ Desmarcado' : '✅ Concluído'} exercício ${exercicioIndex}`);
+        }
+
+        function editarTreino(index) {
+            console.log(`✏️ Editando treino ${index}`);
+            const treino = todosTipos[tipoAtualIndex].treinos[index];
+            
+            // Criar modal de edição
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            let exerciciosHtml = '';
+            treino.exercicios.forEach((exercicio, i) => {
+                const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
+                const seriesPadrao = typeof exercicio === 'object' ? exercicio.series : '3';
+                const repsPadrao = typeof exercicio === 'object' ? exercicio.reps : '12';
+                const pesoPadrao = typeof exercicio === 'object' ? exercicio.peso : '';
+                
+                exerciciosHtml += `
+                    <div class="exercicio-edit" data-exercicio-index="${i}">
+                        <button class="btn-remove" onclick="removerExercicio(${i})">×</button>
+                        <div class="exercicio-preview-item" style="cursor: pointer;">
+                            <div class="exercicio-nome-preview">${nomeExercicio}</div>
+                            <div class="exercicio-dados-preview">
+                                <span class="badge-series">${seriesPadrao} séries</span>
+                                <span class="badge-reps">${repsPadrao} reps</span>
+                                <span class="badge-peso">${pesoPadrao || 'kg'}</span>
+                            </div>
+                        </div>
+                        <input type="hidden" class="exercicio-input" value="${nomeExercicio}" data-index="${i}">
+                        <input type="hidden" class="series-default-input" value="${seriesPadrao}" data-index="${i}">
+                        <input type="hidden" class="reps-default-input" value="${repsPadrao}" data-index="${i}">
+                        <input type="hidden" class="peso-default-input" value="${pesoPadrao}" data-index="${i}">
+                        <button class="btn-edit-exercicio" title="Editar exercício">✏️</button>
+                    </div>
+                `;
+            });
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>✏️ Editar Treino</h2>
+                        <p>Personalize seu treino como desejar</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-nome">Nome do Treino:</label>
+                        <input type="text" id="edit-nome" value="${treino.nome}" placeholder="Ex: Treino A - Peito">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-descricao">Descrição:</label>
+                        <input type="text" id="edit-descricao" value="${treino.descricao}" placeholder="Ex: 5 exercícios • Força">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Exercícios (Nome • Séries • Reps • Peso/Unidade):</label>
+                        <div class="exercicios-lista" id="exercicios-lista">
+                            ${exerciciosHtml}
+                            <button class="btn-add" onclick="adicionarExercicio()">➕ Adicionar Exercício</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-salvar" onclick="salvarEdicaoTreino(${index})">💾 Salvar</button>
+                        <button class="btn-cancelar" onclick="fecharModal()">❌ Cancelar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Adicionar event listeners para os exercícios existentes
+            setTimeout(() => {
+                const exerciciosEdit = document.querySelectorAll('#exercicios-lista .exercicio-edit');
+                exerciciosEdit.forEach((exercicioDiv) => {
+                    const previewItem = exercicioDiv.querySelector('.exercicio-preview-item');
+                    const btnEdit = exercicioDiv.querySelector('.btn-edit-exercicio');
+                    
+                    if (previewItem) {
+                        previewItem.addEventListener('click', function() {
+                            const exerciciosAtuais = document.querySelectorAll('#exercicios-lista .exercicio-edit');
+                            const idx = Array.from(exerciciosAtuais).indexOf(exercicioDiv);
+                            abrirModalCadastroExercicio(idx);
+                        });
+                    }
+                    
+                    if (btnEdit) {
+                        btnEdit.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const exerciciosAtuais = document.querySelectorAll('#exercicios-lista .exercicio-edit');
+                            const idx = Array.from(exerciciosAtuais).indexOf(exercicioDiv);
+                            abrirModalCadastroExercicio(idx);
+                        });
+                    }
+                });
+            }, 100);
+        }
+
+        function removerExercicio(exercicioIndex) {
+            const exerciciosLista = document.getElementById('exercicios-lista');
+            const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
+            
+            if (exercicios.length > 1) {
+                const nomeExercicio = exercicios[exercicioIndex].querySelector('.exercicio-input').value;
+                
+                // Confirmação antes de remover
+                if (confirm(`🗑️ Remover exercício "${nomeExercicio}"?\n\nEsta ação não pode ser desfeita.`)) {
+                    exercicios[exercicioIndex].remove();
+                    
+                    // Reindexar os exercícios restantes
+                    const exerciciosRestantes = exerciciosLista.querySelectorAll('.exercicio-edit');
+                    exerciciosRestantes.forEach((ex, i) => {
+                        const input = ex.querySelector('.exercicio-input');
+                        input.setAttribute('data-index', i);
+                        const btnRemove = ex.querySelector('.btn-remove');
+                        btnRemove.setAttribute('onclick', `removerExercicio(${i})`);
+                    });
+                    
+                    mostrarNotificacao('🗑️ Exercício removido!', 'warning');
+                }
+            } else {
+                mostrarNotificacao('⚠️ Não é possível remover o último exercício!', 'warning');
+            }
+        }
+
+        function adicionarExercicio() {
+            abrirModalCadastroExercicio();
+        }
+
+        function abrirModalCadastroExercicio(exercicioIndex = null) {
+            const isEdicao = exercicioIndex !== null;
+            const exerciciosLista = document.getElementById('exercicios-lista');
+            
+            if (!exerciciosLista) {
+                mostrarNotificacao('⚠️ Erro: Abra o modal de edição do treino primeiro!', 'warning');
+                console.error('exercicios-lista não encontrado. Modal de treino precisa estar aberto.');
+                return;
+            }
+            
+            const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
+            
+            // Se for edição, pegar dados do exercício
+            let dadosExercicio = {
+                nome: 'Novo Exercício',
+                series: '3',
+                reps: '12',
+                peso: ''
+            };
+            
+            if (isEdicao && exercicios[exercicioIndex]) {
+                const exercicioDiv = exercicios[exercicioIndex];
+                dadosExercicio = {
+                    nome: exercicioDiv.querySelector('.exercicio-input').value,
+                    series: exercicioDiv.querySelector('.series-default-input').value,
+                    reps: exercicioDiv.querySelector('.reps-default-input').value,
+                    peso: exercicioDiv.querySelector('.peso-default-input').value
+                };
+            }
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.id = 'modal-cadastro-exercicio';
+            
+            modal.innerHTML = `
+                <div class="modal-content modal-exercicio">
+                    <div class="modal-header">
+                        <h2>${isEdicao ? '✏️ Editar Exercício' : '➕ Novo Exercício'}</h2>
+                        <p>Configure os detalhes do exercício</p>
+                    </div>
+                    
+                    <div class="form-exercicio">
+                        <div class="form-group">
+                            <label for="exercicio-nome-input">🏋️ Nome do Exercício:</label>
+                            <input type="text" 
+                                   id="exercicio-nome-input" 
+                                   value="${dadosExercicio.nome}"
+                                   placeholder="Ex: Supino Reto com Barra"
+                                   maxlength="100">
+                            <small id="contador-caracteres">0/100 caracteres</small>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exercicio-series-input">📊 Séries:</label>
+                                <input type="number" 
+                                       id="exercicio-series-input" 
+                                       value="${dadosExercicio.series}"
+                                       placeholder="3"
+                                       min="1" max="10">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="exercicio-reps-input">🔢 Repetições:</label>
+                                <input type="number" 
+                                       id="exercicio-reps-input" 
+                                       value="${dadosExercicio.reps}"
+                                       placeholder="12"
+                                       min="1" max="100">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exercicio-peso-input">⚖️ Unidade de Peso/Tempo:</label>
+                            <select id="exercicio-peso-input">
+                                <option value="" ${dadosExercicio.peso === '' ? 'selected' : ''}>kg (padrão)</option>
+                                <option value="min" ${dadosExercicio.peso === 'min' ? 'selected' : ''}>minutos</option>
+                                <option value="seg" ${dadosExercicio.peso === 'seg' ? 'selected' : ''}>segundos</option>
+                                <option value="rep" ${dadosExercicio.peso === 'rep' ? 'selected' : ''}>apenas repetições</option>
+                            </select>
+                            <small>Escolha a unidade apropriada para o exercício</small>
+                        </div>
+                        
+                        <div class="form-preview">
+                            <h4>📋 Prévia:</h4>
+                            <div class="preview-exercicio">
+                                <span id="preview-nome">${dadosExercicio.nome}</span>
+                                <span class="preview-dados">
+                                    <span id="preview-series">${dadosExercicio.series}</span> × 
+                                    <span id="preview-reps">${dadosExercicio.reps}</span>
+                                    <span id="preview-unidade">${dadosExercicio.peso || 'kg'}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-cancelar" onclick="fecharModalCadastro()">❌ Cancelar</button>
+                        <button class="btn-salvar" onclick="salvarExercicio(${exercicioIndex})">💾 ${isEdicao ? 'Salvar' : 'Adicionar'}</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Focar no campo nome
+            setTimeout(() => {
+                document.getElementById('exercicio-nome-input').focus();
+                setupPreviewUpdates();
+            }, 100);
+        }
+
+        function setupPreviewUpdates() {
+            const nomeInput = document.getElementById('exercicio-nome-input');
+            const seriesInput = document.getElementById('exercicio-series-input');
+            const repsInput = document.getElementById('exercicio-reps-input');
+            const pesoInput = document.getElementById('exercicio-peso-input');
+            const contadorCaracteres = document.getElementById('contador-caracteres');
+            
+            function updatePreview() {
+                const nome = nomeInput.value || 'Nome do exercício';
+                document.getElementById('preview-nome').textContent = nome;
+                document.getElementById('preview-series').textContent = seriesInput.value || '3';
+                document.getElementById('preview-reps').textContent = repsInput.value || '12';
+                
+                const unidade = pesoInput.value || 'kg';
+                document.getElementById('preview-unidade').textContent = unidade;
+                
+                // Atualizar contador de caracteres
+                if (contadorCaracteres) {
+                    const count = nomeInput.value.length;
+                    contadorCaracteres.textContent = `${count}/100 caracteres`;
+                    contadorCaracteres.style.color = count > 90 ? '#ff6b6b' : '#ccc';
+                }
+            }
+            
+            // Atualizar inicialmente
+            updatePreview();
+            
+            nomeInput.addEventListener('input', updatePreview);
+            seriesInput.addEventListener('input', updatePreview);
+            repsInput.addEventListener('input', updatePreview);
+            pesoInput.addEventListener('change', updatePreview);
+        }
+
+        function salvarExercicio(exercicioIndex) {
+            const nome = document.getElementById('exercicio-nome-input').value.trim();
+            const series = document.getElementById('exercicio-series-input').value.trim();
+            const reps = document.getElementById('exercicio-reps-input').value.trim();
+            const peso = document.getElementById('exercicio-peso-input').value;
+            
+            if (!nome) {
+                mostrarNotificacao('⚠️ Nome do exercício é obrigatório!', 'warning');
+                return;
+            }
+            
+            if (nome.length > 100) {
+                mostrarNotificacao('⚠️ Nome muito longo! Máximo 100 caracteres.', 'warning');
+                return;
+            }
+            
+            if (!series || !reps) {
+                mostrarNotificacao('⚠️ Séries e repetições são obrigatórios!', 'warning');
+                return;
+            }
+            
+            const exerciciosLista = document.getElementById('exercicios-lista');
+            if (!exerciciosLista) {
+                mostrarNotificacao('⚠️ Erro: Lista de exercícios não encontrada!', 'error');
+                console.error('exercicios-lista não encontrado');
+                return;
+            }
+            
+            const isEdicao = exercicioIndex !== null;
+            
+            if (isEdicao) {
+                // Editar exercício existente
+                const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
+                const exercicioDiv = exercicios[exercicioIndex];
+                
+                // Atualizar campos hidden
+                exercicioDiv.querySelector('.exercicio-input').value = nome;
+                exercicioDiv.querySelector('.series-default-input').value = series;
+                exercicioDiv.querySelector('.reps-default-input').value = reps;
+                exercicioDiv.querySelector('.peso-default-input').value = peso;
+                
+                // Atualizar preview visual
+                exercicioDiv.querySelector('.exercicio-nome-preview').textContent = nome;
+                const badges = exercicioDiv.querySelectorAll('.exercicio-dados-preview span');
+                badges[0].textContent = `${series} séries`;
+                badges[1].textContent = `${reps} reps`;
+                badges[2].textContent = peso || 'kg';
+                
+                mostrarNotificacao('✏️ Exercício editado com sucesso!');
+            } else {
+                // Adicionar novo exercício
+                const exercicios = exerciciosLista.querySelectorAll('.exercicio-edit');
+                const novoIndex = exercicios.length;
+                
+                const novoExercicio = document.createElement('div');
+                novoExercicio.className = 'exercicio-edit';
+                novoExercicio.innerHTML = `
+                    <button class="btn-remove" onclick="removerExercicio(${novoIndex})">×</button>
+                    <div class="exercicio-preview-item" style="cursor: pointer;">
+                        <div class="exercicio-nome-preview" data-index="${novoIndex}">${nome}</div>
+                        <div class="exercicio-dados-preview">
+                            <span class="badge-series">${series} séries</span>
+                            <span class="badge-reps">${reps} reps</span>
+                            <span class="badge-peso">${peso || 'kg'}</span>
+                        </div>
+                    </div>
+                    <input type="hidden" class="exercicio-input" value="${nome}" data-index="${novoIndex}">
+                    <input type="hidden" class="series-default-input" value="${series}" data-index="${novoIndex}">
+                    <input type="hidden" class="reps-default-input" value="${reps}" data-index="${novoIndex}">
+                    <input type="hidden" class="peso-default-input" value="${peso}" data-index="${novoIndex}">
+                    <button class="btn-edit-exercicio" title="Editar exercício">✏️</button>
+                `;
+                
+                // Adicionar event listeners após criar o elemento
+                const previewItem = novoExercicio.querySelector('.exercicio-preview-item');
+                const btnEdit = novoExercicio.querySelector('.btn-edit-exercicio');
+                
+                previewItem.addEventListener('click', function() {
+                    const exerciciosAtuais = document.querySelectorAll('.exercicio-edit');
+                    const index = Array.from(exerciciosAtuais).indexOf(novoExercicio);
+                    abrirModalCadastroExercicio(index);
+                });
+                
+                btnEdit.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const exerciciosAtuais = document.querySelectorAll('.exercicio-edit');
+                    const index = Array.from(exerciciosAtuais).indexOf(novoExercicio);
+                    abrirModalCadastroExercicio(index);
+                });
+                
+                // Inserir antes do botão "Adicionar"
+                const btnAdd = exerciciosLista.querySelector('.btn-add');
+                exerciciosLista.insertBefore(novoExercicio, btnAdd);
+                
+                mostrarNotificacao('➕ Exercício adicionado com sucesso!');
+            }
+            
+            fecharModalCadastro();
+        }
+
+        function fecharModalCadastro() {
+            const modal = document.getElementById('modal-cadastro-exercicio');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
+
+        function salvarEdicaoTreino(index) {
+            const novoNome = document.getElementById('edit-nome').value.trim();
+            const novaDescricao = document.getElementById('edit-descricao').value.trim();
+            
+            if (!novoNome) {
+                mostrarNotificacao('⚠️ Nome do treino é obrigatório!', 'warning');
+                return;
+            }
+            
+            // Coletar exercícios com dados completos
+            const exerciciosEditados = document.querySelectorAll('.exercicio-edit');
+            const novosExercicios = [];
+            
+            exerciciosEditados.forEach(exercicioDiv => {
+                const nome = exercicioDiv.querySelector('.exercicio-input').value.trim();
+                const series = exercicioDiv.querySelector('.series-default-input').value.trim();
+                const reps = exercicioDiv.querySelector('.reps-default-input').value.trim();
+                const peso = exercicioDiv.querySelector('.peso-default-input').value.trim();
+                
+                if (nome) {
+                    novosExercicios.push({
+                        nome: nome,
+                        series: series || '3',
+                        reps: reps || '12',
+                        peso: peso || ''
+                    });
+                }
+            });
+            
+            if (novosExercicios.length === 0) {
+                mostrarNotificacao('⚠️ Pelo menos um exercício é obrigatório!', 'warning');
+                return;
+            }
+            
+            // Atualizar treino
+            todosTipos[tipoAtualIndex].treinos[index].nome = novoNome;
+            todosTipos[tipoAtualIndex].treinos[index].descricao = novaDescricao;
+            todosTipos[tipoAtualIndex].treinos[index].exercicios = novosExercicios;
+            
+            // Salvar no localStorage com validação
+            if (salvarTreinosComValidacao()) {
+                fecharModal();
+                carregarTreinos();
+                mostrarNotificacao('💾 Treino salvo com sucesso!');
+                
+                console.log('💾 Treino editado e salvo:', {
+                    nome: novoNome,
+                    descricao: novaDescricao,
+                    exercicios: novosExercicios
+                });
+            } else {
+                mostrarNotificacao('❌ Erro ao salvar treino!', 'warning');
+            }
+        }
+
+        function fecharModal() {
+            const modals = document.querySelectorAll('.modal-overlay');
+            modals.forEach(modal => {
+                if (document.body.contains(modal)) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        function mostrarNotificacao(mensagem, tipo = 'success') {
+            const notificacao = document.createElement('div');
+            notificacao.className = `notification ${tipo}`;
+            notificacao.textContent = mensagem;
+            
+            document.body.appendChild(notificacao);
+            
+            setTimeout(() => {
+                if (document.body.contains(notificacao)) {
+                    document.body.removeChild(notificacao);
+                }
+            }, 3000);
+        }
+
+        // Nova funcionalidade: Editar nome do tipo de treino
+        function editarNomeTipo(index) {
+            const tipo = todosTipos[index];
+            const novoNome = prompt('📝 Digite o novo nome para este tipo de treino:', tipo.nome);
+            
+            if (novoNome && novoNome.trim() !== '' && novoNome.trim() !== tipo.nome) {
+                // Validar comprimento
+                if (novoNome.trim().length > 50) {
+                    mostrarNotificacao('⚠️ Nome muito longo! Máximo 50 caracteres.', 'warning');
+                    return;
+                }
+                
+                todosTipos[index].nome = novoNome.trim();
+                
+                if (salvarTreinosComValidacao()) {
+                    carregarTreinos();
+                    mostrarNotificacao(`✅ Nome alterado para: ${novoNome}`);
+                    console.log(`✏️ Tipo ${index} renomeado para: ${novoNome}`);
+                }
+            }
+        }
+
+        // NOVA: Criar novo tipo de treino
+        function criarNovoTipoTreino() {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 90vw; width: 400px;">
+                    <div class="modal-header">
+                        <h2>➕ Novo Tipo de Treino</h2>
+                        <p>Crie um novo tipo personalizado</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="novoTipoNome">📝 Nome do Tipo:</label>
+                        <input type="text" 
+                               id="novoTipoNome" 
+                               placeholder="Ex: ABCD Avançado, Push Pull Legs..."
+                               maxlength="50"
+                               onkeypress="if(event.key==='Enter') confirmarCriarTipo()"
+                               style="width: 100%; padding: 12px; font-size: 16px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 193, 7, 0.5);">
+                        <small style="color: rgba(255,255,255,0.6); font-size: 0.8em; margin-top: 5px; display: block;">
+                            💡 Escolha um nome descritivo (máximo 50 caracteres)
+                        </small>
+                    </div>
+                    
+                    <div class="form-actions" style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn-salvar" onclick="confirmarCriarTipo()" style="flex: 1;">
+                            ✅ Criar Tipo
+                        </button>
+                        <button class="btn-cancelar" onclick="fecharModal()" style="flex: 1;">
+                            ❌ Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Focar no input
+            setTimeout(() => {
+                const input = document.getElementById('novoTipoNome');
+                if (input) {
+                    input.focus();
+                    input.select();
+                }
+            }, 100);
+        }
+
+        function confirmarCriarTipo() {
+            const input = document.getElementById('novoTipoNome');
+            const novoNome = input ? input.value.trim() : '';
+            
+            if (!novoNome || novoNome === '') {
+                mostrarNotificacao('⚠️ Nome é obrigatório!', 'warning');
+                input.focus();
+                return;
+            }
+            
+            if (novoNome.length > 50) {
+                mostrarNotificacao('⚠️ Nome muito longo! Máximo 50 caracteres.', 'warning');
+                return;
+            }
+            
+            // Criar estrutura básica do novo tipo
+            const novoTipo = {
+                nome: novoNome,
+                treinos: [
+                    {
+                        letra: 'A',
+                        nome: 'Treino A - Personalizado',
+                        descricao: '0 exercícios • Adicione exercícios',
+                        classe: 'treino-a',
+                        exercicios: []
+                    }
+                ]
+            };
+            
+            // Adicionar ao array
+            todosTipos.push(novoTipo);
+            
+            // Salvar e recarregar
+            if (salvarTreinosComValidacao()) {
+                tipoAtualIndex = todosTipos.length - 1; // Selecionar o novo tipo
+                fecharModal();
+                carregarTreinos();
+                mostrarNotificacao(`✅ Tipo "${novoNome}" criado com sucesso!`, 'success');
+                console.log('➕ Novo tipo criado:', novoTipo);
+                
+                // Abrir modal de edição automaticamente
+                setTimeout(() => {
+                    editarTreino(0);
+                }, 500);
+            }
+        }
+
+        // NOVA: Deletar tipo de treino
+        function deletarTipoTreino(index) {
+            if (todosTipos.length <= 1) {
+                mostrarNotificacao('⚠️ Não é possível deletar o último tipo de treino!', 'warning');
+                return;
+            }
+            
+            const tipo = todosTipos[index];
+            const totalTreinos = tipo.treinos.length;
+            const totalExercicios = tipo.treinos.reduce((acc, t) => acc + t.exercicios.length, 0);
+            
+            const confirmacao = confirm(
+                `⚠️ ATENÇÃO: Deletar tipo "${tipo.nome}"?\n\n` +
+                `Este tipo contém:\n` +
+                `• ${totalTreinos} treino(s)\n` +
+                `• ${totalExercicios} exercício(s)\n\n` +
+                `Todos os dados deste tipo serão PERMANENTEMENTE apagados!\n\n` +
+                `Tem certeza?`
+            );
+            
+            if (confirmacao) {
+                console.log('🗑️ Deletando tipo:', tipo.nome);
+                
+                // Remover do array
+                todosTipos.splice(index, 1);
+                
+                // Ajustar índice atual se necessário
+                if (tipoAtualIndex >= todosTipos.length) {
+                    tipoAtualIndex = todosTipos.length - 1;
+                } else if (tipoAtualIndex > index) {
+                    tipoAtualIndex--;
+                }
+                
+                // Salvar e recarregar
+                if (salvarTreinosComValidacao()) {
+                    carregarTreinos();
+                    mostrarNotificacao(`🗑️ Tipo "${tipo.nome}" deletado!`, 'warning');
+                }
+            }
+        }
+
+        // NOVA: Adicionar treino ao tipo atual
+        function adicionarTreinoAoTipo() {
+            const tipo = todosTipos[tipoAtualIndex];
+            const proximaLetra = String.fromCharCode(65 + tipo.treinos.length); // A, B, C, D...
+            
+            if (tipo.treinos.length >= 26) {
+                mostrarNotificacao('⚠️ Limite de 26 treinos por tipo atingido!', 'warning');
+                return;
+            }
+            
+            const novoTreino = {
+                letra: proximaLetra,
+                nome: `Treino ${proximaLetra} - Novo`,
+                descricao: '0 exercícios • Configure',
+                classe: `treino-${proximaLetra.toLowerCase()}`,
+                exercicios: []
+            };
+            
+            tipo.treinos.push(novoTreino);
+            
+            if (salvarTreinosComValidacao()) {
+                carregarTreinos();
+                mostrarNotificacao(`✅ Treino ${proximaLetra} adicionado!`);
+                
+                // Abrir edição automaticamente
+                setTimeout(() => {
+                    editarTreino(tipo.treinos.length - 1);
+                }, 300);
+            }
+        }
+
+        // NOVA: Deletar treino específico
+        function deletarTreino(index) {
+            const tipo = todosTipos[tipoAtualIndex];
+            
+            if (tipo.treinos.length <= 1) {
+                mostrarNotificacao('⚠️ Não é possível deletar o último treino!', 'warning');
+                return;
+            }
+            
+            const treino = tipo.treinos[index];
+            const confirmacao = confirm(
+                `🗑️ Deletar "${treino.nome}"?\n\n` +
+                `${treino.exercicios.length} exercício(s) serão apagados.\n\n` +
+                `Confirma?`
+            );
+            
+            if (confirmacao) {
+                tipo.treinos.splice(index, 1);
+                
+                if (salvarTreinosComValidacao()) {
+                    carregarTreinos();
+                    mostrarNotificacao(`🗑️ Treino deletado!`, 'warning');
+                }
+            }
+        }
+
+        // Nova funcionalidade: Timer para descanso
+        let timerAtivo = null;
+        let timerInterval = null;
+
+        function iniciarTimer(segundos = 90) {
+            if (timerAtivo) {
+                clearInterval(timerInterval);
+            }
+
+            // Criar overlay do timer
+            const timerOverlay = document.createElement('div');
+            timerOverlay.className = 'modal-overlay';
+            timerOverlay.id = 'timer-overlay';
+            
+            timerOverlay.innerHTML = `
+                <div class="timer-container">
+                    <h3>⏱️ Tempo de Descanso</h3>
+                    <div class="timer-display" id="timer-display">${formatarTempo(segundos)}</div>
+                    <div class="timer-controls">
+                        <button class="btn-timer" onclick="adicionarTempo(-30)">-30s</button>
+                        <button class="btn-timer" onclick="adicionarTempo(30)">+30s</button>
+                        <button class="btn-timer danger" onclick="pararTimer()">Parar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(timerOverlay);
+            
+            let tempoRestante = segundos;
+            const display = document.getElementById('timer-display');
+            
+            timerInterval = setInterval(() => {
+                tempoRestante--;
+                display.textContent = formatarTempo(tempoRestante);
+                
+                if (tempoRestante <= 0) {
+                    clearInterval(timerInterval);
+                    mostrarNotificacao('⏰ Tempo de descanso acabou!');
+                    pararTimer();
+                    
+                    // Som de notificação (se suportado)
+                    try {
+                        const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEaBjiA0vTOeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEaBjiA0vTOeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEaBjiA0vTOeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEaBjiA0vTOeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEaBjiA0vTOeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEaBg==');
+                        audio.play();
+                    } catch (e) {
+                        // Falback: vibração se disponível
+                        if (navigator.vibrate) {
+                            navigator.vibrate([200, 100, 200, 100, 200]);
+                        }
+                    }
+                }
+            }, 1000);
+            
+            timerAtivo = true;
+        }
+
+        function formatarTempo(segundos) {
+            const mins = Math.floor(segundos / 60);
+            const secs = segundos % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function adicionarTempo(segundos) {
+            const display = document.getElementById('timer-display');
+            if (display) {
+                const tempoAtual = display.textContent.split(':');
+                const minutos = parseInt(tempoAtual[0]);
+                const segundosAtual = parseInt(tempoAtual[1]);
+                const novoTempo = Math.max(0, (minutos * 60 + segundosAtual) + segundos);
+                display.textContent = formatarTempo(novoTempo);
+            }
+        }
+
+        function pararTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            const overlay = document.getElementById('timer-overlay');
+            if (overlay) {
+                document.body.removeChild(overlay);
+            }
+            timerAtivo = false;
+        }
+
+        // Nova funcionalidade: Configurações
+        function abrirConfiguracoes() {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>⚙️ Configurações</h2>
+                        <p>Personalização e backup dos dados</p>
+                        <small style="color: rgba(255,255,255,0.5); font-size: 0.75em;">Versão 3.4.1 - Carga Progressiva por Série</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>🎯 Tempo padrão de descanso:</label>
+                        <select id="tempo-descanso" onchange="salvarTempoDescanso()" style="width: 100%; padding: 12px; border: none; border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: white;">
+                            <option value="60">1 minuto</option>
+                            <option value="90">1:30 minutos</option>
+                            <option value="120">2 minutos</option>
+                            <option value="180">3 minutos</option>
+                        </select>
+                        <small style="color: rgba(76, 175, 80, 0.8); font-size: 0.75em; margin-top: 5px; display: block;">
+                            ✅ Salvo automaticamente ao alterar
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>💾 Backup dos dados:</label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn-salvar" onclick="exportarDados()" style="flex: 1;">📤 Exportar</button>
+                            <button class="btn-cancelar" onclick="importarDados()" style="flex: 1;">📥 Importar</button>
+                        </div>
+                        <small style="color: rgba(255,255,255,0.5); font-size: 0.75em; margin-top: 5px; display: block;">
+                            💡 Exporta todos os treinos, pesos e históricos
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>💪 Histórico e progresso:</label>
+                        <button class="btn-salvar" onclick="abrirHistorico()" style="width: 100%;">
+                            📈 Ver Histórico de Treinos
+                        </button>
+                        <small style="color: rgba(255,255,255,0.5); font-size: 0.75em; margin-top: 5px; display: block;">
+                            📊 Inclui histórico de carga por série individual
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>⚠️🗑️ Limpar dados:</label>
+                        <button class="btn-cancelar" onclick="limparTodosDados()" style="width: 100%; background: rgba(244, 67, 54, 0.7);">
+                            🗑️ Limpar Todos os Dados
+                        </button>
+                        <small style="color: rgba(244, 67, 54, 0.8); font-size: 0.75em; margin-top: 5px; display: block;">
+                            ⚠️ Remove TUDO: treinos, pesos, histórico e séries salvas
+                        </small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-fechar" onclick="fecharModal()">✅ Fechar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Carregar tempo de descanso salvo
+            const tempoSalvo = localStorage.getItem('tempoDescanso') || '90';
+            const selectTempo = document.getElementById('tempo-descanso');
+            if (selectTempo) {
+                selectTempo.value = tempoSalvo;
+            }
+        }
+
+        function salvarTempoDescanso() {
+            const selectTempo = document.getElementById('tempo-descanso');
+            const tempo = selectTempo.value;
+            localStorage.setItem('tempoDescanso', tempo);
+            
+            const tempoFormatado = {
+                '60': '1:00',
+                '90': '1:30',
+                '120': '2:00',
+                '180': '3:00'
+            }[tempo] || tempo + 's';
+            
+            mostrarNotificacao(`⏱️ Tempo padrão atualizado: ${tempoFormatado}`, 'success');
+        }
+
+        function obterTempoDescanso() {
+            return parseInt(localStorage.getItem('tempoDescanso') || '90');
+        }
+
+        function exportarDados() {
+            // Coletar todos os dados do localStorage
+            const localStorageData = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                localStorageData[key] = localStorage.getItem(key);
+            }
+            
+            const dados = {
+                treinos: todosTipos,
+                localStorage: localStorageData,
+                versao: '3.4.1',
+                data: new Date().toISOString(),
+                info: 'Backup completo incluindo histórico de séries individuais'
+            };
+            
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `treinos-marcelo-v3.5.1-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            mostrarNotificacao('📤 Backup completo exportado! (Inclui séries individuais)', 'success');
+        }
+
+        function importarDados() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const dados = JSON.parse(e.target.result);
+                            
+                            if (dados.treinos && Array.isArray(dados.treinos)) {
+                                // Restaurar treinos
+                                todosTipos.splice(0, todosTipos.length, ...dados.treinos);
+                                localStorage.setItem('marceloTreinos', JSON.stringify(todosTipos));
+                                
+                                // Restaurar localStorage completo (se disponível)
+                                if (dados.localStorage && typeof dados.localStorage === 'object') {
+                                    Object.keys(dados.localStorage).forEach(key => {
+                                        localStorage.setItem(key, dados.localStorage[key]);
+                                    });
+                                    mostrarNotificacao('📥 Backup completo restaurado! (Com histórico de séries)', 'success');
+                                } else {
+                                    mostrarNotificacao('📥 Dados importados (versão antiga)', 'success');
+                                }
+                                
+                                carregarTreinos();
+                                fecharModal();
+                            } else {
+                                mostrarNotificacao('❌ Arquivo inválido!', 'warning');
+                            }
+                        } catch (error) {
+                            console.error('Erro ao importar:', error);
+                            mostrarNotificacao('❌ Erro ao ler arquivo!', 'warning');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            
+            input.click();
+        }
+
+        function limparTodosDados() {
+            const confirmacao1 = confirm('⚠️ ATENÇÃO: Deseja limpar TODOS os dados do app?\n\nIsso inclui:\n• Todos os treinos personalizados\n• Histórico de treinos\n• Pesos e repetições salvos\n• Configurações\n\nEsta ação é IRREVERSÍVEL!\n\nTem certeza?');
+            
+            if (confirmacao1) {
+                const confirmacao2 = prompt('⚠️ CONFIRMAÇÃO FINAL\n\nDigite "APAGAR TUDO" (sem aspas) para confirmar a exclusão permanente de todos os dados:');
+                
+                if (confirmacao2 === 'APAGAR TUDO') {
+                    console.log('🗑️ Limpando todos os dados...');
+                    localStorage.clear();
+                    
+                    // Limpar cache do service worker também
+                    if ('serviceWorker' in navigator) {
+                        caches.keys().then(names => {
+                            names.forEach(name => caches.delete(name));
+                        });
+                    }
+                    
+                    mostrarNotificacao('🗑️ Todos os dados foram apagados!', 'warning');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    mostrarNotificacao('❌ Exclusão cancelada', 'warning');
+                }
+            }
+        }
+
+        // Sistema de histórico
+        function salvarTreinoNoHistorico(tipoIndex, treinoIndex) {
+            const treino = todosTipos[tipoIndex].treinos[treinoIndex];
+            const historico = JSON.parse(localStorage.getItem('historicoTreinos') || '[]');
+            
+            const registroTreino = {
+                data: new Date().toISOString(),
+                tipoNome: todosTipos[tipoIndex].nome,
+                treinoNome: treino.nome,
+                tipoIndex: tipoIndex,
+                treinoIndex: treinoIndex,
+                exercicios: []
+            };
+            
+            // Coletar dados dos exercícios
+            treino.exercicios.forEach((exercicio, i) => {
+                const nomeExercicio = typeof exercicio === 'string' ? exercicio : exercicio.nome;
+                const peso = localStorage.getItem(`peso_${tipoIndex}_${treinoIndex}_${i}`) || '';
+                const series = localStorage.getItem(`series_${tipoIndex}_${treinoIndex}_${i}`) || '';
+                const reps = localStorage.getItem(`reps_${tipoIndex}_${treinoIndex}_${i}`) || '';
+                const concluido = localStorage.getItem(`concluido_${tipoIndex}_${treinoIndex}_${i}`) === 'true';
+                
+                if (concluido) {
+                    registroTreino.exercicios.push({
+                        nome: nomeExercicio,
+                        peso: peso,
+                        series: series,
+                        reps: reps
+                    });
+                }
+            });
+            
+            // Só salva se pelo menos um exercício foi concluído
+            if (registroTreino.exercicios.length > 0) {
+                historico.unshift(registroTreino); // Adiciona no início
+                
+                // Manter apenas últimos 50 registros
+                if (historico.length > 50) {
+                    historico.splice(50);
+                }
+                
+                localStorage.setItem('historicoTreinos', JSON.stringify(historico));
+                return true;
+            }
+            return false;
+        }
+
+        function abrirHistorico() {
+            const historico = JSON.parse(localStorage.getItem('historicoTreinos') || '[]');
+            
+            let historicoHtml = '';
+            if (historico.length === 0) {
+                historicoHtml = '<p style="text-align: center; color: #ccc; padding: 20px;">📭 Nenhum treino concluído ainda</p>';
+            } else {
+                historico.forEach((registro, index) => {
+                    const data = new Date(registro.data);
+                    const dataFormatada = data.toLocaleDateString('pt-BR');
+                    const horaFormatada = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                    
+                    let exerciciosHtml = '';
+                    registro.exercicios.forEach(ex => {
+                        exerciciosHtml += `
+                            <div style="background: rgba(255,255,255,0.05); padding: 8px; margin: 4px 0; border-radius: 5px; font-size: 0.9em;">
+                                <strong>${ex.nome}</strong><br>
+                                ${ex.series ? `${ex.series} séries` : ''} 
+                                ${ex.reps ? `× ${ex.reps} reps` : ''} 
+                                ${ex.peso ? `× ${ex.peso}kg` : ''}
+                            </div>
+                        `;
+                    });
+                    
+                    historicoHtml += `
+                        <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h4 style="margin: 0;">${registro.treinoNome}</h4>
+                                <small style="color: #ccc;">${dataFormatada} ${horaFormatada}</small>
+                            </div>
+                            <p style="color: #ffd93d; margin: 5px 0; font-size: 0.9em;">${registro.tipoNome}</p>
+                            <div style="max-height: 150px; overflow-y: auto;">
+                                ${exerciciosHtml}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h2>📈 Histórico de Treinos</h2>
+                        <p>Seus últimos treinos concluídos</p>
+                    </div>
+                    
+                    <div style="max-height: 400px; overflow-y: auto; padding: 10px 0;">
+                        ${historicoHtml}
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-cancelar" onclick="limparHistorico()" style="background: rgba(244, 67, 54, 0.7);">
+                            🗑️ Limpar Histórico
+                        </button>
+                        <button class="btn-fechar" onclick="fecharModal()">✅ Fechar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function limparHistorico() {
+            if (confirm('⚠️ ATENÇÃO: Deseja limpar TODO o histórico de treinos?\n\nEsta ação é IRREVERSÍVEL e apagará todos os registros de treinos concluídos.\n\nTem certeza?')) {
+                localStorage.removeItem('historicoTreinos');
+                fecharModal();
+                mostrarNotificacao('🗑️ Histórico limpo com sucesso!');
+                console.log('🗑️ Histórico de treinos apagado');
+            }
+        }
+
+        // Função melhorada para salvar dados de séries e repetições
+        function salvarSeriesReps(tipoIndex, treinoIndex, exercicioIndex, series, reps) {
+            const keyS = `series_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            const keyR = `reps_${tipoIndex}_${treinoIndex}_${exercicioIndex}`;
+            localStorage.setItem(keyS, series);
+            localStorage.setItem(keyR, reps);
+        }
+
+        // Debug - Versão v3.2 Pro
+        console.log('💪 Treinos Marcelo v3.2 Pro - Sistema Completo de Gerenciamento!');
+        console.log('✨ v3.2: CRUD de tipos, carga progressiva, sugestões inteligentes');
+        console.log('📊 Tipos disponíveis:', todosTipos.map(t => t.nome));
+    </script>
+<script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js', { scope: './' })
+            .catch(err => console.log('SW reg failed', err));
+        });
+      }
+    </script>
+    <!-- Build: v3.5.1 - 2025-10-28 22:00 UTC - Preview Visual Update -->
+</body>
+</html>
