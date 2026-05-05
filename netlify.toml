@@ -7,7 +7,7 @@
 
 [[redirects]]
   from = "/*"
-  to = "/app-pro.html"
+  to = "/index.html"
   status = 200
 
 [[headers]]
@@ -24,7 +24,7 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/app-pro.html"
+  for = "/index.html"
   [headers.values]
     Content-Type = "text/html; charset=UTF-8"
     Cache-Control = "public, max-age=0, must-revalidate"
