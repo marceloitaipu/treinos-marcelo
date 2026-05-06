@@ -1,10 +1,22 @@
 // Versão com timestamp para forçar atualização
-const CACHE_VERSION = 'v3.5.1';
+const CACHE_VERSION = 'v6.0.0';
 const CACHE_NAME = `tm-${CACHE_VERSION}-${Date.now()}`;
 const urlsToCache = [
     '/',
     '/index.html',
-    '/manifest.json'
+    '/manifest.json',
+    '/css/style.css',
+    '/js/utils.js',
+    '/js/data.js',
+    '/js/storage.js',
+    '/js/series.js',
+    '/js/timer.js',
+    '/js/treinos.js',
+    '/js/treino-session.js',
+    '/js/historico-detalhado.js',
+    '/js/historico.js',
+    '/js/backup.js',
+    '/js/app.js'
 ];
 
 self.addEventListener('install', (event) => {
