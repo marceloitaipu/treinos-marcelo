@@ -1,5 +1,5 @@
 // Versão com timestamp para forçar atualização
-const CACHE_VERSION = 'v6.0.0';
+const CACHE_VERSION = 'v7.0.0';
 const CACHE_NAME = `tm-${CACHE_VERSION}-${Date.now()}`;
 const urlsToCache = [
     '/',
@@ -15,6 +15,7 @@ const urlsToCache = [
     '/js/treino-session.js',
     '/js/historico-detalhado.js',
     '/js/historico.js',
+    '/js/evolucao.js',
     '/js/backup.js',
     '/js/app.js'
 ];

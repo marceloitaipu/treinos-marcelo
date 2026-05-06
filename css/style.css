@@ -195,6 +195,7 @@ body {
 .btn-backup    { color: var(--primary);  border-color: rgba(56,189,248,0.3);   background: rgba(56,189,248,0.07);  }
 .btn-restaurar { color: #818CF8;         border-color: rgba(99,102,241,0.3);   background: rgba(99,102,241,0.07);  }
 .btn-historico { color: var(--success);  border-color: rgba(34,197,94,0.3);    background: rgba(34,197,94,0.07);   }
+.btn-evolucao  { color: #C084FC;         border-color: rgba(192,132,252,0.3);  background: rgba(192,132,252,0.07); }
 .btn-novo-tipo { color: var(--warning);  border-color: rgba(245,158,11,0.3);   background: rgba(245,158,11,0.07);  }
 .btn-del-tipo  { color: var(--danger);   border-color: rgba(239,68,68,0.3);    background: rgba(239,68,68,0.07);   }
 .btn-add-treino{ color: var(--text-muted);border-color: var(--border);          background: rgba(255,255,255,0.04); }
@@ -202,6 +203,7 @@ body {
 .btn-backup:hover    { background: rgba(56,189,248,0.15);  border-color: var(--primary);  color: var(--primary);  }
 .btn-restaurar:hover { background: rgba(99,102,241,0.15);  border-color: #818CF8;         color: #818CF8;         }
 .btn-historico:hover { background: rgba(34,197,94,0.15);   border-color: var(--success);  color: var(--success);  }
+.btn-evolucao:hover  { background: rgba(192,132,252,0.15); border-color: #C084FC;         color: #C084FC;         }
 .btn-novo-tipo:hover { background: rgba(245,158,11,0.15);  border-color: var(--warning);  color: var(--warning);  }
 .btn-del-tipo:hover  { background: rgba(239,68,68,0.15);   border-color: var(--danger);   color: var(--danger);   }
 .btn-add-treino:hover{ background: rgba(56,189,248,0.1);   border-color: rgba(56,189,248,0.35); color: var(--primary); }
@@ -1922,5 +1924,365 @@ body {
 }
 
 .hist-det-table tr:last-child td { border-bottom: none; }
+
+/* ============================================================
+   EVOLUÇÃO — MÓDULO DE PROGRESSÃO
+   ============================================================ */
+
+/* Modal */
+.modal-evolucao-content {
+    max-width: 720px;
+    width: 100%;
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.evol-btn-fechar {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--t-fast), color var(--t-fast);
+    z-index: 10;
+}
+.evol-btn-fechar:hover { background: rgba(239,68,68,0.2); color: var(--danger); }
+
+/* Seções */
+.evol-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+.evol-section:first-of-type { border-top: none; margin-top: 8px; }
+
+.evol-section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.evol-sub {
+    font-size: 0.78rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--text-dim);
+}
+
+/* ─── Resumo Geral ─────────────────────────────────────── */
+.evol-resumo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+@media (min-width: 520px) {
+    .evol-resumo-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.evol-stat-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    text-align: center;
+}
+.evol-card-wide {
+    grid-column: span 2;
+}
+@media (min-width: 520px) {
+    .evol-card-wide { grid-column: span 1; }
+}
+
+.evol-stat-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.1;
+    word-break: break-word;
+}
+.evol-stat-val--sm {
+    font-size: 0.9rem;
+    line-height: 1.35;
+}
+.evol-stat-label {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.evol-nome-destaque {
+    color: var(--text-main);
+    font-weight: 700;
+}
+.evol-pct {
+    color: var(--success);
+    font-weight: 700;
+    font-size: 0.85rem;
+    background: rgba(34, 197, 94, 0.12);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* ─── Barras de Volume ──────────────────────────────────── */
+.evol-bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 100px;
+    padding-bottom: 4px;
+}
+
+.evol-bar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    gap: 4px;
+}
+
+.evol-bar-track {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+}
+
+.evol-bar-fill {
+    width: 100%;
+    background: linear-gradient(180deg, #6366F1 0%, rgba(99,102,241,0.6) 100%);
+    border-radius: 4px 4px 0 0;
+    min-height: 3px;
+    transition: height 0.4s ease;
+}
+.evol-bar-fill--mes {
+    background: linear-gradient(180deg, #38BDF8 0%, rgba(56,189,248,0.55) 100%);
+}
+
+.evol-bar-label {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+.evol-bar-val {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* ─── Contagem por período ──────────────────────────────── */
+.evol-count-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.evol-count-item {
+    flex: 1;
+    min-width: 52px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 8px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+.evol-count-val {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--secondary);
+    line-height: 1;
+}
+.evol-count-label {
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    text-align: center;
+}
+
+/* ─── Exercício Selecionado ─────────────────────────────── */
+.evol-ex-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+.evol-ex-selector label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+.evol-ex-selector select {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+}
+.evol-ex-selector select:focus {
+    border-color: var(--border-focus);
+}
+
+/* Stats do exercício */
+.evol-ex-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+}
+@media (min-width: 480px) {
+    .evol-ex-stats { grid-template-columns: repeat(6, 1fr); }
+}
+
+.evol-ex-stat {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+}
+.evol-ex-stat--tend {
+    grid-column: span 3;
+}
+@media (min-width: 480px) {
+    .evol-ex-stat--tend { grid-column: span 1; }
+}
+
+.evol-ex-val {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.1;
+}
+.evol-ex-val--date {
+    font-size: 0.82rem;
+}
+.evol-ex-label {
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+}
+
+/* Tendência badge */
+.evol-tend-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.evol-tend-subindo { background: rgba(34,197,94,0.15);  color: var(--success); }
+.evol-tend-estavel { background: rgba(245,158,11,0.15); color: var(--warning); }
+.evol-tend-queda   { background: rgba(239,68,68,0.15);  color: var(--danger);  }
+.evol-tend-neutro  { background: rgba(148,163,184,0.1); color: var(--text-dim); }
+
+/* Tabela de registros */
+.evol-tabela-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 14px;
+}
+.evol-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+.evol-tabela th {
+    background: rgba(255,255,255,0.04);
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+.evol-tabela td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(51,65,85,0.5);
+    color: var(--text-main);
+    white-space: nowrap;
+}
+.evol-tabela tr:last-child td { border-bottom: none; }
+.evol-tabela tr:hover td { background: rgba(255,255,255,0.03); }
+.evol-td-vol {
+    font-weight: 700;
+    color: var(--primary);
+    text-align: right;
+}
+
+/* Canvas gráfico */
+.evol-canvas-wrap {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 12px 8px 8px;
+    border: 1px solid var(--border);
+}
+.evol-canvas-title {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    padding-left: 4px;
+}
+#canvas-evol-ex {
+    display: block;
+    width: 100%;
+}
+
+/* Mensagem vazia */
+.evol-empty {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    text-align: center;
+    padding: 20px 12px;
+    background: rgba(255,255,255,0.02);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--border);
+}
 
 
