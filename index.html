@@ -1895,13 +1895,10 @@
                 ${timerHtml}
             `;
             conteudo.appendChild(exerciciosDiv);
-            conteudo.innerHTML += `
-                <div class="modal-footer">
-                    <button class="btn-fechar" onclick="fecharTreinoModal(${tipoAtualIndex}, ${index})">
-                        🏁 Finalizar Treino
-                    </button>
-                </div>
-            `;
+            const footer = document.createElement('div');
+            footer.className = 'modal-footer';
+            footer.innerHTML = `<button class="btn-fechar" onclick="fecharTreinoModal(${tipoAtualIndex}, ${index})">🏁 Finalizar Treino</button>`;
+            conteudo.appendChild(footer);
 
             modal.appendChild(conteudo);
             document.body.appendChild(modal);
@@ -1914,6 +1911,8 @@
 
         function fecharTreinoModal(tipoIndex, treinoIndex) {
             pararTimer();
+            const treino = todosTipos[tipoIndex].treinos[treinoIndex];
+            registrarHistorico(tipoIndex, treinoIndex, treino.nome, treino.exercicios);
             fecharModal();
             carregarTreinosTipo(tipoIndex); // atualiza progresso nos cards
             mostrarNotificacao('🏁 Treino finalizado! Ótimo trabalho! 💪');
@@ -2145,13 +2144,13 @@
         // =============================================
         //  HISTÓRICO DE TREINOS
         // =============================================
-        function registrarHistorico(treinoNome, exercicios) {
+        function registrarHistorico(tipoIndex, treinoIndex, treinoNome, exercicios) {
             const hist = JSON.parse(localStorage.getItem('marceloHistorico') || '[]');
             hist.unshift({
                 data: new Date().toLocaleString('pt-BR'),
                 nome: treinoNome,
                 exercicios: exercicios.map((ex, i) => {
-                    const peso = localStorage.getItem(`peso_extra_${i}`) || '';
+                    const peso = localStorage.getItem(`peso_${tipoIndex}_${treinoIndex}_${i}`) || '';
                     return peso ? `${ex} (${peso}kg)` : ex;
                 })
             });
@@ -2220,11 +2219,11 @@
                 pesos: {}
             };
             // Exportar todos os pesos salvos
-            for (let k in localStorage) {
+            Object.keys(localStorage).forEach(k => {
                 if (k.startsWith('peso_') || k.startsWith('concluido_') || k.startsWith('series_')) {
                     dados.pesos[k] = localStorage.getItem(k);
                 }
-            }
+            });
 
             const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
             const url  = URL.createObjectURL(blob);
