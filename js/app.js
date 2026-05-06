@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     migrarChavesLegadas();      // migra chaves legadas de índice para ID
     salvarTodosOsTreinos();     // persiste os IDs recém-atribuídos
     carregarTreinos();
+    renderDashboard();
 
     // Fechar modal com Escape — pede confirmação se treino estiver ativo
     document.addEventListener('keydown', function (e) {

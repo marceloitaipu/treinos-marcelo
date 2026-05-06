@@ -2285,4 +2285,296 @@ body {
     border: 1px dashed var(--border);
 }
 
+/* ============================================================
+   DASHBOARD INICIAL
+   ============================================================ */
+
+.dash-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 0 4px;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ── Divisor visual abaixo do dashboard ── */
+.dash-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 8px 0 16px;
+}
+
+/* ── Banner mensagem inteligente ── */
+.dash-banner {
+    padding: 11px 16px;
+    border-radius: var(--radius-md);
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.4;
+    border-left: 3px solid transparent;
+}
+.dash-banner--ok     { background: rgba(34,197,94,0.1);  border-color: var(--success); color: #86EFAC; }
+.dash-banner--neutro { background: rgba(56,189,248,0.08); border-color: var(--primary); color: #7DD3FC; }
+.dash-banner--warn   { background: rgba(245,158,11,0.1); border-color: var(--warning); color: #FCD34D; }
+.dash-banner--alert  { background: rgba(239,68,68,0.1);  border-color: var(--danger);  color: #FCA5A5; }
+
+/* ── Grid superior: Próximo + Semana ── */
+.dash-grid-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+@media (min-width: 560px) {
+    .dash-grid-top { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Card base ── */
+.dash-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color var(--t-fast);
+}
+.dash-card:hover { border-color: rgba(56,189,248,0.25); }
+.dash-card--vazio { opacity: 0.65; }
+
+/* ── Eyebrow (label topo do card) ── */
+.dash-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-dim);
+}
+
+/* ── Card: Próximo treino ── */
+.dash-card--prox {
+    border-color: rgba(56,189,248,0.2);
+    background: linear-gradient(135deg, #1E293B 0%, #162032 100%);
+}
+.dash-prox-nome {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.2;
+    margin-top: 2px;
+}
+.dash-prox-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+.dash-prox-tipo-badge {
+    display: inline-block;
+    background: rgba(56,189,248,0.12);
+    color: var(--primary);
+    border: 1px solid rgba(56,189,248,0.25);
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    align-self: flex-start;
+}
+.dash-btn-primary {
+    margin-top: 6px;
+    padding: 13px 20px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #0F172A;
+    font-weight: 800;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: transform var(--t-fast), opacity var(--t-fast);
+    text-align: center;
+    letter-spacing: 0.01em;
+}
+.dash-btn-primary:hover  { transform: translateY(-1px); opacity: 0.92; }
+.dash-btn-primary:active { transform: scale(0.97); }
+
+/* ── Card: Semana ── */
+.dash-semana-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 4px;
+}
+.dash-stat {
+    background: var(--bg-surface);
+    border-radius: var(--radius-sm);
+    padding: 10px 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.04);
+}
+.dash-stat-val {
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1;
+}
+.dash-stat-lbl {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.dash-stat--primary .dash-stat-val { color: var(--secondary); }
+.dash-stat--sky     .dash-stat-val { color: var(--primary);   }
+.dash-stat--green   .dash-stat-val { color: var(--success);   }
+.dash-stat--muted   .dash-stat-val { color: var(--text-muted);}
+
+/* ── Card: Último treino ── */
+.dash-ult-nome {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.25;
+}
+.dash-ult-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+}
+.dash-ult-data {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.dash-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+}
+.dash-badge--dur { background: rgba(245,158,11,0.12); color: #FCD34D; }
+.dash-badge--vol { background: rgba(56,189,248,0.12);  color: var(--primary); }
+
+.dash-btn-sec {
+    margin-top: 4px;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.83rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+    align-self: flex-start;
+}
+.dash-btn-sec:hover {
+    background: rgba(56,189,248,0.1);
+    border-color: rgba(56,189,248,0.3);
+    color: var(--primary);
+}
+
+/* ── Card: Evolução rápida ── */
+.dash-ev-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 4px 0;
+}
+.dash-ev-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+.dash-ev-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.dash-ev-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+.dash-ev-label {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+}
+.dash-ev-nome {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-main);
+    word-break: break-word;
+    line-height: 1.3;
+}
+.dash-ev-data {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+.dash-ev-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 12px;
+    vertical-align: middle;
+}
+.dash-ev-badge--green { background: rgba(34,197,94,0.15);  color: #86EFAC; }
+.dash-ev-badge--sky   { background: rgba(56,189,248,0.15); color: var(--primary); }
+
+/* ── Atalhos rápidos ── */
+.dash-atalhos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 2px;
+}
+.dash-atl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 12px 6px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
+}
+.dash-atl span {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+}
+.dash-atl:hover        { transform: translateY(-2px); border-color: rgba(56,189,248,0.3); }
+.dash-atl:active       { transform: scale(0.96); }
+.dash-atl--treino:hover   { background: rgba(56,189,248,0.08); }
+.dash-atl--hist:hover     { background: rgba(34,197,94,0.08);  }
+.dash-atl--evolucao:hover { background: rgba(192,132,252,0.08); }
+.dash-atl--backup:hover   { background: rgba(245,158,11,0.08); }
+
+/* ── Texto vazio ── */
+.dash-vazio-txt {
+    font-size: 0.83rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin: 4px 0 0;
+}
+
 

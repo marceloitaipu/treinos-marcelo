@@ -43,6 +43,9 @@ function registrarHistorico(tipoIndex, treinoIndex, treinoNome, exercicios, star
     });
     if (v1Hist.length > 50) v1Hist.pop();
     localStorage.setItem('marceloHistorico', JSON.stringify(v1Hist));
+
+    // Atualiza o dashboard após registrar novo treino
+    if (typeof renderDashboard === 'function') renderDashboard();
 }
 
 // =============================================
